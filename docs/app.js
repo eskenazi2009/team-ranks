@@ -58,8 +58,12 @@ async function init() {
     return;
   }
   const dt = new Date(state.meta.updated);
+  const when = isNaN(dt) ? "unknown" : dt.toLocaleString(undefined, {
+    year: "numeric", month: "short", day: "numeric",
+    hour: "numeric", minute: "2-digit", timeZoneName: "short",
+  });
   $("#subtitle").textContent =
-    `${state.meta.seasonYear} season · updated ${dt.toLocaleString()} · ranks across all 30 teams`;
+    `${state.meta.seasonYear} season · last updated ${when} · ranks across all 30 teams`;
 
   wireControls();
   applyPeriod();
