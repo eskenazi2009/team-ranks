@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-23T07:27:40+00:00",
+  "updated": "2026-06-23T07:46:54+00:00",
   "seasonYear": 2026,
   "categories": [
     {
@@ -8,13 +8,6 @@
       "group": "batting",
       "better": "high",
       "fmt": "rate3"
-    },
-    {
-      "key": "so",
-      "label": "Batting Strikeouts",
-      "group": "batting",
-      "better": "low",
-      "fmt": "int"
     },
     {
       "key": "runs",
@@ -43,6 +36,13 @@
       "group": "batting",
       "better": "high",
       "fmt": "rate3"
+    },
+    {
+      "key": "so",
+      "label": "Batting Strikeouts",
+      "group": "batting",
+      "better": "low",
+      "fmt": "int"
     },
     {
       "key": "era",

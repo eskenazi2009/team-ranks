@@ -54,8 +54,14 @@
         <div class="ranks-head" id="modal-head"></div>
         <div style="display:flex;align-items:center;gap:10px;">
           <div class="compare-pick">
-            <label for="compare-select" style="color:var(--muted);font-size:13px;">Compare:</label>
-            <select id="compare-select"></select>
+            <span style="color:var(--muted);font-size:13px;">Compare:</span>
+            <div class="dd" id="compare-dd">
+              <button class="dd-toggle" id="compare-toggle" type="button">
+                <span class="dd-label" id="compare-label">— none —</span>
+                <span class="dd-caret">▾</span>
+              </button>
+              <div class="dd-menu" id="compare-menu"></div>
+            </div>
           </div>
           <button class="close-x" id="close-modal" aria-label="Close">✕</button>
         </div>

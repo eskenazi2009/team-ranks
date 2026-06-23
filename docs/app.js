@@ -84,10 +84,30 @@ function wireControls() {
   $("#close-modal").addEventListener("click", closeModal);
   $("#overlay").addEventListener("click", (e) => { if (e.target.id === "overlay") closeModal(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
-  $("#compare-select").addEventListener("change", (e) => {
-    state.compareTeamId = e.target.value || null;
-    renderModalBody();
+
+  // Custom compare dropdown (native <select> can't show logos).
+  $("#compare-toggle").addEventListener("click", (e) => {
+    e.stopPropagation();
+    $("#compare-menu").classList.toggle("open");
   });
+  document.addEventListener("click", () => $("#compare-menu").classList.remove("open"));
+  $("#compare-menu").addEventListener("click", (e) => {
+    const item = e.target.closest(".dd-item"); if (!item) return;
+    selectCompare(item.dataset.id || null);
+    $("#compare-menu").classList.remove("open");
+  });
+}
+
+function selectCompare(id) {
+  state.compareTeamId = id;
+  const label = $("#compare-label");
+  if (id) {
+    const t = state.byId[id];
+    label.innerHTML = `<img src="${t.logo}" alt=""><span>${t.shortName}</span>`;
+  } else {
+    label.textContent = "— none —";
+  }
+  renderModalBody();
 }
 
 function setActive(segSel, btn) {
@@ -128,12 +148,16 @@ function renderGrid() {
 function openModal(id) {
   state.modalTeamId = id;
   state.compareTeamId = null;
-  const select = $("#compare-select");
   const others = [...state.data[state.period]]
     .filter((t) => t.id !== id)
-    .sort((a, b) => a.name.localeCompare(b.name));
-  select.innerHTML = `<option value="">— none —</option>` +
-    others.map((t) => `<option value="${t.id}">${t.name}</option>`).join("");
+    .sort((a, b) => a.shortName.localeCompare(b.shortName));
+  $("#compare-menu").innerHTML =
+    `<div class="dd-item" data-id="">— none —</div>` +
+    others.map((t) =>
+      `<div class="dd-item" data-id="${t.id}"><img src="${t.logo}" alt="">${t.shortName}</div>`
+    ).join("");
+  $("#compare-menu").classList.remove("open");
+  $("#compare-label").textContent = "— none —";
   $("#overlay").classList.add("open");
   document.body.style.overflow = "hidden";
   renderModalHead();

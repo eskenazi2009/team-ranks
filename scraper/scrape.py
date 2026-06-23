@@ -27,11 +27,11 @@ TEAMS_API = "https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/teams"
 #   fmt:    how the value is displayed ("rate3" -> .241, "rate2" -> 4.45, "int")
 CATEGORIES = [
     ("avg",        "Batting Average",     "batting",  "batting",  "avg",         "high", "rate3"),
-    ("so",         "Batting Strikeouts",  "batting",  "batting",  "strikeouts",  "low",  "int"),
     ("runs",       "Runs",                "batting",  "batting",  "runs",        "high", "int"),
     ("hr",         "Home Runs",           "batting",  "batting",  "homeRuns",    "high", "int"),
     ("obp",        "On-Base %",           "batting",  "batting",  "onBasePct",   "high", "rate3"),
     ("slg",        "Slugging %",          "batting",  "batting",  "slugAvg",     "high", "rate3"),
+    ("so",         "Batting Strikeouts",  "batting",  "batting",  "strikeouts",  "low",  "int"),
     ("era",        "ERA",                 "pitching", "pitching", "ERA",         "low",  "rate2"),
     ("hr_against", "HR Against",          "pitching", "pitching", "homeRuns",    "low",  "int"),
     ("whip",       "WHIP",                "pitching", "pitching", "WHIP",        "low",  "rate2"),
