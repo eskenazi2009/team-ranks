@@ -1,6 +1,9 @@
 # Scraper intermediate (regenerated each run)
 scraper/_raw_data.json
 
+# Local Claude Code settings (machine-specific)
+.claude/settings.local.json
+
 # Python
 __pycache__/
 *.pyc
