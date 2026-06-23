@@ -1,0 +1,76 @@
+{
+  "updated": "2026-06-23T07:16:37+00:00",
+  "seasonYear": 2026,
+  "categories": [
+    {
+      "key": "avg",
+      "label": "Batting Average",
+      "group": "batting",
+      "better": "high",
+      "fmt": "rate3"
+    },
+    {
+      "key": "so",
+      "label": "Batting Strikeouts",
+      "group": "batting",
+      "better": "low",
+      "fmt": "int"
+    },
+    {
+      "key": "runs",
+      "label": "Runs",
+      "group": "batting",
+      "better": "high",
+      "fmt": "int"
+    },
+    {
+      "key": "hr",
+      "label": "Home Runs",
+      "group": "batting",
+      "better": "high",
+      "fmt": "int"
+    },
+    {
+      "key": "obp",
+      "label": "On-Base %",
+      "group": "batting",
+      "better": "high",
+      "fmt": "rate3"
+    },
+    {
+      "key": "slg",
+      "label": "Slugging %",
+      "group": "batting",
+      "better": "high",
+      "fmt": "rate3"
+    },
+    {
+      "key": "era",
+      "label": "ERA",
+      "group": "pitching",
+      "better": "low",
+      "fmt": "rate2"
+    },
+    {
+      "key": "hr_against",
+      "label": "HR Against",
+      "group": "pitching",
+      "better": "low",
+      "fmt": "int"
+    },
+    {
+      "key": "whip",
+      "label": "WHIP",
+      "group": "pitching",
+      "better": "low",
+      "fmt": "rate2"
+    },
+    {
+      "key": "baa",
+      "label": "Batting Avg Against",
+      "group": "pitching",
+      "better": "low",
+      "fmt": "rate3"
+    }
+  ]
+}

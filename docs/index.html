@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MLB Team Stats Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚾</text></svg>" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="title">
+        <h1>⚾ MLB Team Stats Dashboard</h1>
+        <p id="subtitle">Loading…</p>
+      </div>
+      <div class="head-actions">
+        <a class="btn primary" id="download" href="data/mlb_team_stats.xlsx" download>⬇ Download Excel</a>
+      </div>
+    </header>
+
+    <div class="controls">
+      <div class="seg" id="period-seg">
+        <button data-period="season" class="active">Season</button>
+        <button data-period="last7">Last 7 Days</button>
+      </div>
+      <div class="seg" id="view-seg">
+        <button data-view="teams" class="active">Teams</button>
+        <button data-view="table">League Table</button>
+      </div>
+      <input class="search" id="search" type="search" placeholder="Filter teams…" />
+    </div>
+
+    <section id="teams-view">
+      <div class="grid" id="team-grid"></div>
+    </section>
+
+    <section id="table-view" class="hidden">
+      <div class="table-scroll">
+        <table class="league" id="league-table"></table>
+      </div>
+    </section>
+
+    <footer>
+      Data from ESPN public API · ranks computed across all 30 teams · rank 1 = best.
+      Built as a static dashboard · <a id="repo-link" href="#">source</a>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div class="overlay" id="overlay">
+    <div class="modal" id="modal" role="dialog" aria-modal="true">
+      <div class="modal-top">
+        <div class="ranks-head" id="modal-head"></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="compare-pick">
+            <label for="compare-select" style="color:var(--muted);font-size:13px;">Compare:</label>
+            <select id="compare-select"></select>
+          </div>
+          <button class="close-x" id="close-modal" aria-label="Close">✕</button>
+        </div>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

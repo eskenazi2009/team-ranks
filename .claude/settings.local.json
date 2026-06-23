@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:sports.yahoo.com)",
+      "WebSearch",
+      "WebFetch(domain:www.espn.com)",
+      "WebFetch(domain:www.fangraphs.com)"
+    ]
+  }
+}
