@@ -143,6 +143,7 @@ header.top {
 }
 .dd-item:hover { background: var(--card-2); }
 .dd-item img { width: 18px; height: 18px; object-fit: contain; }
+.modal-seg { margin: 16px 0 2px; }
 .close-x { border: 0; background: var(--card); color: var(--text); width: 36px; height: 36px; border-radius: 9px; cursor: pointer; font-size: 18px; }
 .close-x:hover { background: var(--bad); color: #fff; }
 

@@ -68,9 +68,11 @@ async function init() {
 function wireControls() {
   $("#period-seg").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
-    setActive("#period-seg", b);
-    state.period = b.dataset.period;
-    applyPeriod();
+    setPeriod(b.dataset.period);
+  });
+  $("#modal-period").addEventListener("click", (e) => {
+    const b = e.target.closest("button"); if (!b) return;
+    setPeriod(b.dataset.period);
   });
   $("#view-seg").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
@@ -113,6 +115,15 @@ function selectCompare(id) {
 function setActive(segSel, btn) {
   document.querySelectorAll(`${segSel} button`).forEach((b) => b.classList.remove("active"));
   btn.classList.add("active");
+}
+
+// Single source of truth for the period; keeps the page + modal toggles in sync.
+function setPeriod(period) {
+  state.period = period;
+  document.querySelectorAll("#period-seg button, #modal-period button").forEach((b) =>
+    b.classList.toggle("active", b.dataset.period === period)
+  );
+  applyPeriod();
 }
 
 function applyPeriod() {
@@ -158,6 +169,9 @@ function openModal(id) {
     ).join("");
   $("#compare-menu").classList.remove("open");
   $("#compare-label").textContent = "— none —";
+  document.querySelectorAll("#modal-period button").forEach((b) =>
+    b.classList.toggle("active", b.dataset.period === state.period)
+  );
   $("#overlay").classList.add("open");
   document.body.style.overflow = "hidden";
   renderModalHead();
