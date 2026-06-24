@@ -41,7 +41,10 @@ function barColor(hex) {
 }
 
 async function loadJSON(path) {
-  const res = await fetch(path, { cache: "no-store" });
+  // Cache-bust with a unique query string: GitHub Pages' CDN caches by full URL
+  // (max-age 600), and `cache: no-store` only covers the browser cache. A unique
+  // param forces a fresh fetch past the CDN as soon as Pages redeploys.
+  const res = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
   if (!res.ok) throw new Error(`Failed to load ${path}: ${res.status}`);
   return res.json();
 }
