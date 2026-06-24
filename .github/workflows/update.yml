@@ -2,7 +2,9 @@ name: Update MLB team stats
 
 on:
   schedule:
-    - cron: "0 11 * * *"   # daily ~11:00 UTC (after the prior day's games finalize)
+    # 09:00 UTC = 4:00 AM EST. GitHub cron is UTC and does not observe DST,
+    # so during Eastern Daylight Time this effectively runs at 5:00 AM EDT.
+    - cron: "0 9 * * *"
   workflow_dispatch: {}      # allow manual runs from the Actions tab
 
 permissions:
