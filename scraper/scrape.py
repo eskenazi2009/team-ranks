@@ -110,24 +110,58 @@ def _parse_period(payload: dict) -> list[dict]:
     return teams_out
 
 
+DEFAULT_COLOR = "#f06b20"
+DEFAULT_ALT = "#111827"
+
+# Static fallback of ESPN team brand colors, keyed by abbreviation (color, altColor).
+# The live teams endpoint intermittently returns HTTP 403, so we no longer depend on
+# it: colors are stable, so a baked-in map keeps the dashboard correct even when the
+# endpoint is down. Live values (when reachable) still take precedence.
+STATIC_COLORS = {
+    "ARI": ("#aa182c", "#000000"), "ATH": ("#003831", "#efb21e"),
+    "ATL": ("#0c2340", "#ba0c2f"), "BAL": ("#df4601", "#000000"),
+    "BOS": ("#0d2b56", "#bd3039"), "CHC": ("#0e3386", "#cc3433"),
+    "CHW": ("#000000", "#c4ced4"), "CIN": ("#c6011f", "#ffffff"),
+    "CLE": ("#002b5c", "#e31937"), "COL": ("#33006f", "#000000"),
+    "DET": ("#0a2240", "#ff4713"), "HOU": ("#002d62", "#eb6e1f"),
+    "KC": ("#004687", "#7ab2dd"),  "LAA": ("#ba0021", "#c4ced4"),
+    "LAD": ("#005a9c", "#ffffff"), "MIA": ("#00a3e0", "#000000"),
+    "MIL": ("#13294b", "#ffc72c"), "MIN": ("#031f40", "#e20e32"),
+    "NYM": ("#002d72", "#ff5910"), "NYY": ("#132448", "#c4ced4"),
+    "PHI": ("#e81828", "#003278"), "PIT": ("#000000", "#fdb827"),
+    "SD": ("#2f241d", "#ffc425"),  "SEA": ("#005c5c", "#0c2c56"),
+    "SF": ("#000000", "#fd5a1e"),  "STL": ("#be0a14", "#001541"),
+    "TB": ("#092c5c", "#8fbce6"),  "TEX": ("#003278", "#c0111f"),
+    "TOR": ("#134a8e", "#6cace5"), "WSH": ("#ab0003", "#11225b"),
+}
+
+
 def _fetch_team_colors() -> dict:
-    """Return {team_id: {color, altColor}} from the teams endpoint."""
-    data = _get_json(TEAMS_API)
+    """Return {abbr: (color, altColor)} from the ESPN teams endpoint.
+
+    Best-effort only: this endpoint intermittently returns 403, so any failure
+    falls back to STATIC_COLORS rather than aborting the whole scrape.
+    """
+    try:
+        data = _get_json(TEAMS_API, retries=2)
+    except Exception as err:
+        print(f"warning: team colors endpoint unavailable ({err}); using static colors")
+        return {}
     out = {}
     for league in data.get("sports", [])[0].get("leagues", []):
         for item in league.get("teams", []):
             t = item.get("team", {})
-            out[t.get("id")] = {
-                "color": "#" + t["color"] if t.get("color") else "#f06b20",
-                "altColor": "#" + t["alternateColor"] if t.get("alternateColor") else "#111827",
-            }
+            abbr = t.get("abbreviation")
+            if abbr and t.get("color"):
+                out[abbr] = ("#" + t["color"],
+                             "#" + t["alternateColor"] if t.get("alternateColor") else DEFAULT_ALT)
     return out
 
 
 def scrape_all() -> dict:
     """Return {seasonYear, periods:{season:[teams], last7:[teams]}}."""
     result = {"periods": {}}
-    colors = _fetch_team_colors()
+    live_colors = _fetch_team_colors()
     first_payload = None
     for period, split in PERIODS.items():
         payload = _fetch_period(split)
@@ -137,9 +171,10 @@ def scrape_all() -> dict:
         if len(teams) != 30:
             raise RuntimeError(f"Expected 30 teams for '{period}', got {len(teams)}")
         for t in teams:
-            c = colors.get(t["id"], {})
-            t["color"] = c.get("color", "#f06b20")
-            t["altColor"] = c.get("altColor", "#111827")
+            color, alt = live_colors.get(t["abbr"]) or STATIC_COLORS.get(
+                t["abbr"], (DEFAULT_COLOR, DEFAULT_ALT))
+            t["color"] = color
+            t["altColor"] = alt
         result["periods"][period] = teams
 
     season_info = first_payload.get("requestedSeason") or first_payload.get("currentSeason") or {}
