@@ -10,6 +10,8 @@ const state = {
   modalTeamId: null,
   compareTeamId: null,
   sort: { key: null, dir: 1 },         // league table sort
+  history: null,                       // {dates:[], teams:{abbr:{cat:[ranks]}}}
+  historyTeam: null,                   // selected abbr for the History tab
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -55,6 +57,7 @@ async function init() {
     state.categories = state.meta.categories;
     state.data.season = (await loadJSON("data/season.json")).teams;
     state.data.last7 = (await loadJSON("data/last7.json")).teams;
+    try { state.history = await loadJSON("data/history.json"); } catch { state.history = null; }
   } catch (err) {
     $("#subtitle").textContent = "Could not load data. Run the scraper first.";
     console.error(err);
@@ -87,7 +90,23 @@ function wireControls() {
     state.view = b.dataset.view;
     $("#teams-view").classList.toggle("hidden", state.view !== "teams");
     $("#table-view").classList.toggle("hidden", state.view !== "table");
+    $("#history-view").classList.toggle("hidden", state.view !== "history");
     $("#search").classList.toggle("hidden", state.view !== "teams");
+    if (state.view === "history") enterHistory();
+  });
+
+  // History team dropdown (custom, with logos).
+  $("#history-toggle").addEventListener("click", (e) => {
+    e.stopPropagation();
+    $("#history-menu").classList.toggle("open");
+  });
+  document.addEventListener("click", () => $("#history-menu").classList.remove("open"));
+  $("#history-menu").addEventListener("click", (e) => {
+    const item = e.target.closest(".dd-item"); if (!item) return;
+    state.historyTeam = item.dataset.abbr;
+    setHistoryLabel();
+    $("#history-menu").classList.remove("open");
+    renderHistory();
   });
   $("#search").addEventListener("input", renderGrid);
   $("#close-modal").addEventListener("click", closeModal);
@@ -302,6 +321,74 @@ function renderTable() {
       renderTable();
     });
   });
+}
+
+/* ---------- History ---------- */
+function teamByAbbr(abbr) {
+  return state.data.season.find((t) => t.abbr === abbr);
+}
+
+function fmtHistDate(iso) {
+  const d = new Date(iso + "T00:00:00");
+  return isNaN(d) ? iso : d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
+function setHistoryLabel() {
+  const label = $("#history-label");
+  const t = teamByAbbr(state.historyTeam);
+  label.innerHTML = t ? `<img src="${t.logo}" alt=""><span>${t.shortName}</span>` : "—";
+}
+
+function enterHistory() {
+  if (!state.history || !state.history.dates.length) {
+    $("#hist-batting").innerHTML =
+      `<tbody><tr><td style="padding:16px;color:var(--muted)">No history recorded yet.</td></tr></tbody>`;
+    $("#hist-pitching").innerHTML = "";
+    return;
+  }
+  // Populate the team dropdown once.
+  const menu = $("#history-menu");
+  if (!menu.childElementCount) {
+    const teams = [...state.data.season].sort((a, b) => a.shortName.localeCompare(b.shortName));
+    menu.innerHTML = teams
+      .map((t) => `<div class="dd-item" data-abbr="${t.abbr}"><img src="${t.logo}" alt="">${t.shortName}</div>`)
+      .join("");
+  }
+  if (!state.historyTeam) {
+    const first = [...state.data.season].sort((a, b) => a.name.localeCompare(b.name))[0];
+    state.historyTeam = first.abbr;
+  }
+  setHistoryLabel();
+  renderHistory();
+}
+
+function renderHistory() {
+  renderHistoryTable("batting", $("#hist-batting"));
+  renderHistoryTable("pitching", $("#hist-pitching"));
+}
+
+function renderHistoryTable(group, table) {
+  const cats = state.categories.filter((c) => c.group === group);
+  const dates = state.history.dates;
+  const series = state.history.teams[state.historyTeam] || {};
+
+  let head = `<thead><tr><th class="team" title="Snapshot date">Date</th>`;
+  for (const c of cats) head += `<th class="grp-${group}" title="${c.label}">${c.label}</th>`;
+  head += `</tr></thead>`;
+
+  let rows = "";
+  // Most recent first.
+  for (let i = dates.length - 1; i >= 0; i--) {
+    rows += `<tr><td class="team">${fmtHistDate(dates[i])}</td>`;
+    for (const c of cats) {
+      const rank = (series[c.key] || [])[i];
+      rows += rank == null
+        ? `<td><span class="cell-rk">—</span></td>`
+        : `<td><span class="rk" style="background:${rankColor(rank)}">${rank}</span></td>`;
+    }
+    rows += `</tr>`;
+  }
+  table.innerHTML = head + `<tbody>${rows}</tbody>`;
 }
 
 init();

@@ -162,6 +162,16 @@ table.league .grp-pitching { color: #f0a04b; }
 .cell-val { font-variant-numeric: tabular-nums; }
 .cell-rk { font-size: 10px; color: var(--muted); }
 
+/* History view */
+.history-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 8px; }
+.hc-label { color: var(--muted); font-size: 13px; }
+.hc-note { color: var(--muted); font-size: 12px; }
+.hist-title { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin: 22px 0 8px; }
+.hist-title.batting { color: #5ab0ff; }
+.hist-title.pitching { color: #f0a04b; }
+table.league.hist td.team, table.league.hist th.team { min-width: 78px; font-variant-numeric: tabular-nums; }
+table.league.hist .rk { min-width: 26px; font-size: 12px; padding: 2px 7px; }
+
 .hidden { display: none !important; }
 footer { margin-top: 30px; color: var(--muted); font-size: 12px; text-align: center; }
 footer a { color: var(--accent); }

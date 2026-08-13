@@ -17,6 +17,7 @@ self-contained static site you can host for free on **GitHub Pages**.
 - **Compare two teams** side-by-side inside the popup; the better team per category
   is highlighted.
 - **Sortable league table** of all teams × all categories.
+- **History tab** — pick a team and see its **season rank per category over time** (sampled every 3 days) in two linear tables (Batting / Pitching), each cell showing the date and rank.
 - **Excel download** of the underlying team totals.
 
 ### The 10 categories
@@ -46,10 +47,11 @@ logos come from `.../mlb/teams`.
 scraper/
   scrape.py          # fetch + normalize ESPN team totals (season + last7)
   build_outputs.py   # rank, sanity-check, write Excel + JSON
+  build_history.py   # maintain history.json (season ranks every 3 days)
   requirements.txt
 docs/                # the published site (GitHub Pages root)
   index.html  app.js  styles.css
-  data/              # season.json, last7.json, meta.json, mlb_team_stats.xlsx
+  data/              # season.json, last7.json, meta.json, history.json, mlb_team_stats.xlsx
 .github/workflows/update.yml   # daily refresh
 ```
 
@@ -58,7 +60,8 @@ docs/                # the published site (GitHub Pages root)
 ```bash
 pip install -r scraper/requirements.txt
 python scraper/scrape.py          # writes scraper/_raw_data.json
-python scraper/build_outputs.py   # writes docs/data/*
+python scraper/build_outputs.py   # writes docs/data/* (season/last7/meta/xlsx)
+python scraper/build_history.py   # updates docs/data/history.json
 
 # preview the dashboard
 python -m http.server --directory docs 8000

@@ -27,6 +27,7 @@
       <div class="seg" id="view-seg">
         <button data-view="teams" class="active">Teams</button>
         <button data-view="table">League Table</button>
+        <button data-view="history">History</button>
       </div>
       <input class="search" id="search" type="search" placeholder="Filter teams…" />
     </div>
@@ -39,6 +40,24 @@
       <div class="table-scroll">
         <table class="league" id="league-table"></table>
       </div>
+    </section>
+
+    <section id="history-view" class="hidden">
+      <div class="history-controls">
+        <span class="hc-label">Team:</span>
+        <div class="dd" id="history-dd">
+          <button class="dd-toggle" id="history-toggle" type="button">
+            <span class="dd-label" id="history-label">—</span>
+            <span class="dd-caret">▾</span>
+          </button>
+          <div class="dd-menu" id="history-menu"></div>
+        </div>
+        <span class="hc-note">Season rank · sampled every 3 days · rank 1 = best</span>
+      </div>
+      <h3 class="hist-title batting">Batting — Rank History</h3>
+      <div class="table-scroll"><table class="league hist" id="hist-batting"></table></div>
+      <h3 class="hist-title pitching">Pitching — Rank History</h3>
+      <div class="table-scroll"><table class="league hist" id="hist-pitching"></table></div>
     </section>
 
     <footer>
