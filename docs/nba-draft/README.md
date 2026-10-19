@@ -21,10 +21,10 @@ y los endpoints públicos de ESPN.
   que Claude actualiza durante el draft, más un cuadro para pegar notas.
 - **Liga**: puntuación, roster, formato del draft y orden de los equipos.
 
-## Publicar en GitHub Pages
+## Publicación
 
-1. Settings → Pages → *Deploy from a branch* → `main` / `/ (root)`.
-2. La URL queda en `https://<usuario>.github.io/fantasy-nba/`.
+Vive en `docs/nba-draft/` del repo `team-ranks`, que ya publica GitHub Pages desde
+`main` / `/docs`. URL: `https://eskenazi2009.github.io/team-ranks/nba-draft/`.
 
 También funciona abriendo `index.html` desde un servidor local, por ejemplo
 `python3 -m http.server` dentro de la carpeta.
