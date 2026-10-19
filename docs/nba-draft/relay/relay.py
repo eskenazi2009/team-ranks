@@ -191,6 +191,39 @@ def fetch_espn_bulk_stats(season, players):
     return out
 
 
+import unicodedata, re as _re
+
+def norm_name(s):
+    s = unicodedata.normalize("NFKD", s or "").encode("ascii", "ignore").decode()
+    s = _re.sub(r"[^a-z ]", " ", s.lower())
+    s = _re.sub(r"\b(jr|sr|ii|iii|iv|v)\b", " ", s)
+    return " ".join(s.split())
+
+
+def link_espn_ids(players, rosters_by_team, teams):
+    """Asigna espn_id a los jugadores de Sleeper cruzando nombre (y equipo si hay empate)."""
+    by_name = {}
+    for tid, rows in rosters_by_team.items():
+        abbr = next((a for a, t in teams.items() if t["id"] == tid), None)
+        for a in rows:
+            by_name.setdefault(norm_name(a.get("displayName")), []).append((a["id"], abbr))
+    alias = {v: k for k, v in TEAM_ALIAS.items()}  # ESPN abbr -> Sleeper abbr
+    n = 0
+    for p in players.values():
+        if p.get("espn_id"):
+            continue
+        cands = by_name.get(norm_name(f"{p.get('first_name','')} {p.get('last_name','')}")) or []
+        if len(cands) > 1 and p.get("team"):
+            same = [c for c in cands if c[1] and (alias.get(c[1], c[1]) == p["team"] or c[1] == p["team"])]
+            if same:
+                cands = same
+        if cands:
+            p["espn_id"] = int(cands[0][0]) if str(cands[0][0]).isdigit() else cands[0][0]
+            n += 1
+    log(f"espn_id asignados por nombre: {n}")
+    return n
+
+
 # ---------------- ESPN extra (noticias, lesiones, rosters, historial) ----------------
 def fetch_espn_bundle(players, top_n=250, workers=8):
     bundle = {"generated_at": now_iso(), "teams": {}, "injuries": {}, "rosters": {}, "news": [], "athletes": {}}
@@ -203,6 +236,9 @@ def fetch_espn_bundle(players, top_n=250, workers=8):
     for t in teams:
         bundle["teams"][t.get("abbreviation")] = {"id": str(t.get("id")), "displayName": t.get("displayName")}
     ij = try_get("ESPN injuries", f"{ESPN_SITE}/injuries")
+    if isinstance(ij, dict):
+        first = ((ij.get("injuries") or [None])[0])
+        log(f"ESPN injuries: claves={list(ij.keys())} equipos={len(ij.get('injuries') or [])} primero={list(first.keys()) if isinstance(first, dict) else first}")
     for t in (ij or {}).get("injuries") or []:
         for inj in t.get("injuries") or []:
             aid = str((inj.get("athlete") or {}).get("id") or "")
@@ -230,8 +266,6 @@ def fetch_espn_bundle(players, top_n=250, workers=8):
                          "injuries": [x.get("status") for x in (a.get("injuries") or []) if x.get("status")]})
         return str(t["id"]), rows
 
-    ranked = sorted((p for p in players.values() if p.get("espn_id") and p.get("team")),
-                    key=lambda p: p.get("search_rank") or 9_999_999)[:top_n]
 
     def athlete(p):
         eid = str(p["espn_id"])
@@ -251,6 +285,10 @@ def fetch_espn_bundle(players, top_n=250, workers=8):
     with cf.ThreadPoolExecutor(max_workers=workers) as ex:
         for tid, rows in ex.map(roster, teams):
             bundle["rosters"][tid] = rows
+    link_espn_ids(players, bundle["rosters"], bundle["teams"])
+    ranked = sorted((p for p in players.values() if p.get("espn_id") and p.get("team")),
+                    key=lambda p: p.get("search_rank") or 9_999_999)[:top_n]
+    with cf.ThreadPoolExecutor(max_workers=workers) as ex:
         for eid, out in ex.map(athlete, ranked):
             if out:
                 bundle["athletes"][eid] = out
@@ -295,11 +333,20 @@ def do_snapshot(args):
         stats, src = fetch_espn_bulk_stats(prev, players), "espn"
     proj, _ = fetch_stats_like("projections", str(lg_season))
     out = args.out
+    if not args.skip_espn:
+        write_json(f"{out}/espn.json", fetch_espn_bundle(players, top_n=args.top_n))
+    elif os.path.exists(f"{out}/players.json"):
+        # conserva los espn_id ya asignados en un snapshot anterior
+        try:
+            prev_players = json.load(open(f"{out}/players.json", encoding="utf-8"))
+            for pid, pp in prev_players.items():
+                if pp.get("espn_id") and pid in players and not players[pid].get("espn_id"):
+                    players[pid]["espn_id"] = pp["espn_id"]
+        except Exception as e:
+            log(f"no pude reutilizar espn_id previos: {e}", ok=False)
     write_json(f"{out}/players.json", players)
     write_json(f"{out}/stats.json", stats)
     write_json(f"{out}/proj.json", proj)
-    if not args.skip_espn:
-        write_json(f"{out}/espn.json", fetch_espn_bundle(players, top_n=args.top_n))
     snap = {"generated_at": now_iso(), "statsSeason": prev, "projSeason": str(lg_season), "statsSrc": src,
             **{k: core[k] for k in ("state", "user", "league", "users", "rosters", "draft", "traded", "picks")},
             "sources": SOURCES}

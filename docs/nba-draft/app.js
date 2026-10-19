@@ -361,73 +361,102 @@ function assignRoster(players) {
 }
 
 // ---------- valoración y recomendación ----------
-function perGame(st) { const gp = st?.gp || 0; return gp ? fantasyPoints(st) / gp : 0; }
+// Las proyecciones de Sleeper vienen POR JUEGO (gp = 1); las stats de la temporada pasada son totales.
+function perGameOf(st) {
+  if (!st) return null;
+  const gp = Number(st.gp) || 0;
+  const fp = fantasyPoints(st);
+  if (gp <= 1.5) return fp;          // ya es por juego
+  return gp ? fp / gp : null;
+}
+function expectedGames(p, st) {
+  let g = 72;
+  const gpLast = st && Number(st.gp) > 1.5 ? Number(st.gp) : null;
+  if (gpLast != null) g = 0.6 * gpLast + 0.4 * 72;
+  const inj = (p.injury_status || '').toLowerCase();
+  if (/out|ir|season/.test(inj)) g *= 0.8;
+  else if (/doubt/.test(inj)) g *= 0.93;
+  else if (/quest|gtd|dtd|day/.test(inj)) g *= 0.97;
+  if (p.age && p.age >= 33) g *= 0.95;
+  return Math.max(35, Math.min(80, Math.round(g)));
+}
+function adpOf(p) {
+  const pr = S.proj[p.player_id];
+  const a = pr && Number(pr.adp_std);
+  if (a && a > 0 && a < 900) return a;
+  return p.search_rank && p.search_rank < 9000 ? p.search_rank : null;
+}
 function playerValue(p) {
   const pr = S.proj[p.player_id], st = S.stats[p.player_id];
-  const projTot = pr ? fantasyPoints(pr) : null;
+  const projPG = perGameOf(pr);
+  const lastPG = perGameOf(st);
   const lastTot = st ? fantasyPoints(st) : null;
-  const projPG = pr && pr.gp ? projTot / pr.gp : (pr ? null : null);
-  const lastPG = st && st.gp ? lastTot / st.gp : null;
-  let V = projTot ?? lastTot ?? 0;
-  if (!projTot && lastTot != null) {
-    // sin proyección: ajusta por juegos jugados (regresa hacia 70 juegos)
-    const gp = st.gp || 0; if (gp > 0 && gp < 65) V = lastPG * (gp * 0.5 + 65 * 0.5);
-  }
-  return { V, projTot, lastTot, projPG, lastPG, gpLast: st?.gp ?? null };
+  const gpLast = st && Number(st.gp) > 1.5 ? Number(st.gp) : null;
+  const games = expectedGames(p, st);
+  const basePG = projPG ?? lastPG ?? 0;
+  const V = basePG * games;                 // FP esperados en la temporada
+  return { V, games, basePG, projPG, projTot: projPG != null ? projPG * games : null, lastTot, lastPG, gpLast, adp: adpOf(p) };
 }
 function injuryFactor(p) {
   const s = (p.injury_status || '').toLowerCase();
   if (!s) return { f: 1, txt: '' };
-  if (/out|ir|season/.test(s)) return { f: 0.6, txt: `lesionado (${p.injury_status}${p.injury_body_part ? ', ' + p.injury_body_part : ''})` };
-  if (/doubt/.test(s)) return { f: 0.85, txt: `dudoso (${p.injury_body_part || ''})` };
-  if (/quest|gtd|dtd|day/.test(s)) return { f: 0.95, txt: `en duda (${p.injury_body_part || ''})` };
+  if (/out|ir|season/.test(s)) return { f: 0.85, txt: `lesionado: ${p.injury_status}${p.injury_body_part ? ' (' + p.injury_body_part + ')' : ''}` };
+  if (/doubt/.test(s)) return { f: 0.95, txt: `dudoso (${p.injury_body_part || ''})` };
+  if (/quest|gtd|dtd|day/.test(s)) return { f: 0.98, txt: `día a día (${p.injury_body_part || ''})` };
   return { f: 1, txt: '' };
 }
 function availablePlayers() {
   const picked = pickedIds();
   return Object.values(S.players).filter((p) => !picked.has(p.player_id) && p.team && (p.active !== false) && (p.status !== 'Inactive' || S.stats[p.player_id] || S.proj[p.player_id]));
 }
+function allSlots() { return (S.league?.roster_positions || []).filter((x) => x !== 'IR'); }
 function recommend(limit = 8) {
   const avail = availablePlayers().map((p) => ({ p, ...playerValue(p) })).filter((x) => x.V > 0);
   if (!avail.length) return [];
   const T = teams();
-  // nivel de reemplazo por posición: el T-ésimo mejor disponible elegible (lo que habrá en una ronda)
-  const repl = {};
-  for (const pos of BASE_POS) {
-    const list = avail.filter((x) => playerPositions(x.p).includes(pos)).sort((a, b) => b.V - a.V);
-    repl[pos] = list[Math.min(T, list.length - 1)]?.V ?? 0;
-  }
   const mine = myPickedPlayers();
   const { slots } = assignRoster(mine);
-  const emptySlots = slots.filter((s) => !s.player).map((s) => s.slot);
+  const emptyStart = slots.filter((s) => !s.player).map((s) => s.slot);
+  const bnTotal = allSlots().filter((x) => x === 'BN').length;
+  const bnUsed = Math.max(0, mine.length - (slots.length - emptyStart.length));
+  const bnFree = bnTotal - bnUsed;
   const nxt = nextMyPick(), cur = currentPick();
-  const picksUntilMine = nxt && cur ? nxt.pick_no - cur.pick_no : null;
-  const afterNext = myPicks().find((p) => nxt && p.pick_no > nxt.pick_no);
-  const gapAfter = afterNext && nxt ? afterNext.pick_no - nxt.pick_no : 2 * T;
-  const topV = Math.max(...avail.map((x) => x.V));
+  const n = S.picks.length;
+  const nextPickNo = nxt ? nxt.pick_no : n + 1;
+  const after = myPicks().find((q) => q.pick_no > nextPickNo);
+  const afterNo = after ? after.pick_no : nextPickNo + 2 * T;
+  // ¿Quién estará disponible probablemente en mi SIGUIENTE turno? (ADP > ese pick, con margen)
+  const likelyLater = avail.filter((x) => x.adp == null ? x.V < 1500 : x.adp > afterNo + 1);
+  const bestLaterByPos = {};
+  for (const pos of BASE_POS) bestLaterByPos[pos] = Math.max(0, ...likelyLater.filter((x) => playerPositions(x.p).includes(pos)).map((x) => x.V * injuryFactor(x.p).f));
+  const bestLaterAny = Math.max(0, ...likelyLater.map((x) => x.V * injuryFactor(x.p).f));
 
   const scored = avail.map((x) => {
     const pos = playerPositions(x.p);
-    const vorp = Math.max(...pos.map((ps) => x.V - (repl[ps] || 0)));
     const inj = injuryFactor(x.p);
-    const slotPrio = (s) => s === x.p.position ? 0 : BASE_POS.includes(s) ? 1 : (s === 'G' || s === 'F') ? 2 : 3;
-    const fills = [...emptySlots].sort((a, b) => slotPrio(a) - slotPrio(b)).find((s) => eligibleForSlot(x.p, s));
+    const Vadj = x.V * inj.f;
     const why = [];
-    let score = x.V * inj.f + Math.max(0, vorp) * 0.6;
-    if (fills) { score += x.V * 0.08; why.push(`llena tu hueco en ${fills}`); }
-    else if (emptySlots.length) { score -= x.V * 0.06; why.push(`solo iría a banca/UTIL (te faltan ${emptySlots.join(', ')})`); }
-    // probabilidad de que siga disponible en tu siguiente turno (por ADP de Sleeper)
-    const adp = x.p.search_rank && x.p.search_rank < 9000 ? x.p.search_rank : null;
-    const n = S.picks.length;
-    if (adp && picksUntilMine != null) {
-      const margin = adp - (n + picksUntilMine + gapAfter);
-      if (margin > T * 0.6) { score -= x.V * 0.07; why.push(`por ADP (#${adp}) probablemente sigue libre en tu próximo turno`); }
-      else if (adp <= n + picksUntilMine + 2) why.push(`ADP #${adp}: si no lo tomas ahora, se va`);
+    // encaje en el roster
+    const slotPrio = (s) => s === x.p.position ? 0 : BASE_POS.includes(s) ? 1 : (s === 'G' || s === 'F') ? 2 : 3;
+    const fills = [...emptyStart].sort((a, b) => slotPrio(a) - slotPrio(b)).find((s) => eligibleForSlot(x.p, s));
+    let fit = 1;
+    if (fills) why.push(`entra de titular en ${fills}`);
+    else if (bnFree > 0) { fit = 0.88; why.push(`iría a la banca (titulares llenos para ${pos.join('/')})`); }
+    else { fit = 0.3; why.push('no cabe en tu roster'); }
+    // ganancia sobre lo que podrías tomar en tu siguiente turno en esas posiciones
+    const later = Math.min(...pos.map((ps) => bestLaterByPos[ps] || bestLaterAny));
+    const gain = Vadj - later;
+    const score = Vadj * fit + Math.max(0, gain) * 0.5;
+    if (gain > 0) why.unshift(`+${fmt0(gain)} FP sobre el mejor ${pos.join('/')} que te esperaría en el pick #${afterNo}`);
+    else why.unshift(`un ${pos.join('/')} parecido seguiría libre en tu siguiente turno`);
+    if (x.adp != null) {
+      if (x.adp <= nextPickNo + 1) why.push(`ADP ${fmt(x.adp, 1)}: hay que tomarlo ahora`);
+      else if (x.adp > afterNo + 3) why.push(`ADP ${fmt(x.adp, 1)}: probablemente llega a tu próximo turno`);
     }
     if (inj.txt) why.push(inj.txt);
-    if (x.gpLast != null) { if (x.gpLast < 50) why.push(`solo ${x.gpLast} juegos el año pasado`); else if (x.gpLast >= 70) why.push(`${x.gpLast} juegos el año pasado (durable)`); }
-    if (vorp > 0 && topV) why.unshift(`+${fmt0(vorp)} FP sobre el reemplazo en ${pos.join('/')}`);
-    return { ...x, score, vorp, why, fills };
+    if (x.gpLast != null) { if (x.gpLast < 55) why.push(`solo ${x.gpLast} juegos la temporada pasada`); else if (x.gpLast >= 72) why.push(`${x.gpLast} juegos la temporada pasada (durable)`); }
+    else if (x.p.years_exp === 0) why.push('novato: sin historial NBA');
+    return { ...x, Vadj, score, gain, why, fills, fit };
   }).sort((a, b) => b.score - a.score);
   return scored.slice(0, limit);
 }
@@ -489,17 +518,16 @@ function renderAvail() {
   rows = rows.filter((x) => (x.V > 0 || (x.p.search_rank && x.p.search_rank < 600)) && passesPos(x.p, S.posFilterAvail) && (!q || `${x.p.first_name} ${x.p.last_name} ${x.p.team}`.toLowerCase().includes(q)));
   let recMap = null;
   if (sort === 'rec') { recMap = new Map(recommend(400).map((r, i) => [r.p.player_id, { i, s: r.score }])); rows.sort((a, b) => (recMap.get(b.p.player_id)?.s ?? -1) - (recMap.get(a.p.player_id)?.s ?? -1)); }
-  else if (sort === 'adp') rows.sort((a, b) => (a.p.search_rank || 1e7) - (b.p.search_rank || 1e7));
+  else if (sort === 'adp') rows.sort((a, b) => (a.adp ?? 1e7) - (b.adp ?? 1e7));
   else if (sort === 'last') rows.sort((a, b) => (b.lastTot ?? -1) - (a.lastTot ?? -1));
-  else rows.sort((a, b) => (b.projTot ?? b.V) - (a.projTot ?? a.V));
+  else rows.sort((a, b) => b.V - a.V);
   rows = rows.slice(0, 300);
   $('#availCount').textContent = `(${rows.length})`;
   const nxt = nextMyPick(), n = S.picks.length;
-  $('#availTable').innerHTML = `<thead><tr><th>#</th><th>Jugador</th><th>Eq</th><th>Pos</th><th class="num" title="Proyección temporada, puntos de la liga">Proy FP</th><th class="num">Proy/J</th><th class="num" title="Año pasado, puntos de la liga">FP ${S.statsSeason || ''}</th><th class="num">FP/J</th><th class="num">JJ</th><th class="num" title="ADP aprox. de Sleeper · 🔥 = por ADP no llegaría a tu próximo turno">ADP</th><th>Lesión</th></tr></thead><tbody>` +
+  $('#availTable').innerHTML = `<thead><tr><th>#</th><th>Jugador</th><th>Eq</th><th>Pos</th><th class="num" title="Puntos de la liga esperados esta temporada = proyección por juego × juegos esperados"><b>FP esp.</b></th><th class="num" title="Proyección de Sleeper por juego con la puntuación de la liga">Proy/J</th><th class="num" title="Juegos esperados">JJ esp.</th><th class="num" title="Temporada pasada, puntos de la liga">FP ${S.statsSeason || ''}</th><th class="num">FP/J</th><th class="num">JJ</th><th class="num" title="ADP de Sleeper · 🔥 = por ADP no llegaría a tu próximo turno">ADP</th><th>Lesión</th></tr></thead><tbody>` +
     rows.map((x, i) => {
-      const adp = x.p.search_rank && x.p.search_rank < 9000 ? x.p.search_rank : null;
-      const risk = adp && nxt ? (adp <= nxt.pick_no ? '🔥' : '') : '';
-      return `<tr><td class="muted">${i + 1}</td><td>${nameCell(x.p)} ${risk}</td><td>${esc(x.p.team)}</td><td>${posTags(x.p)}</td><td class="num">${fmt0(x.projTot)}</td><td class="num">${fmt(x.projPG)}</td><td class="num">${fmt0(x.lastTot)}</td><td class="num">${fmt(x.lastPG)}</td><td class="num">${x.gpLast ?? '—'}</td><td class="num">${adp ?? '—'}</td><td>${injTag(x.p)}</td></tr>`;
+      const risk = x.adp != null && nxt ? (x.adp <= nxt.pick_no + 1 ? '🔥' : '') : '';
+      return `<tr><td class="muted">${i + 1}</td><td>${nameCell(x.p)} ${risk}</td><td>${esc(x.p.team)}</td><td>${posTags(x.p)}</td><td class="num"><b>${fmt0(x.V)}</b></td><td class="num">${fmt(x.projPG)}</td><td class="num">${x.games}</td><td class="num">${fmt0(x.lastTot)}</td><td class="num">${fmt(x.lastPG)}</td><td class="num">${x.gpLast ?? '—'}</td><td class="num">${x.adp != null ? fmt(x.adp, 1) : '—'}</td><td>${injTag(x.p)}</td></tr>`;
     }).join('') + '</tbody>';
   bindNames($('#availTable'));
 }
@@ -531,16 +559,17 @@ function renderPlayersTable() {
   for (const k of scoringKeys) if (!cols.includes(k) && !['fgmi', 'ftmi', 'tpmi'].includes(k)) cols.push(k);
   let rows = Object.values(S.players).filter((p) => S.stats[p.player_id]).map((p) => {
     const st = S.stats[p.player_id]; const gp = st.gp || 0; const fp = fantasyPoints(st); const pr = S.proj[p.player_id];
-    return { p, st, gp, fp, fppg: gp ? fp / gp : 0, proj: pr ? fantasyPoints(pr) : null, picked: picked.has(p.player_id) };
+    const pv = playerValue(p);
+    return { p, st, gp, fp, fppg: gp ? fp / gp : 0, proj: pv.V || null, projPG: pv.projPG, picked: picked.has(p.player_id) };
   });
   rows = rows.filter((r) => (!onlyAvail || !r.picked) && passesPos(r.p, S.posFilterPl) && (!q || `${r.p.first_name} ${r.p.last_name} ${r.p.team}`.toLowerCase().includes(q)));
   const { key, dir } = S.sortPl;
-  const val = (r) => key === 'fp' ? (pg ? r.fppg : r.fp) : key === 'proj' ? (r.proj ?? -1) : key === 'name' ? `${r.p.last_name}` : key === 'gp' ? r.gp : (pg && r.gp && key !== 'gp' ? statVal(r.st, key) / r.gp : statVal(r.st, key));
+  const val = (r) => key === 'fp' ? (pg ? r.fppg : r.fp) : key === 'proj' ? (pg ? (r.projPG ?? -1) : (r.proj ?? -1)) : key === 'name' ? `${r.p.last_name}` : key === 'gp' ? r.gp : (pg && r.gp && key !== 'gp' ? statVal(r.st, key) / r.gp : statVal(r.st, key));
   rows.sort((a, b) => { const x = val(a), y = val(b); return (typeof x === 'string') ? dir * x.localeCompare(y) : dir * (x - y); });
   rows = rows.slice(0, 400);
   const th = (k, label, num = true) => `<th class="${num ? 'num' : ''} ${S.sortPl.key === k ? 'sorted' : ''}" data-k="${k}">${label}${S.sortPl.key === k ? (dir < 0 ? ' ▼' : ' ▲') : ''}</th>`;
-  $('#plTable').innerHTML = `<thead><tr>${th('name', 'Jugador', false)}<th>Eq</th><th>Pos</th>${th('fp', `FP liga${pg ? '/J' : ''}`)}${th('proj', 'Proy FP')}${cols.map((c) => th(c, STAT_LABELS[c] || c.toUpperCase())).join('')}<th>Lesión</th></tr></thead><tbody>` +
-    rows.map((r) => `<tr class="${r.picked ? 'muted' : ''}"><td>${nameCell(r.p)}${r.picked ? ' <span class="small muted">(tomado)</span>' : ''}</td><td>${esc(r.p.team)}</td><td>${posTags(r.p)}</td><td class="num"><b>${fmt(pg ? r.fppg : r.fp, pg ? 1 : 0)}</b></td><td class="num">${fmt0(r.proj)}</td>${cols.map((c) => `<td class="num">${c === 'gp' || !pg || !r.gp ? fmt(statVal(r.st, c), c === 'gp' || c === 'dd' || c === 'td' ? 0 : (pg ? 1 : 0)) : fmt(statVal(r.st, c) / r.gp)}</td>`).join('')}<td>${injTag(r.p)}</td></tr>`).join('') + '</tbody>';
+  $('#plTable').innerHTML = `<thead><tr>${th('name', 'Jugador', false)}<th>Eq</th><th>Pos</th>${th('fp', `FP liga${pg ? '/J' : ''}`)}${th('proj', pg ? 'Proy/J' : 'FP esp.')}${cols.map((c) => th(c, STAT_LABELS[c] || c.toUpperCase())).join('')}<th>Lesión</th></tr></thead><tbody>` +
+    rows.map((r) => `<tr class="${r.picked ? 'muted' : ''}"><td>${nameCell(r.p)}${r.picked ? ' <span class="small muted">(tomado)</span>' : ''}</td><td>${esc(r.p.team)}</td><td>${posTags(r.p)}</td><td class="num"><b>${fmt(pg ? r.fppg : r.fp, pg ? 1 : 0)}</b></td><td class="num">${pg ? fmt(r.projPG) : fmt0(r.proj)}</td>${cols.map((c) => `<td class="num">${c === 'gp' || !pg || !r.gp ? fmt(statVal(r.st, c), c === 'gp' || c === 'dd' || c === 'td' ? 0 : (pg ? 1 : 0)) : fmt(statVal(r.st, c) / r.gp)}</td>`).join('')}<td>${injTag(r.p)}</td></tr>`).join('') + '</tbody>';
   $('#plTable').querySelectorAll('th[data-k]').forEach((h) => h.onclick = () => { const k = h.dataset.k; S.sortPl = { key: k, dir: S.sortPl.key === k ? -S.sortPl.dir : (k === 'name' ? 1 : -1) }; renderPlayersTable(); });
   bindNames($('#plTable'));
 }
@@ -548,7 +577,7 @@ function renderPlayersTable() {
 // ---------- render: recomendaciones ----------
 function renderReco() {
   const recs = recommend(8);
-  const item = (r, i) => `<div class="item"><div class="rank">${i + 1}</div><div><div class="nm" data-pid="${r.p.player_id}">${esc(r.p.first_name)} ${esc(r.p.last_name)} <span class="muted small">${esc(r.p.team)} · ${playerPositions(r.p).join('/')}</span> ${injTag(r.p)}</div><div class="small">Proy ${fmt0(r.projTot)} FP (${fmt(r.projPG)}/J) · Año pasado ${fmt0(r.lastTot)} FP en ${r.gpLast ?? '—'} JJ · ADP ${r.p.search_rank && r.p.search_rank < 9000 ? '#' + r.p.search_rank : '—'}</div><div class="why">${r.why.map(esc).join(' · ')}</div></div></div>`;
+  const item = (r, i) => `<div class="item"><div class="rank">${i + 1}</div><div><div class="nm" data-pid="${r.p.player_id}">${esc(r.p.first_name)} ${esc(r.p.last_name)} <span class="muted small">${esc(r.p.team)} · ${playerPositions(r.p).join('/')}</span> ${injTag(r.p)}</div><div class="small"><b>${fmt0(r.V)} FP esperados</b> (${fmt(r.basePG)}/J × ${r.games} JJ) · temporada pasada ${fmt0(r.lastTot)} FP en ${r.gpLast ?? '—'} JJ · ADP ${r.adp != null ? fmt(r.adp, 1) : '—'}</div><div class="why">${r.why.map(esc).join(' · ')}</div></div></div>`;
   $('#recoList').innerHTML = recs.slice(0, 3).map(item).join('') || '<p class="muted">Sin datos suficientes todavía.</p>';
   $('#recoMore').innerHTML = recs.slice(3).map((r, i) => item(r, i + 3)).join('');
   document.querySelectorAll('#recoList .nm, #recoMore .nm').forEach((el) => el.onclick = () => openPlayer(el.dataset.pid));
@@ -578,13 +607,15 @@ function renderLeague() {
   $('#lgRoster').innerHTML = `<div class="kv">
     <div class="k">Equipos</div><div>${lg.total_rosters}</div>
     <div class="k">Roster</div><div>${Object.entries(counts).map(([k, v]) => `${v}× ${k}`).join(', ')}</div>
-    <div class="k">Titulares</div><div>${startingSlots().length} · Banca ${counts.BN || 0} · IR ${counts.IR || 0}</div>
+    <div class="k">Titulares</div><div>${startingSlots().length} · Banca ${counts.BN || 0} · IR ${lg.settings?.reserve_slots ?? counts.IR ?? 0}</div>
+    <div class="k">Alineaciones</div><div>${lg.settings?.daily_waivers ? 'diarias' : 'semanales'}${lg.settings?.bench_lock ? ' · banca se bloquea al iniciar cada juego' : ''}${lg.settings?.league_average_match ? ' · además juegas contra el promedio de la liga' : ''}</div>
+    <div class="k">Keepers</div><div>${lg.settings?.max_keepers ? `hasta ${lg.settings.max_keepers}` : 'no'} · deadline de cambios semana ${lg.settings?.trade_deadline ?? '—'}</div>
     <div class="k">Draft</div><div>${esc(typeLbl || '—')} · ${d.settings?.rounds || '—'} rondas · ${d.settings?.pick_timer ? d.settings.pick_timer + ' s por pick' : 'sin reloj'}${d.settings?.reversal_round ? ` · inversión en ronda ${d.settings.reversal_round}` : ''}</div>
     <div class="k">Inicio</div><div>${d.start_time ? new Date(d.start_time).toLocaleString() : '—'}</div>
     <div class="k">Mi posición</div><div>#${S.mySlot ?? '?'}</div>
     <div class="k">Formato</div><div>${esc(lg.settings?.type === 2 ? 'Dinastía/Keeper' : lg.settings?.type === 1 ? 'Keeper' : 'Redraft')} · playoffs ${lg.settings?.playoff_teams || '—'} equipos · semana ${lg.settings?.playoff_week_start || '—'}</div>
     <div class="k">Waivers</div><div>${esc(String(lg.settings?.waiver_type ?? '—'))} · presupuesto ${lg.settings?.waiver_budget ?? '—'}</div>
-    <div class="k">Scoring</div><div>${esc(lg.scoring_type || d.metadata?.scoring_type || 'points')}</div>
+    <div class="k">Scoring</div><div>${esc(lg.scoring_type || d.metadata?.scoring_type || 'points')} · liga de puntos${d.settings?.enforce_position_limits ? ' · Sleeper exige que cada pick quepa en un slot' : ''}${d.settings?.cpu_autopick ? ' · autopick si se acaba el reloj' : ''}</div>
   </div>`;
   const order = Object.entries(d.draft_order || {}).sort((a, b) => a[1] - b[1]);
   $('#lgTeams').innerHTML = `<table class="tbl mini"><thead><tr><th>Slot</th><th>Equipo</th><th>Usuario</th></tr></thead><tbody>${order.map(([uid, slot]) => { const u = S.users.find((x) => x.user_id === uid); return `<tr class="${uid === S.user?.user_id ? 'me' : ''}"><td>${slot}</td><td>${esc(u?.metadata?.team_name || '—')}</td><td>${esc(u?.display_name || uid)}</td></tr>`; }).join('')}</tbody></table>`;
@@ -618,6 +649,34 @@ async function espnBundle() {
 }
 async function cached(key, fn) { if (S.cache[key]) return S.cache[key]; const v = await fn().catch((e) => { diag(`${key}: ${e.message}`, false); return null; }); S.cache[key] = v; return v; }
 
+function depthChartHTML(p) {
+  if (!p.team) return '<span class="muted small">Sin equipo.</span>';
+  const picked = pickedIds();
+  const team = Object.values(S.players).filter((q) => q.team === p.team && (q.active !== false));
+  const byPos = {};
+  for (const q of team) {
+    const pos = q.depth_chart_position || null; const ord = q.depth_chart_order || null;
+    if (!pos || !ord) continue;
+    (byPos[pos] = byPos[pos] || []).push({ q, ord });
+  }
+  const cols = ['PG', 'SG', 'SF', 'PF', 'C'].filter((c) => byPos[c]);
+  if (!cols.length) return '<span class="muted small">Sleeper no publica depth chart para este equipo todavía.</span>';
+  const depth = Math.max(...cols.map((c) => byPos[c].length));
+  const cell = (e) => {
+    if (!e) return '<td></td>';
+    const q = e.q; const st = S.stats[q.player_id]; const pv = playerValue(q);
+    const own = picked.has(q.player_id) ? `<span class="muted small">· ${esc(rosterUser(S.picks.find((x) => x.player_id === q.player_id).roster_id))}</span>` : '<span class="small" style="color:var(--good)">· libre</span>';
+    return `<td class="${q.player_id === p.player_id ? 'me' : ''}">${nameCell(q)} ${injTag(q)}<div class="small muted">${fmt(pv.basePG)} FP/J${st?.gp ? ` · ${fmt0(st.gp)} JJ` : ''} ${own}</div></td>`;
+  };
+  let html = `<div class="table-wrap"><table class="tbl mini depth"><thead><tr><th></th>${cols.map((c) => `<th>${c}</th>`).join('')}</tr></thead><tbody>`;
+  for (let i = 1; i <= depth; i++) {
+    html += `<tr><td class="muted">${i === 1 ? '<b>Titular</b>' : i === 2 ? 'Banca 1' : 'Banca ' + (i - 1)}</td>${cols.map((c) => cell(byPos[c].find((e) => e.ord === i))).join('')}</tr>`;
+  }
+  const rest = team.filter((q) => !q.depth_chart_position || !q.depth_chart_order).filter((q) => playerValue(q).basePG > 0).sort((a, b) => playerValue(b).basePG - playerValue(a).basePG);
+  html += '</tbody></table></div>';
+  if (rest.length) html += `<div class="small muted" style="margin-top:6px">Fuera del depth chart: ${rest.map((q) => `${esc(q.first_name)} ${esc(q.last_name)}`).join(', ')}</div>`;
+  return html;
+}
 function bindNames(root) { root.querySelectorAll('.name[data-pid]').forEach((el) => el.onclick = () => openPlayer(el.dataset.pid)); }
 
 async function openPlayer(pid) {
@@ -626,22 +685,31 @@ async function openPlayer(pid) {
   const box = $('#modalBody'); $('#modal').classList.remove('hidden');
   const img = p.espn_id ? `https://a.espncdn.com/i/headshots/nba/players/full/${p.espn_id}.png` : `https://sleepercdn.com/content/nba/players/thumb/${pid}.jpg`;
   const inj = p.injury_status ? `<div><span class="inj ${esc(p.injury_status)}">${esc(p.injury_status)}</span> ${esc(p.injury_body_part || '')} ${p.injury_notes ? '· ' + esc(p.injury_notes) : ''} ${p.injury_start_date ? '<span class="muted small">desde ' + esc(p.injury_start_date) + '</span>' : ''}</div>` : '<div class="muted small">Sin lesión reportada en Sleeper</div>';
-  const sline = (s, lbl) => s ? `<div class="statline">${['gp', 'min', 'pts', 'reb', 'ast', 'stl', 'blk', 'to', 'tpm'].map((k) => `<div class="s"><b>${k === 'gp' ? fmt0(s.gp) : fmt(s.gp ? statVal(s, k) / s.gp : 0)}</b><span>${k === 'gp' ? 'JJ' : (STAT_LABELS[k] || k) + '/J'}</span></div>`).join('')}<div class="s"><b>${fmt(s.gp ? fantasyPoints(s) / s.gp : 0)}</b><span>FP/J</span></div><div class="s"><b>${fmt0(fantasyPoints(s))}</b><span>FP total</span></div></div>` : `<p class="muted small">Sin ${lbl}.</p>`;
+  const pv = playerValue(p);
+  const sline = (s, lbl, perGame) => {
+    if (!s) return `<p class="muted small">Sin ${lbl}.</p>`;
+    const gp = perGame ? 1 : (Number(s.gp) || 1);
+    const cells = ['gp', 'min', 'pts', 'reb', 'ast', 'stl', 'blk', 'to', 'tpm', 'dd'].map((k) => `<div class="s"><b>${k === 'gp' ? (perGame ? pv.games : fmt0(s.gp)) : fmt(k === 'min' && s.min == null && s.sp != null ? s.sp / 60 / gp : statVal(s, k) / gp)}</b><span>${k === 'gp' ? (perGame ? 'JJ esp.' : 'JJ') : (STAT_LABELS[k] || k) + '/J'}</span></div>`).join('');
+    const fppg = fantasyPoints(s) / gp;
+    return `<div class="statline">${cells}<div class="s"><b>${fmt(fppg)}</b><span>FP/J</span></div><div class="s"><b>${fmt0(perGame ? fppg * pv.games : fantasyPoints(s))}</b><span>${perGame ? 'FP esperados' : 'FP total'}</span></div></div>`;
+  };
   const picked = S.picks.find((x) => x.player_id === pid);
   box.innerHTML = `
     <div class="phead"><img src="${img}" onerror="this.style.display='none'" alt=""><div>
       <h2>${esc(p.first_name)} ${esc(p.last_name)} <span class="muted">#${esc(p.number ?? '')}</span></h2>
       <div>${posTags(p)} <b>${esc(p.team || 'Sin equipo')}</b> · ${p.age ? p.age + ' años' : ''} · ${p.years_exp != null ? (p.years_exp === 0 ? 'novato' : p.years_exp + ' temporadas') : ''} ${p.height ? '· ' + esc(p.height) : ''} ${p.college ? '· ' + esc(p.college) : ''}</div>
       ${inj}
-      ${picked ? `<div class="small">Draftеado por <b>${esc(rosterUser(picked.roster_id))}</b> (pick #${picked.pick_no})</div>` : `<div class="small" style="color:var(--good)">Disponible · ADP Sleeper ${p.search_rank && p.search_rank < 9000 ? '#' + p.search_rank : '—'}</div>`}
+      ${picked ? `<div class="small">Draftеado por <b>${esc(rosterUser(picked.roster_id))}</b> (pick #${picked.pick_no})</div>` : `<div class="small" style="color:var(--good)">Disponible · ADP Sleeper ${pv.adp != null ? fmt(pv.adp, 1) : '—'}</div>`}
     </div></div>
-    <div class="pbox"><h3>Temporada pasada ${S.statsSeason || ''} (promedios por juego, puntos de esta liga)</h3>${sline(st, 'stats del año pasado')}</div>
-    ${pr ? `<div class="pbox" style="margin-top:10px"><h3>Proyección ${S.projSeason || ''}</h3>${sline(pr, 'proyección')}</div>` : ''}
+    ${pr ? `<div class="pbox"><h3>Proyección ${S.projSeason || ''}-${String(Number(S.projSeason) + 1).slice(2)} por juego (puntos de esta liga)</h3>${sline(pr, 'proyección', true)}</div>` : ''}
+    <div class="pbox" style="margin-top:10px"><h3>Temporada pasada ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (promedios por juego, puntos de esta liga)</h3>${sline(st, 'stats del año pasado', false)}</div>
     <div class="pgrid" style="margin-top:10px">
       <div class="pbox"><h3>Noticias recientes</h3><div id="pNews" class="news loading">Cargando…</div></div>
       <div class="pbox"><h3>Lesiones (ESPN)</h3><div id="pInj" class="loading">Cargando…</div><h3 style="margin-top:12px">Temporadas anteriores</h3><div id="pSeasons" class="loading">Cargando…</div></div>
     </div>
-    <div class="pbox" style="margin-top:10px"><h3>Roster de ${esc(p.team || '')}</h3><div id="pRoster" class="loading">Cargando…</div></div>`;
+    <div class="pbox" style="margin-top:10px"><h3>Depth chart de ${esc(p.team || '')} <span class="muted" style="text-transform:none">(titulares y banca según Sleeper)</span></h3><div id="pDepth">${depthChartHTML(p)}</div></div>
+    <div class="pbox" style="margin-top:10px"><h3>Roster completo de ${esc(p.team || '')} (ESPN)</h3><div id="pRoster" class="loading">Cargando…</div></div>`;
+  bindNames($('#pDepth'));
 
   // --- ESPN en paralelo ---
   const eid = p.espn_id ? String(p.espn_id) : null;

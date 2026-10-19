@@ -97,3 +97,6 @@ textarea{width:100%}
 .bar i{display:block;height:100%;background:var(--accent)}
 .loading{opacity:.6}
 .err{color:var(--bad)}
+
+.tbl.depth td{vertical-align:top;white-space:normal;min-width:120px}
+.tbl.depth tr:first-child td{background:#1b1f2a}
