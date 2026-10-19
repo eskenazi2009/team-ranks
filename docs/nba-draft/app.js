@@ -41,10 +41,35 @@ function diag(msg, ok = true) {
   if (!ok) console.warn(msg);
 }
 
-async function getJSON(url, opts = {}) {
+// Proxies CORS de respaldo: se usan solo si el navegador no puede llamar al host directamente
+// (bloqueo de red, extensión, webview sin CORS…). El modo que funciona se recuerda por host.
+const PROXIES = [
+  (u) => `https://corsproxy.io/?url=${encodeURIComponent(u)}`,
+  (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+  (u) => `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(u)}`,
+];
+const hostMode = {}; // host -> -1 directo | índice del proxy
+async function fetchJSON(url, opts) {
   const r = await fetch(url, { cache: 'no-store', ...opts });
   if (!r.ok) throw new Error(`${r.status} ${url}`);
   return r.json();
+}
+async function getJSON(url, opts = {}) {
+  const host = (() => { try { return new URL(url, location.href).host; } catch { return url; } })();
+  const sameOrigin = host === location.host || !/^https?:/.test(url);
+  if (sameOrigin) return fetchJSON(url, opts);
+  const known = hostMode[host];
+  if (known != null && known >= 0) return fetchJSON(PROXIES[known](url), opts);
+  try { const j = await fetchJSON(url, opts); hostMode[host] = -1; return j; }
+  catch (e) {
+    if (!(e instanceof TypeError)) throw e; // 4xx/5xx reales: no insistir por proxy
+    let last = e;
+    for (let i = 0; i < PROXIES.length; i++) {
+      try { const j = await fetchJSON(PROXIES[i](url), opts); hostMode[host] = i; diag(`${host}: bloqueado en directo, usando proxy ${new URL(PROXIES[i]('https://x')).host}`); return j; }
+      catch (e2) { last = e2; }
+    }
+    throw new Error(`No se pudo conectar con ${host} (directo ni por proxy): ${last.message}`);
+  }
 }
 async function firstOk(label, urls, validate = (x) => x != null) {
   for (const u of urls) {
@@ -633,7 +658,8 @@ async function boot() {
     try { if (Notification && Notification.permission === 'default') Notification.requestPermission(); } catch {}
   } catch (e) {
     diag(e.message, false);
-    $('#leagueName').innerHTML = `<span class="err">${esc(e.message)}</span>`;
+    const hint = /conectar|fetch/i.test(e.message) ? ' · Revisa tu conexión o prueba en otro navegador (Chrome/Safari normal, no una vista dentro de otra app).' : '';
+    $('#leagueName').innerHTML = `<span class="err">${esc(e.message)}${esc(hint)}</span>`;
     $('#setup').classList.remove('hidden');
   }
 }
