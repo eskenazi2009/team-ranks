@@ -81,3 +81,8 @@ python -m http.server --directory docs 8000
 - `scraper/_raw_data.json` is a regenerated intermediate and is git-ignored.
 - The build script runs sanity assertions (30 teams, no nulls, plausible ranges,
   complete 1–30 ranks) and fails loudly if ESPN changes shape.
+
+## 🏀 Draft NBA en vivo (Sleeper)
+
+En `docs/nba-draft/` vive un asistente de draft para la liga **Benchwarmers** de Sleeper,
+publicado en `https://eskenazi2009.github.io/team-ranks/nba-draft/`. Ver `docs/nba-draft/README.md`.
