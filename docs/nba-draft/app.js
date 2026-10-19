@@ -68,6 +68,10 @@ async function getJSON(url, opts = {}) {
       try { const j = await fetchJSON(PROXIES[i](url), opts); hostMode[host] = i; diag(`${host}: bloqueado en directo, usando proxy ${new URL(PROXIES[i]('https://x')).host}`); return j; }
       catch (e2) { last = e2; }
     }
+    // sonda de control para distinguir "sin internet" de "host bloqueado"
+    let ctl = 'sin probar';
+    try { const r = await fetch('https://api.github.com/zen', { cache: 'no-store' }); ctl = r.ok ? 'internet OK' : 'control ' + r.status; } catch { ctl = 'sin internet'; }
+    diag(`${host}: directo=${e.message} · ${ctl} · online=${navigator.onLine}`, false);
     throw new Error(`No se pudo conectar con ${host} (directo ni por proxy): ${last.message}`);
   }
 }
