@@ -9,12 +9,15 @@ y los endpoints públicos de ESPN.
 - **Draft en vivo**: jugadores disponibles (se actualiza cada 15 s), tu roster por
   slot, quién está en el reloj, cuántos picks faltan para tu turno, reloj del pick,
   aviso sonoro y notificación cuando te toca.
-- **Ficha de jugador** (clic en cualquier nombre): stats del año pasado y proyección
-  con los puntos de la liga, juegos jugados, lesión actual (Sleeper + ESPN), noticias
-  recientes, temporadas anteriores y el roster de su equipo NBA con quién está libre.
+- **Ficha de jugador** (clic en cualquier nombre): proyección por juego y stats del año
+  pasado con los puntos de la liga, juegos esperados, **mejores 5 juegos de la temporada
+  pasada** con los puntos de la liga (registro juego a juego de ESPN para los ~350 mejores
+  por ADP), lesión actual (Sleeper + ESPN), noticias, temporadas anteriores y el **depth
+  chart** de su equipo NBA (titulares y banca según Sleeper) con quién está libre.
 - **Jugadores**: tabla con los stats de la temporada pasada y los **puntos de fantasía
   calculados con la configuración exacta de la liga**, totales o por juego, filtrable
-  por los slots del roster (PG, SG, SF, PF, C, G, F, UTIL) y ordenable por columna.
+  por los slots del roster (PG, SG, SF, PF, C, G, F, UTIL) y ordenable por cualquier
+  encabezado (igual que la tabla de disponibles).
 - **Picks sugeridos**: top 3 para tu equipo en este momento, en orden, con la razón
   (valor sobre el reemplazo, huecos del roster, lesiones, ADP y si llegaría a tu
   siguiente turno). Al lado, el panel **Claude en vivo** lee `live/claude.json`,
