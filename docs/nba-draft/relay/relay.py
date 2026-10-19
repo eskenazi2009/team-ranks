@@ -239,9 +239,17 @@ def fetch_espn_bundle(players, top_n=250, workers=8):
     if isinstance(ij, dict):
         first = ((ij.get("injuries") or [None])[0])
         log(f"ESPN injuries: claves={list(ij.keys())} equipos={len(ij.get('injuries') or [])} primero={list(first.keys()) if isinstance(first, dict) else first}")
+    shown = False
     for t in (ij or {}).get("injuries") or []:
         for inj in t.get("injuries") or []:
-            aid = str((inj.get("athlete") or {}).get("id") or "")
+            if not shown:
+                log("ESPN injuries ejemplo: " + json.dumps(inj, ensure_ascii=False)[:700])
+                shown = True
+            ath = inj.get("athlete") or {}
+            aid = str(ath.get("id") or "")
+            if not aid:
+                m = _re.search(r"athletes/(\d+)", str(ath.get("$ref") or ath.get("href") or "")) or _re.search(r"a:(\d+)", str(ath.get("uid") or ""))
+                aid = m.group(1) if m else ""
             if not aid:
                 continue
             det = inj.get("details") or {}
