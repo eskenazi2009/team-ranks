@@ -200,12 +200,14 @@ async function loadCore() {
 
 const KEEP = ['player_id', 'first_name', 'last_name', 'team', 'position', 'fantasy_positions', 'status', 'active', 'age', 'years_exp', 'injury_status', 'injury_body_part', 'injury_notes', 'injury_start_date', 'espn_id', 'search_rank', 'number', 'height', 'weight', 'college', 'news_updated', 'depth_chart_order', 'depth_chart_position', 'birth_date'];
 async function loadPlayers() {
-  const c = lsGet('nba_players_v1');
-  if (c && Date.now() - c.ts < 12 * 3600e3 && c.data && Object.keys(c.data).length > 100) { S.players = c.data; diag(`jugadores desde caché (${Object.keys(c.data).length})`); return; }
   let all = null;
   try { all = await fetchJSON(`${DATA}players.json?v=${S.snap?.generated_at || Date.now()}`); diag(`jugadores del relay (${Object.keys(all).length})`); }
   catch (e) { diag('players.json del relay: ' + e.message, false); }
-  if (!all) all = await getJSON(`${SLEEPER}/players/nba`);
+  if (!all) {
+    const c = lsGet('nba_players_v1');
+    if (c && Date.now() - c.ts < 12 * 3600e3 && c.data && Object.keys(c.data).length > 100) { S.players = c.data; diag(`jugadores desde caché (${Object.keys(c.data).length})`); return; }
+    all = await getJSON(`${SLEEPER}/players/nba`);
+  }
   const trimmed = {};
   for (const [id, p] of Object.entries(all)) {
     if (!p || !p.first_name) continue;
@@ -213,8 +215,9 @@ async function loadPlayers() {
     trimmed[id] = t;
   }
   S.players = trimmed;
-  lsSet('nba_players_v1', { ts: Date.now(), data: trimmed });
-  diag(`jugadores descargados (${Object.keys(trimmed).length})`);
+  if (!S.snap) lsSet('nba_players_v1', { ts: Date.now(), data: trimmed });
+  const withEspn = Object.values(trimmed).filter((x) => x.espn_id).length;
+  diag(`jugadores listos (${Object.keys(trimmed).length}, ${withEspn} con id ESPN)`);
 }
 
 function parseSleeperStatsArray(arr) {
@@ -707,13 +710,12 @@ async function openPlayer(pid) {
       <div class="pbox"><h3>Noticias recientes</h3><div id="pNews" class="news loading">Cargando…</div></div>
       <div class="pbox"><h3>Lesiones (ESPN)</h3><div id="pInj" class="loading">Cargando…</div><h3 style="margin-top:12px">Temporadas anteriores</h3><div id="pSeasons" class="loading">Cargando…</div></div>
     </div>
-    <div class="pbox" style="margin-top:10px"><h3>Depth chart de ${esc(p.team || '')} <span class="muted" style="text-transform:none">(titulares y banca según Sleeper)</span></h3><div id="pDepth">${depthChartHTML(p)}</div></div>
-    <div class="pbox" style="margin-top:10px"><h3>Roster completo de ${esc(p.team || '')} (ESPN)</h3><div id="pRoster" class="loading">Cargando…</div></div>`;
+    <div class="pbox" style="margin-top:10px"><h3>Depth chart de ${esc(p.team || '')} <span class="muted" style="text-transform:none">(titulares y banca según Sleeper)</span></h3><div id="pDepth">${depthChartHTML(p)}</div></div>`;
   bindNames($('#pDepth'));
 
   // --- ESPN en paralelo ---
   const eid = p.espn_id ? String(p.espn_id) : null;
-  const newsEl = $('#pNews'), injEl = $('#pInj'), seaEl = $('#pSeasons'), rosEl = $('#pRoster');
+  const newsEl = $('#pNews'), injEl = $('#pInj'), seaEl = $('#pSeasons');
   const tasks = [];
   const bundle = await espnBundle();
   tasks.push((async () => {
@@ -721,6 +723,7 @@ async function openPlayer(pid) {
     if (bundle && eid) {
       news = bundle.athletes?.[eid]?.news || [];
       if (!news.length) news = (bundle.news || []).filter((a) => (a.athletes || []).includes(eid) || `${a.headline} ${a.description}`.includes(p.last_name)).slice(0, 8);
+      if (!news.length && p.team) { const t = bundle.teams?.[TEAM_ALIAS[p.team] || p.team]; if (t) news = (bundle.news || []).filter((a) => (a.teams || []).includes(String(t.id))).slice(0, 5).map((a) => ({ ...a, headline: '[equipo] ' + a.headline })); }
       news = news.map((n) => ({ ...n, links: { web: { href: n.href } } }));
     }
     if (!news.length && eid && hostOk('site.web.api.espn.com')) {
@@ -757,28 +760,6 @@ async function openPlayer(pid) {
     const idx = want.map((w) => labels.indexOf(w));
     rows = rows.slice(-6).reverse();
     seaEl.innerHTML = `<table class="tbl mini"><thead><tr><th>Temp</th><th>Eq</th>${want.map((w) => `<th class="num">${w}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr><td>${esc(r.season || '')}</td><td>${esc(r.team || '')}</td>${idx.map((i) => `<td class="num">${i >= 0 ? esc(r.stats?.[i]) : '—'}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
-  })());
-  tasks.push((async () => {
-    rosEl.classList.remove('loading');
-    if (!p.team) { rosEl.innerHTML = '<span class="muted small">Sin equipo.</span>'; return; }
-    let ath = null;
-    if (bundle) {
-      const t = bundle.teams?.[TEAM_ALIAS[p.team] || p.team];
-      const rows = t ? bundle.rosters?.[t.id] : null;
-      if (rows) ath = rows.map((a) => ({ id: a.id, displayName: a.displayName, position: { abbreviation: a.position }, age: a.age, experience: { years: a.exp }, injuries: (a.injuries || []).map((x) => ({ status: x })) }));
-    }
-    if (!ath && hostOk('site.api.espn.com')) {
-      const teams = await espnTeams(); const t = teams[TEAM_ALIAS[p.team] || p.team];
-      if (!t) { rosEl.innerHTML = '<span class="muted small">Equipo no encontrado en ESPN.</span>'; return; }
-      const rj = await cached('ro' + t.id, () => getJSON(`${ESPN_SITE}/teams/${t.id}/roster`));
-      ath = rj?.athletes || [];
-    }
-    if (!ath) { rosEl.innerHTML = '<span class="muted small">Roster no disponible.</span>'; return; }
-    ath = ath.slice().sort((a, b) => (a.position?.abbreviation || '').localeCompare(b.position?.abbreviation || ''));
-    const picked = pickedIds();
-    const byEspn = {}; for (const q of Object.values(S.players)) if (q.espn_id) byEspn[String(q.espn_id)] = q;
-    rosEl.innerHTML = `<table class="tbl mini"><thead><tr><th>Jugador</th><th>Pos</th><th class="num">Edad</th><th class="num">Exp</th><th>Estado</th><th class="num">FP/J ${S.statsSeason || ''}</th><th>Draft</th></tr></thead><tbody>${ath.map((a) => { const sp = byEspn[String(a.id)]; const sst = sp ? S.stats[sp.player_id] : null; const injs = (a.injuries || []).map((x) => x.status).join(', '); return `<tr class="${sp && sp.player_id === pid ? 'me' : ''}"><td>${sp ? nameCell(sp) : esc(a.displayName)}</td><td>${esc(a.position?.abbreviation || '')}</td><td class="num">${a.age ?? '—'}</td><td class="num">${a.experience?.years ?? '—'}</td><td>${injs ? `<span class="inj ${esc(injs)}">${esc(injs)}</span>` : ''}</td><td class="num">${sst && sst.gp ? fmt(fantasyPoints(sst) / sst.gp) : '—'}</td><td class="small">${sp && picked.has(sp.player_id) ? esc(rosterUser(S.picks.find((x) => x.player_id === sp.player_id).roster_id)) : (sp ? '<span style="color:var(--good)">libre</span>' : '')}</td></tr>`; }).join('')}</tbody></table>`;
-    bindNames(rosEl);
   })());
   await Promise.allSettled(tasks);
 }
