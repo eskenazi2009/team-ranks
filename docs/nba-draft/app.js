@@ -127,6 +127,7 @@ function statVal(st, key) {
     case 'ftmi': return Math.max(0, (st.fta || 0) - (st.ftm || 0));
     case 'tpmi': return Math.max(0, (st.tpa || 0) - (st.tpm || 0));
     case 'reb': return (st.oreb || 0) + (st.dreb || 0);
+    case 'min': return st.sp ? st.sp / 60 : 0;
     default: return 0;
   }
 }
@@ -579,12 +580,13 @@ function renderPlayersTable() {
   });
   rows = rows.filter((r) => (!onlyAvail || !r.picked) && passesPos(r.p, S.posFilterPl) && (!q || `${r.p.first_name} ${r.p.last_name} ${r.p.team}`.toLowerCase().includes(q)));
   const { key, dir } = S.sortPl;
-  const val = (r) => key === 'fp' ? (pg ? r.fppg : r.fp) : key === 'proj' ? (pg ? (r.projPG ?? -1) : (r.proj ?? -1)) : key === 'name' ? `${r.p.last_name} ${r.p.first_name}` : key === 'team' ? (r.p.team || '') : key === 'pos' ? playerPositions(r.p).join('/') : key === 'inj' ? (r.p.injury_status || '') : key === 'gp' ? r.gp : (pg && r.gp && key !== 'gp' ? statVal(r.st, key) / r.gp : statVal(r.st, key));
+  const val = (r) => key === 'fp' ? (pg ? r.fppg : r.fp) : key === 'fppg' ? r.fppg : key === 'proj' ? (pg ? (r.projPG ?? -1) : (r.proj ?? -1)) : key === 'name' ? `${r.p.last_name} ${r.p.first_name}` : key === 'team' ? (r.p.team || '') : key === 'pos' ? playerPositions(r.p).join('/') : key === 'inj' ? (r.p.injury_status || '') : key === 'gp' ? r.gp : (pg && r.gp && key !== 'gp' ? statVal(r.st, key) / r.gp : statVal(r.st, key));
   rows.sort((a, b) => { const x = val(a), y = val(b); return (typeof x === 'string') ? dir * x.localeCompare(y) : dir * (x - y); });
   rows = rows.slice(0, 400);
-  const th = (k, label, num = true) => `<th class="${num ? 'num' : ''} ${S.sortPl.key === k ? 'sorted' : ''}" data-k="${k}">${label}${S.sortPl.key === k ? (dir < 0 ? ' ▼' : ' ▲') : ''}</th>`;
-  $('#plTable').innerHTML = `<thead><tr>${th('name', 'Jugador', false)}${th('team', 'Eq', false)}${th('pos', 'Pos', false)}${th('fp', `FP liga${pg ? '/J' : ''}`)}${th('proj', pg ? 'Proy/J' : 'FP esp.')}${cols.map((c) => th(c, STAT_LABELS[c] || c.toUpperCase())).join('')}${th('inj', 'Lesión', false)}</tr></thead><tbody>` +
-    rows.map((r) => `<tr class="${r.picked ? 'muted' : ''}"><td>${nameCell(r.p)}${r.picked ? ' <span class="small muted">(tomado)</span>' : ''}</td><td>${esc(r.p.team)}</td><td>${posTags(r.p)}</td><td class="num"><b>${fmt(pg ? r.fppg : r.fp, pg ? 1 : 0)}</b></td><td class="num">${pg ? fmt(r.projPG) : fmt0(r.proj)}</td>${cols.map((c) => `<td class="num">${c === 'gp' || !pg || !r.gp ? fmt(statVal(r.st, c), c === 'gp' || c === 'dd' || c === 'td' ? 0 : (pg ? 1 : 0)) : fmt(statVal(r.st, c) / r.gp)}</td>`).join('')}<td>${injTag(r.p)}</td></tr>`).join('') + '</tbody>';
+  const titles = { fp: 'Puntos de la liga en la temporada pasada', fppg: 'Puntos de la liga por juego en la temporada pasada', proj: 'Puntos esperados esta temporada (proyección × juegos esperados)' };
+  const th = (k, label, num = true) => `<th class="${num ? 'num' : ''} ${S.sortPl.key === k ? 'sorted' : ''}" data-k="${k}" title="${esc(titles[k] || '')}">${label}${S.sortPl.key === k ? (dir < 0 ? ' ▼' : ' ▲') : ''}</th>`;
+  $('#plTable').innerHTML = `<thead><tr>${th('name', 'Jugador', false)}${th('team', 'Eq', false)}${th('pos', 'Pos', false)}${th('fp', `FP liga${pg ? '/J' : ''}`)}${th('fppg', 'FP/J', true)}${th('proj', pg ? 'Proy/J' : 'FP esp.')}${cols.map((c) => th(c, STAT_LABELS[c] || c.toUpperCase())).join('')}${th('inj', 'Lesión', false)}</tr></thead><tbody>` +
+    rows.map((r) => `<tr class="${r.picked ? 'muted' : ''}"><td>${nameCell(r.p)}${r.picked ? ' <span class="small muted">(tomado)</span>' : ''}</td><td>${esc(r.p.team)}</td><td>${posTags(r.p)}</td><td class="num"><b>${fmt(pg ? r.fppg : r.fp, pg ? 1 : 0)}</b></td><td class="num"><b>${fmt(r.fppg)}</b></td><td class="num">${pg ? fmt(r.projPG) : fmt0(r.proj)}</td>${cols.map((c) => `<td class="num">${c === 'gp' || !pg || !r.gp ? fmt(statVal(r.st, c), c === 'gp' || c === 'dd' || c === 'td' ? 0 : (pg ? 1 : 0)) : fmt(statVal(r.st, c) / r.gp)}</td>`).join('')}<td>${injTag(r.p)}</td></tr>`).join('') + '</tbody>';
   $('#plTable').querySelectorAll('th[data-k]').forEach((h) => h.onclick = () => { const k = h.dataset.k; S.sortPl = { key: k, dir: S.sortPl.key === k ? -S.sortPl.dir : (['name', 'team', 'pos', 'inj'].includes(k) ? 1 : -1) }; renderPlayersTable(); });
   bindNames($('#plTable'));
 }
