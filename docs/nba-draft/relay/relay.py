@@ -248,7 +248,8 @@ def fetch_espn_bundle(players, top_n=250, workers=8):
             ath = inj.get("athlete") or {}
             aid = str(ath.get("id") or "")
             if not aid:
-                m = _re.search(r"athletes/(\d+)", str(ath.get("$ref") or ath.get("href") or "")) or _re.search(r"a:(\d+)", str(ath.get("uid") or ""))
+                # ESPN no manda athlete.id aquí; el id va en links[].href (…/player/_/id/5105571/…) o en $ref/uid
+                m = _re.search(r"(?:athletes|/id)/(\d+)", json.dumps(ath)) or _re.search(r"a:(\d+)", str(ath.get("uid") or ""))
                 aid = m.group(1) if m else ""
             if not aid:
                 continue
