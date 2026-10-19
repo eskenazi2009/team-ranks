@@ -1,0 +1,64 @@
+name: NBA draft relay
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "snapshot (datos estáticos a docs/nba-draft/data) o live (picks en vivo a la rama nba-live)"
+        type: choice
+        options: [snapshot, live]
+        default: snapshot
+      minutes:
+        description: "live: minutos máximos de seguimiento"
+        default: "240"
+      interval:
+        description: "live: segundos entre consultas"
+        default: "15"
+      skip_espn:
+        description: "snapshot: omitir noticias/rosters/historial de ESPN (más rápido)"
+        type: boolean
+        default: false
+  schedule:
+    - cron: "0 11 * * *"   # snapshot diario (lesiones, noticias, proyecciones)
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nba-draft-relay-${{ inputs.mode || 'snapshot' }}
+  cancel-in-progress: false
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Snapshot de datos (Sleeper + ESPN) a docs/nba-draft/data
+        if: ${{ (inputs.mode || 'snapshot') == 'snapshot' }}
+        run: |
+          python docs/nba-draft/relay/relay.py snapshot --push ${{ inputs.skip_espn == true && '--skip-espn' || '' }}
+
+      - name: Snapshot rápido antes del draft
+        if: ${{ inputs.mode == 'live' }}
+        run: |
+          python docs/nba-draft/relay/relay.py snapshot --push --skip-espn || echo "snapshot falló, sigo con live"
+
+      - name: Picks en vivo a la rama nba-live
+        if: ${{ inputs.mode == 'live' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir live && cd live
+          git init -q -b nba-live
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if git fetch -q origin nba-live; then git reset -q --hard FETCH_HEAD; fi
+          cd ..
+          python docs/nba-draft/relay/relay.py live --live-dir live --minutes "${{ inputs.minutes }}" --interval "${{ inputs.interval }}"

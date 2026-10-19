@@ -35,6 +35,27 @@ Botón ⚙ arriba a la derecha: usuario de Sleeper, nombre de la liga, temporada
 y segundos entre refrescos. El panel *Diagnóstico de fuentes* muestra qué endpoint
 respondió y cuál falló.
 
+## Relay en GitHub Actions (sin depender del navegador)
+
+El navegador de algunos usuarios no puede llamar a Sleeper/ESPN directamente (CORS o
+bloqueos de red). Por eso el workflow `.github/workflows/nba-draft-relay.yml` baja los
+datos desde GitHub y la página los lee de su mismo origen:
+
+- **snapshot** (diario a las 11:00 UTC o manual): escribe `data/snapshot.json` (liga,
+  draft, usuarios, rosters, picks), `data/players.json`, `data/stats.json`,
+  `data/proj.json`, `data/espn.json` (lesiones, rosters NBA, noticias e historial de
+  los 250 mejores por ADP) y `data/live.json`, y los commitea en `main`.
+- **live** (manual, el día del draft): cada 15 s consulta draft + picks y, si cambian,
+  los publica en `live.json` de la rama `nba-live`. La página lo lee desde
+  `raw.githubusercontent.com` con cache-busting. `claude.json` en esa misma rama es el
+  panel "Claude en vivo".
+
+La página intenta en este orden: datos del relay, Sleeper/ESPN directo, proxy CORS
+público. El diagnóstico (⚙) muestra qué fuente se usó.
+
+Prueba local del relay: `python3 test/mock.py <fixtures.json> 8799` y luego
+`SLEEPER_BASE=http://127.0.0.1:8799/api.sleeper.app/v1 … python3 relay/relay.py snapshot --out data`.
+
 ## Fuentes de datos
 
 | Dato | Endpoint |
@@ -61,5 +82,5 @@ servicio CORS público de respaldo y lo indica en el diagnóstico.
 
 ## Prueba local con datos simulados
 
-`node test/run.js .` abre el sitio (con `BLOCK_DIRECT=1` simula Sleeper bloqueado) en Chromium (Playwright) interceptando Sleeper y
+`node test/run.js .` abre el sitio (`BLOCK_DIRECT=1` simula Sleeper bloqueado; `BLOCK_ALL=1` bloquea todo lo externo y obliga a usar el relay) en Chromium (Playwright) interceptando Sleeper y
 ESPN con `test/fixtures.js`, imprime las vistas y guarda capturas.

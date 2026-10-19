@@ -10,6 +10,15 @@ const SLEEPER2 = 'https://api.sleeper.com';
 const ESPN_SITE = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba';
 const ESPN_WEB = 'https://site.web.api.espn.com/apis/common/v3/sports/basketball/nba';
 
+// Datos estáticos que deja el relay (GitHub Actions) en el mismo origen de la página,
+// y rama `nba-live` con los picks en vivo (leída desde raw.githubusercontent.com).
+const DATA = 'data/';
+const REPO = (() => {
+  const m = location.host.match(/^([^.]+)\.github\.io$/); const seg = location.pathname.split('/').filter(Boolean)[0];
+  return { owner: m ? m[1] : 'eskenazi2009', repo: (m && seg) ? seg : 'team-ranks' };
+})();
+const LIVE_RAW = `https://raw.githubusercontent.com/${REPO.owner}/${REPO.repo}/nba-live/`;
+
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = (n, d = 1) => (n == null || isNaN(n)) ? '—' : Number(n).toFixed(d);
@@ -49,6 +58,8 @@ const PROXIES = [
   (u) => `https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(u)}`,
 ];
 const hostMode = {}; // host -> -1 directo | índice del proxy
+const hostDead = {}; // host -> timestamp hasta el que no se reintenta
+function hostOk(host) { return !(hostDead[host] && Date.now() < hostDead[host]); }
 async function fetchJSON(url, opts) {
   const r = await fetch(url, { cache: 'no-store', ...opts });
   if (!r.ok) throw new Error(`${r.status} ${url}`);
@@ -58,6 +69,7 @@ async function getJSON(url, opts = {}) {
   const host = (() => { try { return new URL(url, location.href).host; } catch { return url; } })();
   const sameOrigin = host === location.host || !/^https?:/.test(url);
   if (sameOrigin) return fetchJSON(url, opts);
+  if (!hostOk(host)) throw new Error(`${host} sin conexión (reintento en ${Math.ceil((hostDead[host] - Date.now()) / 1000)} s)`);
   const known = hostMode[host];
   if (known != null && known >= 0) return fetchJSON(PROXIES[known](url), opts);
   try { const j = await fetchJSON(url, opts); hostMode[host] = -1; return j; }
@@ -72,6 +84,7 @@ async function getJSON(url, opts = {}) {
     let ctl = 'sin probar';
     try { const r = await fetch('https://api.github.com/zen', { cache: 'no-store' }); ctl = r.ok ? 'internet OK' : 'control ' + r.status; } catch { ctl = 'sin internet'; }
     diag(`${host}: directo=${e.message} · ${ctl} · online=${navigator.onLine}`, false);
+    hostDead[host] = Date.now() + 3 * 60e3;
     throw new Error(`No se pudo conectar con ${host} (directo ni por proxy): ${last.message}`);
   }
 }
@@ -125,7 +138,38 @@ function fantasyPoints(st) {
 const STAT_LABELS = { pts: 'PTS', reb: 'REB', ast: 'AST', stl: 'ROB', blk: 'TAP', to: 'PÉRD', tpm: '3PM', tpa: '3PA', fgm: 'FGM', fga: 'FGA', fgmi: 'FG fall.', ftm: 'FTM', fta: 'FTA', ftmi: 'FT fall.', tpmi: '3P fall.', oreb: 'REB OF', dreb: 'REB DEF', dd: 'Doble-doble', td: 'Triple-doble', qd: 'Cuádruple', pf: 'Faltas', tf: 'Técnicas', ff: 'Flagrantes', ej: 'Expulsión', min: 'Minutos', gp: 'Juegos', gs: 'Titular', fg_pct: 'FG%', ft_pct: 'FT%', tp_pct: '3P%', pts_std: 'FP std' };
 
 // ---------- carga Sleeper ----------
+async function loadSnapshot() {
+  try {
+    const snap = await fetchJSON(`${DATA}snapshot.json?v=${Date.now()}`);
+    if (!snap?.league || !snap?.user) return null;
+    const sameUser = (snap.user.username || '').toLowerCase() === S.cfg.user.toLowerCase();
+    const sameLeague = (snap.league.name || '').toLowerCase().includes(S.cfg.league.toLowerCase());
+    if (!sameUser || !sameLeague) { diag(`snapshot es de ${snap.user.username}/${snap.league.name}; se usa la API`, false); return null; }
+    return snap;
+  } catch (e) { diag('sin snapshot del relay: ' + e.message, false); return null; }
+}
+function applyCore() {
+  const found = S.league;
+  $('#leagueName').textContent = `${found.name} · ${found.season}`;
+  document.title = `Draft NBA · ${found.name}`;
+  const myRoster = S.rosters.find((r) => r.owner_id === S.user.user_id || (r.co_owners || []).includes(S.user.user_id));
+  S.myRosterId = myRoster?.roster_id ?? null;
+  S.mySlot = S.draft.draft_order?.[S.user.user_id] ?? null;
+  if (S.mySlot == null && S.myRosterId != null && S.draft.slot_to_roster_id) {
+    const ent = Object.entries(S.draft.slot_to_roster_id).find(([, rid]) => rid === S.myRosterId);
+    if (ent) S.mySlot = Number(ent[0]);
+  }
+  diag(`draft ${S.draft.draft_id} estado=${S.draft.status} tipo=${S.draft.type} rondas=${S.draft.settings?.rounds} equipos=${S.draft.settings?.teams} mi slot=${S.mySlot}`);
+  renderLeague();
+}
 async function loadCore() {
+  const snap = await loadSnapshot();
+  if (snap) {
+    S.snap = snap; S.state = snap.state; S.user = snap.user; S.league = snap.league; S.users = snap.users || []; S.rosters = snap.rosters || [];
+    S.draft = snap.draft; S.traded = snap.traded || []; S.picks = (snap.picks || []).slice().sort((a, b) => a.pick_no - b.pick_no);
+    diag(`datos del relay generados ${snap.generated_at} (${S.league.name})`);
+    applyCore(); return;
+  }
   S.state = await getJSON(`${SLEEPER}/state/nba`).catch((e) => { diag('state/nba: ' + e.message, false); return null; });
   S.user = await getJSON(`${SLEEPER}/user/${encodeURIComponent(S.cfg.user)}`);
   diag(`usuario ${S.user.display_name} (${S.user.user_id})`);
@@ -141,9 +185,6 @@ async function loadCore() {
   }
   if (!found) throw new Error(`No encontré la liga "${S.cfg.league}" para ${S.cfg.user}. Revisa el nombre en ⚙.`);
   S.league = found;
-  $('#leagueName').textContent = `${found.name} · ${found.season}`;
-  document.title = `Draft NBA · ${found.name}`;
-
   const [users, rosters, drafts] = await Promise.all([
     getJSON(`${SLEEPER}/league/${found.league_id}/users`),
     getJSON(`${SLEEPER}/league/${found.league_id}/rosters`),
@@ -154,22 +195,17 @@ async function loadCore() {
   if (!draftMeta) throw new Error('La liga no tiene draft creado todavía.');
   S.draft = await getJSON(`${SLEEPER}/draft/${draftMeta.draft_id}`);
   S.traded = await getJSON(`${SLEEPER}/draft/${draftMeta.draft_id}/traded_picks`).catch(() => []);
-  const myRoster = rosters.find((r) => r.owner_id === S.user.user_id || (r.co_owners || []).includes(S.user.user_id));
-  S.myRosterId = myRoster?.roster_id ?? null;
-  S.mySlot = S.draft.draft_order?.[S.user.user_id] ?? null;
-  if (S.mySlot == null && S.myRosterId != null && S.draft.slot_to_roster_id) {
-    const ent = Object.entries(S.draft.slot_to_roster_id).find(([, rid]) => rid === S.myRosterId);
-    if (ent) S.mySlot = Number(ent[0]);
-  }
-  diag(`draft ${S.draft.draft_id} estado=${S.draft.status} tipo=${S.draft.type} rondas=${S.draft.settings?.rounds} equipos=${S.draft.settings?.teams} mi slot=${S.mySlot}`);
-  renderLeague();
+  applyCore();
 }
 
 const KEEP = ['player_id', 'first_name', 'last_name', 'team', 'position', 'fantasy_positions', 'status', 'active', 'age', 'years_exp', 'injury_status', 'injury_body_part', 'injury_notes', 'injury_start_date', 'espn_id', 'search_rank', 'number', 'height', 'weight', 'college', 'news_updated', 'depth_chart_order', 'depth_chart_position', 'birth_date'];
 async function loadPlayers() {
   const c = lsGet('nba_players_v1');
   if (c && Date.now() - c.ts < 12 * 3600e3 && c.data && Object.keys(c.data).length > 100) { S.players = c.data; diag(`jugadores desde caché (${Object.keys(c.data).length})`); return; }
-  const all = await getJSON(`${SLEEPER}/players/nba`);
+  let all = null;
+  try { all = await fetchJSON(`${DATA}players.json?v=${S.snap?.generated_at || Date.now()}`); diag(`jugadores del relay (${Object.keys(all).length})`); }
+  catch (e) { diag('players.json del relay: ' + e.message, false); }
+  if (!all) all = await getJSON(`${SLEEPER}/players/nba`);
   const trimmed = {};
   for (const [id, p] of Object.entries(all)) {
     if (!p || !p.first_name) continue;
@@ -192,6 +228,20 @@ async function loadStats() {
   const lgSeason = Number(S.league.season) || new Date().getFullYear();
   const prev = String(lgSeason - 1);
   S.statsSeason = prev; S.projSeason = String(lgSeason);
+  if (S.snap) {
+    const v = S.snap.generated_at || Date.now();
+    const [st, pr] = await Promise.all([
+      fetchJSON(`${DATA}stats.json?v=${v}`).catch((e) => { diag('stats.json del relay: ' + e.message, false); return null; }),
+      fetchJSON(`${DATA}proj.json?v=${v}`).catch(() => null),
+    ]);
+    if (st && Object.keys(st).length > 10) {
+      S.stats = st; S.statsSrc = S.snap.statsSrc || 'relay'; S.proj = pr || {};
+      S.statsSeason = S.snap.statsSeason || prev; S.projSeason = S.snap.projSeason || String(lgSeason);
+      diag(`stats ${S.statsSeason} (${Object.keys(st).length}) y proyecciones (${Object.keys(S.proj).length}) del relay`);
+      $('#statsSeasonLbl').textContent = `temporada ${S.statsSeason}-${String(Number(S.statsSeason) + 1).slice(2)}${S.statsSrc === 'espn' ? ' (ESPN)' : ''}`;
+      return;
+    }
+  }
   const cs = lsGet('nba_stats_' + prev);
   if (cs && Date.now() - cs.ts < 7 * 86400e3 && Object.keys(cs.data).length > 10) { S.stats = cs.data; S.statsSrc = cs.src; diag(`stats ${prev} desde caché`); }
   else {
@@ -244,12 +294,26 @@ async function loadEspnBulkStats(season) {
 
 async function loadPicks() {
   if (!S.draft) return;
-  const [d, picks] = await Promise.all([
-    getJSON(`${SLEEPER}/draft/${S.draft.draft_id}`).catch(() => null),
-    getJSON(`${SLEEPER}/draft/${S.draft.draft_id}/picks`).catch(() => null),
-  ]);
-  if (d) S.draft = d;
-  if (Array.isArray(picks)) S.picks = picks.sort((a, b) => a.pick_no - b.pick_no);
+  const did = S.draft.draft_id;
+  const cands = [];
+  const tasks = [
+    fetchJSON(`${LIVE_RAW}live.json?t=${Date.now()}`).then((j) => { if (j?.picks && j?.draft?.draft_id === did) cands.push({ src: 'relay en vivo', ...j }); }).catch(() => {}),
+    hostOk('api.sleeper.app')
+      ? Promise.all([getJSON(`${SLEEPER}/draft/${did}`), getJSON(`${SLEEPER}/draft/${did}/picks`)]).then(([d, p]) => { if (Array.isArray(p)) cands.push({ src: 'Sleeper directo', draft: d, picks: p, fetched_at: new Date().toISOString() }); }).catch(() => {})
+      : Promise.resolve(),
+  ];
+  await Promise.all(tasks);
+  if (!cands.length && !S.picksLoadedOnce) {
+    try { const j = await fetchJSON(`${DATA}live.json?v=${Date.now()}`); if (j?.picks) cands.push({ src: 'snapshot', ...j }); } catch {}
+  }
+  if (!cands.length) { if (!S.picksLoadedOnce) diag('picks: ninguna fuente respondió', false); return; }
+  cands.sort((a, b) => (b.picks.length - a.picks.length) || ((b.fetched_at || '') > (a.fetched_at || '') ? 1 : -1));
+  const best = cands[0];
+  if (best.draft) S.draft = best.draft;
+  S.picks = best.picks.slice().sort((a, b) => a.pick_no - b.pick_no);
+  if (S.liveSrc !== best.src) { S.liveSrc = best.src; diag(`picks vía ${best.src}` + (best.fetched_at ? ` (${best.fetched_at})` : '')); }
+  S.picksLoadedOnce = true;
+  S.liveFetchedAt = best.fetched_at || null;
 }
 
 // ---------- lógica del draft ----------
@@ -403,6 +467,7 @@ function renderClock() {
     el.textContent = `Reloj del pick: ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`; return;
   }
   el.textContent = `Picks: ${S.picks.length}/${teams() * rounds()}`;
+  if (S.liveSrc && S.liveSrc !== 'Sleeper directo') el.title = `Fuente: ${S.liveSrc} ${S.liveFetchedAt || ''}`;
 }
 
 // ---------- render: tabla disponibles ----------
@@ -490,7 +555,9 @@ function renderReco() {
 }
 async function loadClaudeLive() {
   try {
-    const j = await getJSON(`live/claude.json?t=${Date.now()}`);
+    let j;
+    try { j = await fetchJSON(`${LIVE_RAW}claude.json?t=${Date.now()}`); }
+    catch { j = await fetchJSON(`live/claude.json?t=${Date.now()}`); }
     const el = $('#claudeLive');
     const picks = (j.top3 || []).map((t, i) => `<div class="pick"><b>${i + 1}. ${esc(t.player)}</b>${t.reason ? ` — ${esc(t.reason)}` : ''}</div>`).join('');
     el.innerHTML = `<div class="ts">Actualizado: ${esc(j.updated || '—')}${j.pick ? ` · para el pick #${esc(j.pick)}` : ''}</div>${picks}${j.notes ? `<div>${esc(j.notes)}</div>` : ''}`;
@@ -543,6 +610,12 @@ async function espnInjuries() {
   } catch (e) { diag('ESPN injuries: ' + e.message, false); }
   S.espnInjuries = map; return map;
 }
+async function espnBundle() {
+  if (S.espnData !== undefined) return S.espnData;
+  try { S.espnData = await fetchJSON(`${DATA}espn.json?v=${S.snap?.generated_at || Date.now()}`); diag(`ESPN del relay (${S.espnData.generated_at})`); }
+  catch (e) { S.espnData = null; diag('espn.json del relay: ' + e.message, false); }
+  return S.espnData;
+}
 async function cached(key, fn) { if (S.cache[key]) return S.cache[key]; const v = await fn().catch((e) => { diag(`${key}: ${e.message}`, false); return null; }); S.cache[key] = v; return v; }
 
 function bindNames(root) { root.querySelectorAll('.name[data-pid]').forEach((el) => el.onclick = () => openPlayer(el.dataset.pid)); }
@@ -574,14 +647,20 @@ async function openPlayer(pid) {
   const eid = p.espn_id ? String(p.espn_id) : null;
   const newsEl = $('#pNews'), injEl = $('#pInj'), seaEl = $('#pSeasons'), rosEl = $('#pRoster');
   const tasks = [];
+  const bundle = await espnBundle();
   tasks.push((async () => {
     let news = [];
-    if (eid) {
+    if (bundle && eid) {
+      news = bundle.athletes?.[eid]?.news || [];
+      if (!news.length) news = (bundle.news || []).filter((a) => (a.athletes || []).includes(eid) || `${a.headline} ${a.description}`.includes(p.last_name)).slice(0, 8);
+      news = news.map((n) => ({ ...n, links: { web: { href: n.href } } }));
+    }
+    if (!news.length && eid && hostOk('site.web.api.espn.com')) {
       const ov = await cached('ov' + eid, () => getJSON(`${ESPN_WEB}/athletes/${eid}/overview`));
       news = ov?.news || [];
       if (!news.length) { const nj = await cached('nw' + eid, () => getJSON(`${ESPN_SITE}/news?limit=12&athletes=${eid}`)); news = (nj?.articles || []).filter((a) => JSON.stringify(a.categories || []).includes(`"athleteId":${eid}`) || (a.headline || '').includes(p.last_name)); }
     }
-    if (!news.length && p.team) {
+    if (!news.length && p.team && hostOk('site.api.espn.com')) {
       const teams = await espnTeams(); const t = teams[TEAM_ALIAS[p.team] || p.team];
       if (t) { const nj = await cached('tn' + t.id, () => getJSON(`${ESPN_SITE}/news?limit=25&team=${t.id}`)); news = (nj?.articles || []).filter((a) => `${a.headline} ${a.description}`.includes(p.last_name)).slice(0, 8); if (!news.length) news = (nj?.articles || []).slice(0, 5).map((a) => ({ ...a, headline: '[equipo] ' + a.headline })); }
     }
@@ -589,28 +668,45 @@ async function openPlayer(pid) {
     newsEl.innerHTML = news.length ? news.slice(0, 10).map((n) => `<div class="n"><a href="${esc(n.links?.web?.href || n.links?.web?.short?.href || '#')}" target="_blank" rel="noopener">${esc(n.headline)}</a><div class="d">${n.published ? new Date(n.published).toLocaleDateString() : ''} ${n.description ? '· ' + esc(n.description) : ''}</div></div>`).join('') : '<span class="muted">Sin noticias disponibles. ' + (p.news_updated ? 'Última actualización en Sleeper: ' + new Date(p.news_updated).toLocaleString() : '') + '</span>';
   })());
   tasks.push((async () => {
-    const m = await espnInjuries(); const i = eid ? m[eid] : null;
+    let i = bundle && eid ? bundle.injuries?.[eid] : null;
+    if (!i && !bundle && hostOk('site.api.espn.com')) { const m = await espnInjuries(); i = eid ? m[eid] : null; }
     injEl.classList.remove('loading');
     injEl.innerHTML = i ? `<b>${esc(i.status)}</b> ${i.type ? '· ' + esc(i.type) : ''}<div class="small">${esc(i.detail)}</div>${i.returnDate ? `<div class="small muted">Regreso estimado: ${esc(i.returnDate)}</div>` : ''}` : '<span class="muted small">No aparece en el reporte de lesiones de ESPN.</span>';
   })());
   tasks.push((async () => {
     seaEl.classList.remove('loading');
     if (!eid) { seaEl.innerHTML = '<span class="muted small">Sin id de ESPN.</span>'; return; }
-    const sj = await cached('st' + eid, () => getJSON(`${ESPN_WEB}/athletes/${eid}/stats`));
-    const cat = (sj?.categories || []).find((c) => /averag/i.test(c.name)) || sj?.categories?.[0];
-    if (!cat) { seaEl.innerHTML = '<span class="muted small">Sin historial.</span>'; return; }
+    let labels = null, rows = null;
+    const bs = bundle?.athletes?.[eid]?.seasons;
+    if (bs?.labels) { labels = bs.labels; rows = (bs.rows || []).map((r) => ({ season: r.season, team: r.team, stats: r.stats })); }
+    else if (hostOk('site.web.api.espn.com')) {
+      const sj = await cached('st' + eid, () => getJSON(`${ESPN_WEB}/athletes/${eid}/stats`));
+      const cat = (sj?.categories || []).find((c) => /averag/i.test(c.name)) || sj?.categories?.[0];
+      if (cat) { labels = cat.labels; rows = (cat.statistics || []).map((r) => ({ season: r.season?.displayName || r.season?.year, team: (r.teamSlug || '').toUpperCase().slice(0, 3), stats: r.stats })); }
+    }
+    if (!labels) { seaEl.innerHTML = '<span class="muted small">Sin historial.</span>'; return; }
     const want = ['GP', 'MIN', 'PTS', 'REB', 'AST', 'STL', 'BLK', 'TO', '3PM', 'FG%', 'FT%'];
-    const idx = want.map((w) => cat.labels.indexOf(w));
-    const rows = (cat.statistics || []).slice(-6).reverse();
-    seaEl.innerHTML = `<table class="tbl mini"><thead><tr><th>Temp</th><th>Eq</th>${want.map((w) => `<th class="num">${w}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr><td>${esc(r.season?.displayName || r.season?.year || '')}</td><td>${esc((r.teamSlug || '').toUpperCase().slice(0, 3))}</td>${idx.map((i) => `<td class="num">${i >= 0 ? esc(r.stats[i]) : '—'}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    const idx = want.map((w) => labels.indexOf(w));
+    rows = rows.slice(-6).reverse();
+    seaEl.innerHTML = `<table class="tbl mini"><thead><tr><th>Temp</th><th>Eq</th>${want.map((w) => `<th class="num">${w}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr><td>${esc(r.season || '')}</td><td>${esc(r.team || '')}</td>${idx.map((i) => `<td class="num">${i >= 0 ? esc(r.stats?.[i]) : '—'}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
   })());
   tasks.push((async () => {
     rosEl.classList.remove('loading');
     if (!p.team) { rosEl.innerHTML = '<span class="muted small">Sin equipo.</span>'; return; }
-    const teams = await espnTeams(); const t = teams[TEAM_ALIAS[p.team] || p.team];
-    if (!t) { rosEl.innerHTML = '<span class="muted small">Equipo no encontrado en ESPN.</span>'; return; }
-    const rj = await cached('ro' + t.id, () => getJSON(`${ESPN_SITE}/teams/${t.id}/roster`));
-    const ath = (rj?.athletes || []).sort((a, b) => (a.position?.abbreviation || '').localeCompare(b.position?.abbreviation || ''));
+    let ath = null;
+    if (bundle) {
+      const t = bundle.teams?.[TEAM_ALIAS[p.team] || p.team];
+      const rows = t ? bundle.rosters?.[t.id] : null;
+      if (rows) ath = rows.map((a) => ({ id: a.id, displayName: a.displayName, position: { abbreviation: a.position }, age: a.age, experience: { years: a.exp }, injuries: (a.injuries || []).map((x) => ({ status: x })) }));
+    }
+    if (!ath && hostOk('site.api.espn.com')) {
+      const teams = await espnTeams(); const t = teams[TEAM_ALIAS[p.team] || p.team];
+      if (!t) { rosEl.innerHTML = '<span class="muted small">Equipo no encontrado en ESPN.</span>'; return; }
+      const rj = await cached('ro' + t.id, () => getJSON(`${ESPN_SITE}/teams/${t.id}/roster`));
+      ath = rj?.athletes || [];
+    }
+    if (!ath) { rosEl.innerHTML = '<span class="muted small">Roster no disponible.</span>'; return; }
+    ath = ath.slice().sort((a, b) => (a.position?.abbreviation || '').localeCompare(b.position?.abbreviation || ''));
     const picked = pickedIds();
     const byEspn = {}; for (const q of Object.values(S.players)) if (q.espn_id) byEspn[String(q.espn_id)] = q;
     rosEl.innerHTML = `<table class="tbl mini"><thead><tr><th>Jugador</th><th>Pos</th><th class="num">Edad</th><th class="num">Exp</th><th>Estado</th><th class="num">FP/J ${S.statsSeason || ''}</th><th>Draft</th></tr></thead><tbody>${ath.map((a) => { const sp = byEspn[String(a.id)]; const sst = sp ? S.stats[sp.player_id] : null; const injs = (a.injuries || []).map((x) => x.status).join(', '); return `<tr class="${sp && sp.player_id === pid ? 'me' : ''}"><td>${sp ? nameCell(sp) : esc(a.displayName)}</td><td>${esc(a.position?.abbreviation || '')}</td><td class="num">${a.age ?? '—'}</td><td class="num">${a.experience?.years ?? '—'}</td><td>${injs ? `<span class="inj ${esc(injs)}">${esc(injs)}</span>` : ''}</td><td class="num">${sst && sst.gp ? fmt(fantasyPoints(sst) / sst.gp) : '—'}</td><td class="small">${sp && picked.has(sp.player_id) ? esc(rosterUser(S.picks.find((x) => x.player_id === sp.player_id).roster_id)) : (sp ? '<span style="color:var(--good)">libre</span>' : '')}</td></tr>`; }).join('')}</tbody></table>`;
@@ -665,6 +761,7 @@ async function boot() {
     const hint = /conectar|fetch/i.test(e.message) ? ' · Revisa tu conexión o prueba en otro navegador (Chrome/Safari normal, no una vista dentro de otra app).' : '';
     $('#leagueName').innerHTML = `<span class="err">${esc(e.message)}${esc(hint)}</span>`;
     $('#setup').classList.remove('hidden');
+    const d = document.querySelector('#setup .diag'); if (d) d.open = true;
   }
 }
 

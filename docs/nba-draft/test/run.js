@@ -8,7 +8,12 @@ const http=require('http'),fs=require('fs');
   const unmatched = [];
   page.on('console', m => { if (m.type()==='error') console.log('CONSOLE', m.text()); });
   page.on('pageerror', e => console.log('PAGEERROR', e.message));
-  await page.route(/sleeper|espn|corsproxy|allorigins|codetabs/, route => {
+  await page.route(/raw\.githubusercontent\.com/, route => {
+    const u = route.request().url();
+    if (/live\.json/.test(u)) return route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: (fs.existsSync(path.resolve(process.argv[2], 'data/live.json')) ? fs.readFileSync(path.resolve(process.argv[2], 'data/live.json')) : JSON.stringify({ draft: fx['api.sleeper.app/v1/draft/D1'], picks: fx['api.sleeper.app/v1/draft/D1/picks'], fetched_at: new Date().toISOString() })) });
+    return route.fulfill({ status: 404, body: 'nf' });
+  });
+  await page.route(/^https?:\/\/[^/]*(sleeper|espn|corsproxy|allorigins|codetabs)/, route => {
     let raw = route.request().url();
     if (/corsproxy|allorigins|codetabs/.test(raw)) { const q = new URL(raw).searchParams; raw = q.get('url') || q.get('quest'); }
     else if (process.env.BLOCK_DIRECT && /api\.sleeper/.test(raw)) { return route.abort('failed'); }
@@ -19,6 +24,7 @@ const http=require('http'),fs=require('fs');
   });
   const root=path.resolve(process.argv[2]);
   const srv=http.createServer((q,r)=>{const f=path.join(root,decodeURIComponent(q.url.split('?')[0]==='/'?'/index.html':q.url.split('?')[0]));fs.readFile(f,(e,d)=>{if(e){r.statusCode=404;return r.end('nf');}r.setHeader('content-type',f.endsWith('.js')?'text/javascript':f.endsWith('.css')?'text/css':f.endsWith('.json')?'application/json':'text/html');r.end(d);});}).listen(8765);
+  if (process.env.BLOCK_ALL) await page.route(/^https?:\/\/[^/]*(sleeper|espn|corsproxy|allorigins|codetabs|api\.github\.com)/, route => route.abort('failed'));
   await page.goto('http://localhost:8765/');
   await page.waitForFunction(() => document.querySelector('#availTable tbody') && document.querySelector('#availTable tbody').children.length > 0, null, { timeout: 15000 });
   await page.waitForTimeout(500);
