@@ -8,8 +8,11 @@ const http=require('http'),fs=require('fs');
   const unmatched = [];
   page.on('console', m => { if (m.type()==='error') console.log('CONSOLE', m.text()); });
   page.on('pageerror', e => console.log('PAGEERROR', e.message));
-  await page.route(/sleeper|espn/, route => {
-    const u = new URL(route.request().url()); const key = u.host + u.pathname;
+  await page.route(/sleeper|espn|corsproxy|allorigins|codetabs/, route => {
+    let raw = route.request().url();
+    if (/corsproxy|allorigins|codetabs/.test(raw)) { const q = new URL(raw).searchParams; raw = q.get('url') || q.get('quest'); }
+    else if (process.env.BLOCK_DIRECT && /api\.sleeper/.test(raw)) { return route.abort('failed'); }
+    const u = new URL(raw); const key = u.host + u.pathname;
     const hit = Object.keys(fx).filter(k => key === k || key.startsWith(k)).sort((a,b)=>b.length-a.length)[0];
     if (!hit) { unmatched.push(route.request().url()); return route.fulfill({ status: 404, body: 'nf' }); }
     route.fulfill({ status: 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify(fx[hit]) });

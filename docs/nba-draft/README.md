@@ -46,6 +46,9 @@ respondió y cuál falló.
 
 Los jugadores, stats y proyecciones se guardan en `localStorage` (12 h / 7 d / 1 d).
 
+Si el navegador no puede llamar a un host directamente, el sitio reintenta por un
+servicio CORS público de respaldo y lo indica en el diagnóstico.
+
 ## Notas de Claude en vivo
 
 `live/claude.json` tiene esta forma; el sitio lo relee cada refresco:
@@ -58,5 +61,5 @@ Los jugadores, stats y proyecciones se guardan en `localStorage` (12 h / 7 d / 1
 
 ## Prueba local con datos simulados
 
-`node test/run.js .` abre el sitio en Chromium (Playwright) interceptando Sleeper y
+`node test/run.js .` abre el sitio (con `BLOCK_DIRECT=1` simula Sleeper bloqueado) en Chromium (Playwright) interceptando Sleeper y
 ESPN con `test/fixtures.js`, imprime las vistas y guarda capturas.
