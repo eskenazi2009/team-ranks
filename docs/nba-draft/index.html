@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Draft NBA · Benchwarmers</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">🏀 <strong>Draft en vivo</strong> <span id="leagueName" class="muted">cargando liga…</span></div>
+  <div class="status">
+    <span id="draftStatus" class="pill">—</span>
+    <span id="clock" class="pill">—</span>
+    <button id="refreshBtn" class="btn" title="Actualizar ahora">↻</button>
+    <button id="setupBtn" class="btn ghost" title="Configuración">⚙</button>
+  </div>
+</header>
+
+<section id="setup" class="setup hidden">
+  <label>Usuario Sleeper <input id="inUser" value="raymondesk"></label>
+  <label>Liga <input id="inLeague" value="Benchwarmers"></label>
+  <label>Temporada liga <input id="inSeason" placeholder="auto" size="6"></label>
+  <label>Refresco (seg) <input id="inPoll" type="number" value="15" min="5" size="4"></label>
+  <button id="applySetup" class="btn primary">Aplicar</button>
+  <details class="diag"><summary>Diagnóstico de fuentes</summary><pre id="diag"></pre></details>
+</section>
+
+<nav class="tabs">
+  <button data-tab="draft" class="tab active">Draft en vivo</button>
+  <button data-tab="players" class="tab">Jugadores</button>
+  <button data-tab="picks" class="tab">Picks sugeridos</button>
+  <button data-tab="league" class="tab">Liga</button>
+</nav>
+
+<main>
+  <!-- ===== DRAFT ===== -->
+  <section id="tab-draft" class="panel">
+    <div class="grid-draft">
+      <div class="card">
+        <div class="card-head">
+          <h2>Disponibles <span id="availCount" class="muted"></span></h2>
+          <div class="controls">
+            <input id="availSearch" placeholder="Buscar jugador…">
+            <div id="availPos" class="chips"></div>
+            <select id="availSort">
+              <option value="proj">Orden: Proy. FP</option>
+              <option value="last">Orden: FP año pasado</option>
+              <option value="adp">Orden: ADP Sleeper</option>
+              <option value="rec">Orden: Recomendación</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap tall"><table id="availTable" class="tbl"></table></div>
+      </div>
+      <div class="side">
+        <div class="card">
+          <h2>Mi turno</h2>
+          <div id="myTurn" class="turn">—</div>
+          <h3>Mi roster</h3>
+          <div id="myRoster" class="roster"></div>
+        </div>
+        <div class="card">
+          <h2>Últimos picks</h2>
+          <ol id="pickFeed" class="feed"></ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PLAYERS ===== -->
+  <section id="tab-players" class="panel hidden">
+    <div class="card">
+      <div class="card-head">
+        <h2>Stats <span id="statsSeasonLbl" class="muted"></span> y puntos con la configuración de la liga</h2>
+        <div class="controls">
+          <input id="plSearch" placeholder="Buscar…">
+          <div id="plPos" class="chips"></div>
+          <label class="chk"><input type="checkbox" id="plOnlyAvail" checked> Solo disponibles</label>
+          <label class="chk"><input type="checkbox" id="plPerGame"> Por juego</label>
+        </div>
+      </div>
+      <div class="table-wrap tall"><table id="plTable" class="tbl"></table></div>
+    </div>
+  </section>
+
+  <!-- ===== PICKS ===== -->
+  <section id="tab-picks" class="panel hidden">
+    <div class="grid-picks">
+      <div class="card">
+        <h2>Top 3 para mi equipo ahora</h2>
+        <p class="muted small">Calculado con la puntuación de la liga, lo que falta en tu roster, la escasez por posición, lesiones y la probabilidad de que el jugador siga disponible en tu siguiente turno.</p>
+        <div id="recoList" class="reco"></div>
+        <h3>Siguientes en la lista</h3>
+        <div id="recoMore" class="reco small"></div>
+      </div>
+      <div class="card">
+        <h2>Claude en vivo</h2>
+        <div id="claudeLive" class="claude"><p class="muted">Sin notas todavía. Durante el draft Claude escribe aquí sus sugerencias.</p></div>
+        <h3>Pegar nota manual</h3>
+        <textarea id="manualNote" rows="4" placeholder="Pega aquí lo que Claude te mande en el chat…"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LEAGUE ===== -->
+  <section id="tab-league" class="panel hidden">
+    <div class="grid-picks">
+      <div class="card"><h2>Puntuación</h2><div id="lgScoring"></div></div>
+      <div class="card"><h2>Roster y draft</h2><div id="lgRoster"></div><h3>Equipos</h3><div id="lgTeams"></div></div>
+    </div>
+  </section>
+</main>
+
+<!-- ===== PLAYER MODAL ===== -->
+<div id="modal" class="modal hidden">
+  <div class="modal-box">
+    <button id="modalClose" class="close">✕</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
