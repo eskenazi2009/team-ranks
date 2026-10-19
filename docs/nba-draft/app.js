@@ -745,7 +745,7 @@ async function openPlayer(pid) {
     const top = sorted.slice(0, 5);
     const avg = rows.reduce((a, r) => a + r.fp, 0) / rows.length;
     const over = (n) => rows.filter((r) => r.fp >= n).length;
-    bestEl.innerHTML = `<table class="tbl mini"><thead><tr><th>#</th><th>Fecha</th><th>Rival</th><th class="num">FP</th><th class="num">MIN</th><th class="num">PTS</th><th class="num">REB</th><th class="num">AST</th><th class="num">ROB</th><th class="num">TAP</th><th class="num">PÉRD</th><th class="num">3PM</th><th class="num">FG</th><th class="num">FT</th></tr></thead><tbody>${top.map((r, i) => `<tr><td><b>${i + 1}</b></td><td>${esc(r.date)}</td><td>${esc(r.opp)} <span class="muted small">${esc(r.res || '')}</span></td><td class="num"><b>${fmt(r.fp)}</b></td><td class="num">${fmt0(r.min)}</td><td class="num">${fmt0(r.pts)}</td><td class="num">${fmt0(r.reb)}</td><td class="num">${fmt0(r.ast)}</td><td class="num">${fmt0(r.stl)}</td><td class="num">${fmt0(r.blk)}</td><td class="num">${fmt0(r.to)}</td><td class="num">${fmt0(r.tpm)}</td><td class="num">${fmt0(r.fgm)}/${fmt0(r.fga)}</td><td class="num">${fmt0(r.ftm)}/${fmt0(r.fta)}</td></tr>`).join('')}</tbody></table>
+    bestEl.innerHTML = `<div class="statline">${top.map((r, i) => `<div class="s" title="${esc(r.date)} ${esc(r.opp)}"><b>${fmt(r.fp)}</b><span>#${i + 1} · ${esc(r.date.slice(5))} ${esc(r.opp)}</span></div>`).join('')}</div>
       <div class="small muted" style="margin-top:6px">${rows.length} juegos registrados · promedio ${fmt(avg)} FP · top 5 promedio ${fmt(top.reduce((a, r) => a + r.fp, 0) / top.length)} FP · juegos de 50+ FP: ${over(50)} · 40+: ${over(40)} · menos de 20: ${rows.filter((r) => r.fp < 20).length}</div>`;
   })());
   tasks.push((async () => {
