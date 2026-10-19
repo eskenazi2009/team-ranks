@@ -225,8 +225,47 @@ def link_espn_ids(players, rosters_by_team, teams):
 
 
 # ---------------- ESPN extra (noticias, lesiones, rosters, historial) ----------------
-def fetch_espn_bundle(players, top_n=250, workers=8):
-    bundle = {"generated_at": now_iso(), "teams": {}, "injuries": {}, "rosters": {}, "news": [], "athletes": {}}
+def _split_made(v):
+    """'9-18' -> (9, 18)"""
+    try:
+        a, b = str(v).split("-")
+        return float(a), float(b)
+    except Exception:
+        return None, None
+
+
+def parse_gamelog(gl):
+    """Devuelve la lista de juegos de temporada regular: [fecha, rival, min, pts, reb, ast, stl, blk, to, tpm, fgm, fga, ftm, fta]."""
+    labels = gl.get("labels") or []
+    idx = {l: i for i, l in enumerate(labels)}
+    events = gl.get("events") or {}
+    games = []
+    for st in gl.get("seasonTypes") or []:
+        if "regular" not in (st.get("displayName") or "").lower():
+            continue
+        for cat in st.get("categories") or []:
+            for ev in cat.get("events") or []:
+                stats = ev.get("stats") or []
+                def g(label):
+                    i = idx.get(label)
+                    try:
+                        return float(stats[i]) if i is not None and i < len(stats) else None
+                    except (TypeError, ValueError):
+                        return None
+                fgm, fga = _split_made(stats[idx["FG"]]) if "FG" in idx and idx["FG"] < len(stats) else (None, None)
+                tpm, tpa = _split_made(stats[idx["3PT"]]) if "3PT" in idx and idx["3PT"] < len(stats) else (None, None)
+                ftm, fta = _split_made(stats[idx["FT"]]) if "FT" in idx and idx["FT"] < len(stats) else (None, None)
+                meta = events.get(str(ev.get("eventId"))) or {}
+                opp = (meta.get("opponent") or {}).get("abbreviation") or ""
+                ha = meta.get("homeAway") or ""
+                date = (meta.get("gameDate") or "")[:10]
+                games.append([date, ("@" if ha == "away" else "vs ") + opp, g("MIN"), g("PTS"), g("REB"), g("AST"), g("STL"), g("BLK"), g("TO"), tpm, fgm, fga, ftm, fta, meta.get("gameResult")])
+    games.sort(key=lambda x: x[0])
+    return games
+
+
+def fetch_espn_bundle(players, top_n=250, workers=8, gamelog_season=None):
+    bundle = {"generated_at": now_iso(), "teams": {}, "injuries": {}, "rosters": {}, "news": [], "athletes": {}, "gamelog_season": gamelog_season}
     tj = try_get("ESPN teams", f"{ESPN_SITE}/teams?limit=40")
     teams = []
     try:
@@ -283,6 +322,11 @@ def fetch_espn_bundle(players, top_n=250, workers=8):
         if ov:
             out["news"] = [{"headline": n.get("headline"), "description": n.get("description"), "published": n.get("published"),
                             "href": ((n.get("links") or {}).get("web") or {}).get("href")} for n in (ov.get("news") or [])[:10]]
+        gl = try_get(f"ESPN gamelog {p.get('last_name')}", f"{ESPN_WEB}/athletes/{eid}/gamelog?season={gamelog_season}") if gamelog_season else None
+        if gl:
+            games = parse_gamelog(gl)
+            if games:
+                out["games"] = games
         sj = try_get(f"ESPN stats {p.get('last_name')}", f"{ESPN_WEB}/athletes/{eid}/stats")
         if sj:
             cat = next((c for c in sj.get("categories") or [] if "averag" in (c.get("name") or "").lower()), None) or ((sj.get("categories") or [None])[0])
@@ -343,7 +387,7 @@ def do_snapshot(args):
     proj, _ = fetch_stats_like("projections", str(lg_season))
     out = args.out
     if not args.skip_espn:
-        write_json(f"{out}/espn.json", fetch_espn_bundle(players, top_n=args.top_n))
+        write_json(f"{out}/espn.json", fetch_espn_bundle(players, top_n=args.top_n, gamelog_season=int(prev) + 1))
     elif os.path.exists(f"{out}/players.json"):
         # conserva los espn_id ya asignados en un snapshot anterior
         try:
@@ -405,7 +449,7 @@ def main():
     ap.add_argument("--push", action="store_true")
     ap.add_argument("--push-branch", default="main")
     ap.add_argument("--skip-espn", action="store_true")
-    ap.add_argument("--top-n", type=int, default=250)
+    ap.add_argument("--top-n", type=int, default=350)
     ap.add_argument("--live-dir", default="live")
     ap.add_argument("--minutes", type=int, default=240)
     ap.add_argument("--interval", type=int, default=15)

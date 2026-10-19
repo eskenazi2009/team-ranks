@@ -35,6 +35,7 @@ const S = {
   mySlot: null, myRosterId: null,
   posFilterAvail: new Set(), posFilterPl: new Set(),
   sortPl: { key: 'fp', dir: -1 },
+  sortAvail: { key: 'V', dir: -1 },
   timer: null, tick: null,
   espnTeams: null, espnInjuries: null,
   cache: {},
@@ -516,22 +517,33 @@ function nameCell(p) { return `<span class="name" data-pid="${p.player_id}">${es
 
 function renderAvail() {
   const q = $('#availSearch').value.trim().toLowerCase();
-  const sort = $('#availSort').value;
   let rows = availablePlayers().map((p) => ({ p, ...playerValue(p) }));
-  rows = rows.filter((x) => (x.V > 0 || (x.p.search_rank && x.p.search_rank < 600)) && passesPos(x.p, S.posFilterAvail) && (!q || `${x.p.first_name} ${x.p.last_name} ${x.p.team}`.toLowerCase().includes(q)));
+  rows = rows.filter((x) => (x.V > 0 || (x.adp != null && x.adp < 600)) && passesPos(x.p, S.posFilterAvail) && (!q || `${x.p.first_name} ${x.p.last_name} ${x.p.team}`.toLowerCase().includes(q)));
+  const { key, dir } = S.sortAvail;
   let recMap = null;
-  if (sort === 'rec') { recMap = new Map(recommend(400).map((r, i) => [r.p.player_id, { i, s: r.score }])); rows.sort((a, b) => (recMap.get(b.p.player_id)?.s ?? -1) - (recMap.get(a.p.player_id)?.s ?? -1)); }
-  else if (sort === 'adp') rows.sort((a, b) => (a.adp ?? 1e7) - (b.adp ?? 1e7));
-  else if (sort === 'last') rows.sort((a, b) => (b.lastTot ?? -1) - (a.lastTot ?? -1));
-  else rows.sort((a, b) => b.V - a.V);
+  if (key === 'rec') recMap = new Map(recommend(500).map((r) => [r.p.player_id, r.score]));
+  const val = (x) => {
+    switch (key) {
+      case 'name': return `${x.p.last_name} ${x.p.first_name}`;
+      case 'team': return x.p.team || '';
+      case 'pos': return playerPositions(x.p).join('/');
+      case 'inj': return x.p.injury_status || '';
+      case 'rec': return recMap.get(x.p.player_id) ?? -1;
+      case 'adp': return x.adp ?? 1e7;
+      default: return x[key] ?? (dir < 0 ? -1e9 : 1e9);
+    }
+  };
+  rows.sort((a, b) => { const va = val(a), vb = val(b); return typeof va === 'string' ? dir * va.localeCompare(vb) : dir * (va - vb); });
   rows = rows.slice(0, 300);
   $('#availCount').textContent = `(${rows.length})`;
-  const nxt = nextMyPick(), n = S.picks.length;
-  $('#availTable').innerHTML = `<thead><tr><th>#</th><th>Jugador</th><th>Eq</th><th>Pos</th><th class="num" title="Puntos de la liga esperados esta temporada = proyección por juego × juegos esperados"><b>FP esp.</b></th><th class="num" title="Proyección de Sleeper por juego con la puntuación de la liga">Proy/J</th><th class="num" title="Juegos esperados">JJ esp.</th><th class="num" title="Temporada pasada, puntos de la liga">FP ${S.statsSeason || ''}</th><th class="num">FP/J</th><th class="num">JJ</th><th class="num" title="ADP de Sleeper · 🔥 = por ADP no llegaría a tu próximo turno">ADP</th><th>Lesión</th></tr></thead><tbody>` +
+  const nxt = nextMyPick();
+  const th = (k, label, num = true, title = '') => `<th class="${num ? 'num' : ''}" data-k="${k}" title="${esc(title)}">${label}${S.sortAvail.key === k ? (dir < 0 ? ' ▼' : ' ▲') : ''}</th>`;
+  $('#availTable').innerHTML = `<thead><tr><th>#</th>${th('name', 'Jugador', false)}${th('team', 'Eq', false)}${th('pos', 'Pos', false)}${th('V', '<b>FP esp.</b>', true, 'Puntos de la liga esperados esta temporada = proyección por juego × juegos esperados')}${th('projPG', 'Proy/J', true, 'Proyección de Sleeper por juego con la puntuación de la liga')}${th('games', 'JJ esp.', true, 'Juegos esperados')}${th('lastTot', `FP ${S.statsSeason || ''}`, true, 'Temporada pasada, puntos de la liga')}${th('lastPG', 'FP/J')}${th('gpLast', 'JJ')}${th('adp', 'ADP', true, 'ADP de Sleeper · 🔥 = por ADP no llegaría a tu próximo turno')}${th('rec', 'Rec.', true, 'Puntuación de la recomendación para tu equipo')}${th('inj', 'Lesión', false)}</tr></thead><tbody>` +
     rows.map((x, i) => {
       const risk = x.adp != null && nxt ? (x.adp <= nxt.pick_no + 1 ? '🔥' : '') : '';
-      return `<tr><td class="muted">${i + 1}</td><td>${nameCell(x.p)} ${risk}</td><td>${esc(x.p.team)}</td><td>${posTags(x.p)}</td><td class="num"><b>${fmt0(x.V)}</b></td><td class="num">${fmt(x.projPG)}</td><td class="num">${x.games}</td><td class="num">${fmt0(x.lastTot)}</td><td class="num">${fmt(x.lastPG)}</td><td class="num">${x.gpLast ?? '—'}</td><td class="num">${x.adp != null ? fmt(x.adp, 1) : '—'}</td><td>${injTag(x.p)}</td></tr>`;
+      return `<tr><td class="muted">${i + 1}</td><td>${nameCell(x.p)} ${risk}</td><td>${esc(x.p.team)}</td><td>${posTags(x.p)}</td><td class="num"><b>${fmt0(x.V)}</b></td><td class="num">${fmt(x.projPG)}</td><td class="num">${x.games}</td><td class="num">${fmt0(x.lastTot)}</td><td class="num">${fmt(x.lastPG)}</td><td class="num">${x.gpLast ?? '—'}</td><td class="num">${x.adp != null ? fmt(x.adp, 1) : '—'}</td><td class="num">${recMap ? fmt0(recMap.get(x.p.player_id)) : ''}</td><td>${injTag(x.p)}</td></tr>`;
     }).join('') + '</tbody>';
+  $('#availTable').querySelectorAll('th[data-k]').forEach((h) => h.onclick = () => { const k = h.dataset.k; const strCol = ['name', 'team', 'pos', 'inj', 'adp'].includes(k); S.sortAvail = { key: k, dir: S.sortAvail.key === k ? -S.sortAvail.dir : (strCol ? 1 : -1) }; renderAvail(); });
   bindNames($('#availTable'));
 }
 
@@ -567,13 +579,13 @@ function renderPlayersTable() {
   });
   rows = rows.filter((r) => (!onlyAvail || !r.picked) && passesPos(r.p, S.posFilterPl) && (!q || `${r.p.first_name} ${r.p.last_name} ${r.p.team}`.toLowerCase().includes(q)));
   const { key, dir } = S.sortPl;
-  const val = (r) => key === 'fp' ? (pg ? r.fppg : r.fp) : key === 'proj' ? (pg ? (r.projPG ?? -1) : (r.proj ?? -1)) : key === 'name' ? `${r.p.last_name}` : key === 'gp' ? r.gp : (pg && r.gp && key !== 'gp' ? statVal(r.st, key) / r.gp : statVal(r.st, key));
+  const val = (r) => key === 'fp' ? (pg ? r.fppg : r.fp) : key === 'proj' ? (pg ? (r.projPG ?? -1) : (r.proj ?? -1)) : key === 'name' ? `${r.p.last_name} ${r.p.first_name}` : key === 'team' ? (r.p.team || '') : key === 'pos' ? playerPositions(r.p).join('/') : key === 'inj' ? (r.p.injury_status || '') : key === 'gp' ? r.gp : (pg && r.gp && key !== 'gp' ? statVal(r.st, key) / r.gp : statVal(r.st, key));
   rows.sort((a, b) => { const x = val(a), y = val(b); return (typeof x === 'string') ? dir * x.localeCompare(y) : dir * (x - y); });
   rows = rows.slice(0, 400);
   const th = (k, label, num = true) => `<th class="${num ? 'num' : ''} ${S.sortPl.key === k ? 'sorted' : ''}" data-k="${k}">${label}${S.sortPl.key === k ? (dir < 0 ? ' ▼' : ' ▲') : ''}</th>`;
-  $('#plTable').innerHTML = `<thead><tr>${th('name', 'Jugador', false)}<th>Eq</th><th>Pos</th>${th('fp', `FP liga${pg ? '/J' : ''}`)}${th('proj', pg ? 'Proy/J' : 'FP esp.')}${cols.map((c) => th(c, STAT_LABELS[c] || c.toUpperCase())).join('')}<th>Lesión</th></tr></thead><tbody>` +
+  $('#plTable').innerHTML = `<thead><tr>${th('name', 'Jugador', false)}${th('team', 'Eq', false)}${th('pos', 'Pos', false)}${th('fp', `FP liga${pg ? '/J' : ''}`)}${th('proj', pg ? 'Proy/J' : 'FP esp.')}${cols.map((c) => th(c, STAT_LABELS[c] || c.toUpperCase())).join('')}${th('inj', 'Lesión', false)}</tr></thead><tbody>` +
     rows.map((r) => `<tr class="${r.picked ? 'muted' : ''}"><td>${nameCell(r.p)}${r.picked ? ' <span class="small muted">(tomado)</span>' : ''}</td><td>${esc(r.p.team)}</td><td>${posTags(r.p)}</td><td class="num"><b>${fmt(pg ? r.fppg : r.fp, pg ? 1 : 0)}</b></td><td class="num">${pg ? fmt(r.projPG) : fmt0(r.proj)}</td>${cols.map((c) => `<td class="num">${c === 'gp' || !pg || !r.gp ? fmt(statVal(r.st, c), c === 'gp' || c === 'dd' || c === 'td' ? 0 : (pg ? 1 : 0)) : fmt(statVal(r.st, c) / r.gp)}</td>`).join('')}<td>${injTag(r.p)}</td></tr>`).join('') + '</tbody>';
-  $('#plTable').querySelectorAll('th[data-k]').forEach((h) => h.onclick = () => { const k = h.dataset.k; S.sortPl = { key: k, dir: S.sortPl.key === k ? -S.sortPl.dir : (k === 'name' ? 1 : -1) }; renderPlayersTable(); });
+  $('#plTable').querySelectorAll('th[data-k]').forEach((h) => h.onclick = () => { const k = h.dataset.k; S.sortPl = { key: k, dir: S.sortPl.key === k ? -S.sortPl.dir : (['name', 'team', 'pos', 'inj'].includes(k) ? 1 : -1) }; renderPlayersTable(); });
   bindNames($('#plTable'));
 }
 
@@ -691,7 +703,7 @@ async function openPlayer(pid) {
   const pv = playerValue(p);
   const sline = (s, lbl, perGame) => {
     if (!s) return `<p class="muted small">Sin ${lbl}.</p>`;
-    const gp = perGame ? 1 : (Number(s.gp) || 1);
+    const gp = perGame ? (Number(s.gp) > 1.5 ? Number(s.gp) : 1) : (Number(s.gp) || 1);
     const cells = ['gp', 'min', 'pts', 'reb', 'ast', 'stl', 'blk', 'to', 'tpm', 'dd'].map((k) => `<div class="s"><b>${k === 'gp' ? (perGame ? pv.games : fmt0(s.gp)) : fmt(k === 'min' && s.min == null && s.sp != null ? s.sp / 60 / gp : statVal(s, k) / gp)}</b><span>${k === 'gp' ? (perGame ? 'JJ esp.' : 'JJ') : (STAT_LABELS[k] || k) + '/J'}</span></div>`).join('');
     const fppg = fantasyPoints(s) / gp;
     return `<div class="statline">${cells}<div class="s"><b>${fmt(fppg)}</b><span>FP/J</span></div><div class="s"><b>${fmt0(perGame ? fppg * pv.games : fantasyPoints(s))}</b><span>${perGame ? 'FP esperados' : 'FP total'}</span></div></div>`;
@@ -706,6 +718,7 @@ async function openPlayer(pid) {
     </div></div>
     ${pr ? `<div class="pbox"><h3>Proyección ${S.projSeason || ''}-${String(Number(S.projSeason) + 1).slice(2)} por juego (puntos de esta liga)</h3>${sline(pr, 'proyección', true)}</div>` : ''}
     <div class="pbox" style="margin-top:10px"><h3>Temporada pasada ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (promedios por juego, puntos de esta liga)</h3>${sline(st, 'stats del año pasado', false)}</div>
+    <div class="pbox" style="margin-top:10px"><h3>Mejores 5 juegos ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (puntos de esta liga)</h3><div id="pBest" class="loading">Cargando…</div></div>
     <div class="pgrid" style="margin-top:10px">
       <div class="pbox"><h3>Noticias recientes</h3><div id="pNews" class="news loading">Cargando…</div></div>
       <div class="pbox"><h3>Lesiones (ESPN)</h3><div id="pInj" class="loading">Cargando…</div><h3 style="margin-top:12px">Temporadas anteriores</h3><div id="pSeasons" class="loading">Cargando…</div></div>
@@ -718,6 +731,23 @@ async function openPlayer(pid) {
   const newsEl = $('#pNews'), injEl = $('#pInj'), seaEl = $('#pSeasons');
   const tasks = [];
   const bundle = await espnBundle();
+  tasks.push((async () => {
+    const bestEl = $('#pBest'); bestEl.classList.remove('loading');
+    const games = eid ? bundle?.athletes?.[eid]?.games : null;
+    if (!games || !games.length) { bestEl.innerHTML = `<span class="muted small">${bundle ? 'Sin registro juego a juego para este jugador (se baja para los ~350 mejores por ADP).' : 'Registro no disponible.'}</span>`; return; }
+    const rows = games.map((g) => {
+      const [date, opp, min, pts, reb, ast, stl, blk, to, tpm, fgm, fga, ftm, fta, res] = g;
+      const cats = [pts, reb, ast, stl, blk].filter((v) => (v || 0) >= 10).length;
+      const line = { pts: pts || 0, reb: reb || 0, ast: ast || 0, stl: stl || 0, blk: blk || 0, to: to || 0, tpm: tpm || 0, fgm: fgm || 0, fga: fga || 0, ftm: ftm || 0, fta: fta || 0, dd: cats >= 2 ? 1 : 0, td: cats >= 3 ? 1 : 0 };
+      return { date, opp, min, res, ...line, fp: fantasyPoints(line) };
+    });
+    const sorted = [...rows].sort((a, b) => b.fp - a.fp);
+    const top = sorted.slice(0, 5);
+    const avg = rows.reduce((a, r) => a + r.fp, 0) / rows.length;
+    const over = (n) => rows.filter((r) => r.fp >= n).length;
+    bestEl.innerHTML = `<table class="tbl mini"><thead><tr><th>#</th><th>Fecha</th><th>Rival</th><th class="num">FP</th><th class="num">MIN</th><th class="num">PTS</th><th class="num">REB</th><th class="num">AST</th><th class="num">ROB</th><th class="num">TAP</th><th class="num">PÉRD</th><th class="num">3PM</th><th class="num">FG</th><th class="num">FT</th></tr></thead><tbody>${top.map((r, i) => `<tr><td><b>${i + 1}</b></td><td>${esc(r.date)}</td><td>${esc(r.opp)} <span class="muted small">${esc(r.res || '')}</span></td><td class="num"><b>${fmt(r.fp)}</b></td><td class="num">${fmt0(r.min)}</td><td class="num">${fmt0(r.pts)}</td><td class="num">${fmt0(r.reb)}</td><td class="num">${fmt0(r.ast)}</td><td class="num">${fmt0(r.stl)}</td><td class="num">${fmt0(r.blk)}</td><td class="num">${fmt0(r.to)}</td><td class="num">${fmt0(r.tpm)}</td><td class="num">${fmt0(r.fgm)}/${fmt0(r.fga)}</td><td class="num">${fmt0(r.ftm)}/${fmt0(r.fta)}</td></tr>`).join('')}</tbody></table>
+      <div class="small muted" style="margin-top:6px">${rows.length} juegos registrados · promedio ${fmt(avg)} FP · top 5 promedio ${fmt(top.reduce((a, r) => a + r.fp, 0) / top.length)} FP · juegos de 50+ FP: ${over(50)} · 40+: ${over(40)} · menos de 20: ${rows.filter((r) => r.fp < 20).length}</div>`;
+  })());
   tasks.push((async () => {
     let news = [];
     if (bundle && eid) {
@@ -824,7 +854,7 @@ document.querySelectorAll('.tab').forEach((b) => b.onclick = () => {
 $('#setupBtn').onclick = () => $('#setup').classList.toggle('hidden');
 $('#applySetup').onclick = () => { S.cfg = { user: $('#inUser').value.trim(), league: $('#inLeague').value.trim(), season: $('#inSeason').value.trim(), poll: Number($('#inPoll').value) || 15 }; lsSet('draft_cfg', S.cfg); boot(); };
 $('#refreshBtn').onclick = () => { S.lastPickCount = -1; refresh(); };
-$('#availSearch').oninput = renderAvail; $('#availSort').onchange = renderAvail;
+$('#availSearch').oninput = renderAvail; $('#availSort').onchange = () => { const v = $('#availSort').value; S.sortAvail = v === 'proj' ? { key: 'V', dir: -1 } : v === 'last' ? { key: 'lastTot', dir: -1 } : v === 'adp' ? { key: 'adp', dir: 1 } : { key: 'rec', dir: -1 }; renderAvail(); };
 $('#plSearch').oninput = renderPlayersTable; $('#plOnlyAvail').onchange = renderPlayersTable; $('#plPerGame').onchange = renderPlayersTable;
 $('#modalClose').onclick = () => $('#modal').classList.add('hidden');
 $('#modal').onclick = (e) => { if (e.target.id === 'modal') $('#modal').classList.add('hidden'); };
