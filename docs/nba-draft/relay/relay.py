@@ -323,10 +323,19 @@ def fetch_espn_bundle(players, top_n=250, workers=8, gamelog_season=None):
             out["news"] = [{"headline": n.get("headline"), "description": n.get("description"), "published": n.get("published"),
                             "href": ((n.get("links") or {}).get("web") or {}).get("href")} for n in (ov.get("news") or [])[:10]]
         gl = try_get(f"ESPN gamelog {p.get('last_name')}", f"{ESPN_WEB}/athletes/{eid}/gamelog?season={gamelog_season}") if gamelog_season else None
-        if gl:
-            games = parse_gamelog(gl)
-            if games:
-                out["games"] = games
+        games = parse_gamelog(gl) if gl else []
+        used = gamelog_season
+        if not games and gamelog_season:
+            # no jugó la temporada pasada (lesión, etc.): usar su última temporada con juegos
+            for back in (1, 2):
+                gl2 = try_get(f"ESPN gamelog {p.get('last_name')} {gamelog_season - back}", f"{ESPN_WEB}/athletes/{eid}/gamelog?season={gamelog_season - back}")
+                games = parse_gamelog(gl2) if gl2 else []
+                if games:
+                    used = gamelog_season - back
+                    break
+        if games:
+            out["games"] = games
+            out["games_season"] = used
         sj = try_get(f"ESPN stats {p.get('last_name')}", f"{ESPN_WEB}/athletes/{eid}/stats")
         if sj:
             cat = next((c for c in sj.get("categories") or [] if "averag" in (c.get("name") or "").lower()), None) or ((sj.get("categories") or [None])[0])
