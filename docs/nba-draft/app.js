@@ -758,7 +758,7 @@ async function openPlayer(pid) {
     </div></div>
     ${pr ? `<div class="pbox"><h3>Proyección ${S.projSeason || ''}-${String(Number(S.projSeason) + 1).slice(2)} por juego (puntos de esta liga)</h3>${sline(pr, 'proyección', true)}</div>` : ''}
     <div class="pbox" style="margin-top:10px"><h3>Temporada pasada ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (promedios por juego, puntos de esta liga)</h3>${sline(st, 'stats del año pasado', false)}</div>
-    <div class="pbox" style="margin-top:10px"><h3>Mejores 5 juegos ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (puntos de esta liga)</h3><div id="pBest" class="loading">Cargando…</div></div>
+    <div class="pbox" style="margin-top:10px"><h3 id="pBestTitle">Mejores 5 juegos ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (puntos de esta liga)</h3><div id="pBest" class="loading">Cargando…</div></div>
     <div class="pgrid" style="margin-top:10px">
       <div class="pbox"><h3>Noticias recientes</h3><div id="pNews" class="news loading">Cargando…</div></div>
       <div class="pbox"><h3>Lesiones (ESPN)</h3><div id="pInj" class="loading">Cargando…</div><h3 style="margin-top:12px">Temporadas anteriores</h3><div id="pSeasons" class="loading">Cargando…</div></div>
@@ -774,6 +774,8 @@ async function openPlayer(pid) {
   tasks.push((async () => {
     const bestEl = $('#pBest'); bestEl.classList.remove('loading');
     const games = eid ? bundle?.athletes?.[eid]?.games : null;
+    const gs = eid ? bundle?.athletes?.[eid]?.games_season : null;
+    if (gs && games?.length) { const yr = Number(gs) - 1; $('#pBestTitle').textContent = `Mejores 5 juegos ${yr}-${String(yr + 1).slice(2)}${String(yr + 1) !== String(Number(S.statsSeason) + 1) ? ' (su última temporada con juegos)' : ''} (puntos de esta liga)`; }
     if (!games || !games.length) { bestEl.innerHTML = `<span class="muted small">${bundle ? 'Sin registro juego a juego para este jugador (se baja para los ~350 mejores por ADP).' : 'Registro no disponible.'}</span>`; return; }
     const rows = games.map((g) => {
       const [date, opp, min, pts, reb, ast, stl, blk, to, tpm, fgm, fga, ftm, fta, res] = g;
