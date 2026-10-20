@@ -666,6 +666,45 @@ async function espnBundle() {
 }
 async function cached(key, fn) { if (S.cache[key]) return S.cache[key]; const v = await fn().catch((e) => { diag(`${key}: ${e.message}`, false); return null; }); S.cache[key] = v; return v; }
 
+// Rango de fechas de la temporada pasada según todos los registros juego a juego del relay.
+function seasonSpan(bundle) {
+  if (bundle?._span) return bundle._span;
+  let min = '9999', max = '0000';
+  for (const a of Object.values(bundle?.athletes || {})) for (const g of a.games || []) { if (g[0] < min) min = g[0]; if (g[0] > max) max = g[0]; }
+  return (bundle._span = { min, max });
+}
+// Ausencias largas: huecos de 10+ días entre juegos (se ignora el receso del Juego de Estrellas), más inicio y final de temporada.
+function lastAbsence(eid, bundle) {
+  const games = bundle?.athletes?.[eid]?.games;
+  if (!games || games.length < 10) return undefined;
+  const { min, max } = seasonSpan(bundle);
+  const D = (x) => new Date(x + 'T12:00:00');
+  const days = (a, b) => Math.round((D(b) - D(a)) / 864e5);
+  const fd = (x) => D(x).toLocaleDateString('es', { day: 'numeric', month: 'short' });
+  const list = [];
+  if (days(min, games[0][0]) >= 10) list.push({ from: min, to: games[0][0], d: days(min, games[0][0]), kind: 'start' });
+  for (let k = 1; k < games.length; k++) {
+    const a = games[k - 1][0], b = games[k][0], d = days(a, b);
+    const inBreak = a >= '2026-02-08' && b <= '2026-02-26' && d <= 11;
+    if (d >= 10 && !inBreak) list.push({ from: a, to: b, d, kind: 'gap' });
+  }
+  const lastD = games[games.length - 1][0];
+  if (days(lastD, max) >= 10) list.push({ from: lastD, to: max, d: days(lastD, max), kind: 'end' });
+  if (!list.length) return null;
+  const est = (d) => Math.max(1, Math.round(d / 2.2) - 1);
+  list.sort((a, b) => b.to.localeCompare(a.to));
+  const l = list[0];
+  const text = l.kind === 'start' ? `se perdió el inicio de temporada hasta el ${fd(l.to)} (~${est(l.d)} juegos)`
+    : l.kind === 'end' ? `no jugó desde el ${fd(l.from)} hasta el final de temporada (~${est(l.d)} juegos)`
+    : `fuera del ${fd(l.from)} al ${fd(l.to)} (~${est(l.d)} juegos)`;
+  return { text, total: list.length };
+}
+function injuryNews(n, p) {
+  const t = `${n.headline || ''} ${n.description || ''}`;
+  if (/highlights/i.test(n.headline || '')) return false;
+  if (!t.includes(p.last_name)) return false;
+  return /\b(injur\w*|sprain\w*|strain\w*|tweak\w*|surgery|torn|fractur\w*|sidelined|ruled out|day-to-day|knee|ankle|hamstring|calf|achilles|foot|shoulder|wrist|hip|groin|quad\w*|thigh|concussion|illness|soreness|lower back|back spasms?)\b/i.test(t);
+}
 function depthChartHTML(p) {
   if (!p.team) return '<span class="muted small">Sin equipo.</span>';
   const picked = pickedIds();
@@ -706,9 +745,8 @@ async function openPlayer(pid) {
   const sline = (s, lbl, perGame) => {
     if (!s) return `<p class="muted small">Sin ${lbl}.</p>`;
     const gp = perGame ? (Number(s.gp) > 1.5 ? Number(s.gp) : 1) : (Number(s.gp) || 1);
-    const cells = ['gp', 'min', 'pts', 'reb', 'ast', 'stl', 'blk', 'to', 'tpm', 'dd'].map((k) => `<div class="s"><b>${k === 'gp' ? (perGame ? pv.games : fmt0(s.gp)) : fmt(k === 'min' && s.min == null && s.sp != null ? s.sp / 60 / gp : statVal(s, k) / gp)}</b><span>${k === 'gp' ? (perGame ? 'JJ esp.' : 'JJ') : (STAT_LABELS[k] || k) + '/J'}</span></div>`).join('');
     const fppg = fantasyPoints(s) / gp;
-    return `<div class="statline">${cells}<div class="s"><b>${fmt(fppg)}</b><span>FP/J</span></div><div class="s"><b>${fmt0(perGame ? fppg * pv.games : fantasyPoints(s))}</b><span>${perGame ? 'FP esperados' : 'FP total'}</span></div></div>`;
+    return `<div class="statline"><div class="s"><b>${perGame ? pv.games : fmt0(s.gp)}</b><span>${perGame ? 'JJ esp.' : 'JJ'}</span></div><div class="s"><b>${fmt(fppg)}</b><span>FP/J</span></div><div class="s"><b>${fmt0(perGame ? fppg * pv.games : fantasyPoints(s))}</b><span>${perGame ? 'FP esperados' : 'FP total'}</span></div></div>`;
   };
   const picked = S.picks.find((x) => x.player_id === pid);
   box.innerHTML = `
@@ -774,7 +812,30 @@ async function openPlayer(pid) {
     let i = bundle && eid ? bundle.injuries?.[eid] : null;
     if (!i && !bundle && hostOk('site.api.espn.com')) { const m = await espnInjuries(); i = eid ? m[eid] : null; }
     injEl.classList.remove('loading');
-    injEl.innerHTML = i ? `<b>${esc(i.status)}</b> ${i.type ? '· ' + esc(i.type) : ''}<div class="small">${esc(i.detail)}</div>${i.returnDate ? `<div class="small muted">Regreso estimado: ${esc(i.returnDate)}</div>` : ''}` : '<span class="muted small">No aparece en el reporte de lesiones de ESPN.</span>';
+    const fdate = (d) => { try { return new Date(d.length === 10 ? d + 'T12:00:00' : d).toLocaleDateString('es', { day: 'numeric', month: 'short', year: 'numeric' }); } catch { return d; } };
+    const nowInj = i || p.injury_status;
+    let html = '';
+    if (nowInj) {
+      const status = i?.status || p.injury_status;
+      const part = i?.type || p.injury_body_part;
+      html += `<div><span class="inj ${esc(String(status).replace(/\s/g, ''))}">${esc(status)}</span> <b>Lesionado ahora</b>${part ? ' · ' + esc(part) : ''}</div>`;
+      const since = i?.date || p.injury_start_date;
+      if (since) html += `<div class="small">Desde: ${esc(fdate(since))}</div>`;
+      const det = i?.detail || p.injury_notes;
+      if (det) html += `<div class="small muted">${esc(det)}</div>`;
+      if (i?.returnDate) html += `<div class="small muted">Regreso estimado: ${esc(fdate(i.returnDate))}</div>`;
+    } else {
+      html += '<div style="color:var(--good)"><b>Sin lesión actual</b></div>';
+    }
+    // última ausencia del año pasado, calculada del registro juego a juego (ESPN no da el historial de lesiones)
+    const ab = lastAbsence(eid, bundle);
+    html += `<div style="margin-top:8px"><b>Última ausencia ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)}:</b> ` + (ab === undefined
+      ? '<span class="muted small">sin registro juego a juego</span>'
+      : ab ? `${esc(ab.text)}<div class="small muted">Motivo no disponible en las fuentes (puede ser lesión, descanso o traspaso).${ab.total > 1 ? (ab.total === 2 ? ' Hubo otra ausencia larga ese año.' : ` Hubo otras ${ab.total - 1} ausencias largas ese año.`) : ''}</div>` : '<span class="muted small">no se perdió más de unos pocos juegos seguidos</span>') + '</div>';
+    // noticia reciente de lesión (solo si nombra al jugador y una parte del cuerpo)
+    const nws = (bundle?.athletes?.[eid]?.news || []).concat(bundle?.news || []).filter((n) => injuryNews(n, p)).sort((a, b) => String(b.published).localeCompare(String(a.published)))[0];
+    if (nws) html += `<div style="margin-top:8px"><b>Noticia reciente:</b> <a href="${esc(nws.href || '#')}" target="_blank" rel="noopener">${esc(nws.headline)}</a> <span class="muted small">${nws.published ? esc(fdate(nws.published.slice(0, 10))) : ''}</span></div>`;
+    injEl.innerHTML = html;
   })());
   tasks.push((async () => {
     seaEl.classList.remove('loading');
