@@ -12,3 +12,7 @@
 - Puntuación y formato salen siempre de la liga en Sleeper (data/snapshot.json), nunca de supuestos.
 - Datos: el relay de GitHub Actions (nba-draft-relay.yml) deja JSON en docs/nba-draft/data; el
   navegador de Raymond no alcanza Sleeper ni ESPN directo.
+- Las semanas de la liga van de lunes a domingo (la semana 1 empezó el martes 20 de octubre de 2026 y
+  cierra el domingo 25). Al contar juegos restantes, cortar siempre en el domingo.
+- Regla de lock que usa Raymond: a cada jugador le cuenta un solo juego por semana y él elige cuál;
+  comparar el puntaje ya logrado contra la probabilidad de superarlo en los juegos restantes.
