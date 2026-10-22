@@ -359,23 +359,57 @@ def fetch_espn_bundle(players, top_n=250, workers=8, gamelog_season=None):
 
 
 # ---------------- diario: stats y proyecciones por fecha, matchups, calendario ----------------
-def fetch_daily(core, season, days_back=7, days_fwd=3):
+def _pair(v):
+    try:
+        a, b = str(v).split("-")
+        return float(a), float(b)
+    except Exception:
+        return None, None
+
+
+def parse_boxscore(summary, by_espn):
+    """Box score de ESPN -> {sleeper_pid: línea}. Mapea por espn_id; si no hay, usa 'espn:<id>'."""
+    out = {}
+    for tm in ((summary or {}).get("boxscore") or {}).get("players") or []:
+        abbr = (tm.get("team") or {}).get("abbreviation")
+        for grp in tm.get("statistics") or []:
+            labels = grp.get("labels") or []
+            ix = {l: i for i, l in enumerate(labels)}
+            for a in grp.get("athletes") or []:
+                ath = a.get("athlete") or {}
+                eid = str(ath.get("id") or "")
+                stats = a.get("stats") or []
+                def g(label):
+                    i = ix.get(label)
+                    try:
+                        return float(stats[i]) if i is not None and i < len(stats) else None
+                    except (TypeError, ValueError):
+                        return None
+                def pr(label):
+                    i = ix.get(label)
+                    return _pair(stats[i]) if i is not None and i < len(stats) else (None, None)
+                fgm, fga = pr("FG"); tpm, tpa = pr("3PT"); ftm, fta = pr("FT")
+                line = {"name": ath.get("displayName"), "team": abbr, "espn_id": eid, "dnp": bool(a.get("didNotPlay")), "reason": a.get("reason"),
+                        "starter": bool(a.get("starter")), "min": g("MIN"), "pts": g("PTS"), "reb": g("REB"), "oreb": g("OREB"), "dreb": g("DREB"),
+                        "ast": g("AST"), "stl": g("STL"), "blk": g("BLK"), "to": g("TO"), "pf": g("PF"),
+                        "tpm": tpm, "tpa": tpa, "fgm": fgm, "fga": fga, "ftm": ftm, "fta": fta}
+                pid = by_espn.get(eid)
+                out[pid or f"espn:{eid}"] = line
+    return out
+
+
+def fetch_daily(core, season, players=None, days_back=7, days_fwd=3):
     """Stats reales y proyecciones de Sleeper por fecha (ventana alrededor de hoy), matchups de la
     semana en curso y calendario/marcadores de ESPN. Devuelve el dict que se escribe en daily.json."""
-    today = dt.datetime.now(dt.timezone.utc).date()
+    # Nota: Sleeper ignora el parámetro date en stats/projections (devuelve la temporada completa),
+    # así que los puntos por partido salen del box score de ESPN y se calculan con la puntuación de la liga.
+    by_espn = {str(v["espn_id"]): pid for pid, v in (players or {}).items() if v.get("espn_id")}
+    # ESPN usa hora del Este para el día de juego; alineamos "hoy" a esa zona (UTC-4/-5)
+    today = (dt.datetime.now(dt.timezone.utc) - dt.timedelta(hours=5)).date()
     out = {"generated_at": now_iso(), "season": str(season), "today": today.isoformat(), "days": {}, "matchups": {}, "state": core.get("state")}
     for off in range(-days_back, days_fwd + 1):
         d = (today + dt.timedelta(days=off)).isoformat()
-        day = {"stats": {}, "proj": {}, "games": []}
-        if off <= 0:
-            j = try_get(f"stats {d}", f"{SLEEPER2}/stats/nba/{season}?season_type=regular&date={d}&{POS_Q}&order_by=pts", timeout=60)
-            for r in (j if isinstance(j, list) else []):
-                if r and r.get("player_id") and r.get("stats"):
-                    day["stats"][r["player_id"]] = {**r["stats"], "opponent": r.get("opponent"), "team": r.get("team"), "game_id": r.get("game_id")}
-        j = try_get(f"proyecciones {d}", f"{SLEEPER2}/projections/nba/{season}?season_type=regular&date={d}&{POS_Q}&order_by=pts", timeout=60)
-        for r in (j if isinstance(j, list) else []):
-            if r and r.get("player_id") and r.get("stats"):
-                day["proj"][r["player_id"]] = {**r["stats"], "opponent": r.get("opponent"), "team": r.get("team"), "game_id": r.get("game_id")}
+        day = {"games": [], "box": {}}
         sb = try_get(f"ESPN scoreboard {d}", f"{ESPN_SITE}/scoreboard?dates={d.replace('-', '')}")
         for ev in (sb or {}).get("events") or []:
             try:
@@ -388,7 +422,15 @@ def fetch_daily(core, season, days_back=7, days_fwd=3):
                                      "hs": h.get("score"), "as": a.get("score")})
             except Exception:
                 pass
-        if day["stats"] or day["proj"] or day["games"]:
+        for gm in day["games"]:
+            if gm.get("state") in ("in", "post") and gm.get("id"):
+                sm = try_get(f"ESPN box {d} {gm['away']}@{gm['home']}", f"{ESPN_SITE}/summary?event={gm['id']}")
+                box = parse_boxscore(sm, by_espn) if sm else {}
+                for pid, line in box.items():
+                    line["game_id"] = gm["id"]; line["final"] = gm.get("state") == "post"
+                    line["opp"] = gm["home"] if line.get("team") == gm["away"] else gm["away"]
+                    day["box"][pid] = line
+        if day["games"]:
             out["days"][d] = day
     st_ = core.get("state") or {}
     weeks = []
@@ -404,7 +446,8 @@ def fetch_daily(core, season, days_back=7, days_fwd=3):
         m = try_get(f"matchups semana {w}", f"{SLEEPER}/league/{lid}/matchups/{w}")
         if isinstance(m, list):
             out["matchups"][str(w)] = m
-    log(f"diario: {len(out['days'])} fechas, matchups semanas {list(out['matchups'])}")
+    nbox = sum(len(x["box"]) for x in out["days"].values())
+    log(f"diario: {len(out['days'])} fechas, {nbox} líneas de box score, matchups semanas {list(out['matchups'])}")
     return out
 
 
@@ -460,7 +503,7 @@ def do_snapshot(args):
     write_json(f"{out}/stats.json", stats)
     write_json(f"{out}/proj.json", proj)
     try:
-        write_json(f"{out}/daily.json", fetch_daily(core, lg_season))
+        write_json(f"{out}/daily.json", fetch_daily(core, lg_season, players=players))
     except Exception as ex:
         log(f"diario falló: {ex}", ok=False)
     snap = {"generated_at": now_iso(), "statsSeason": prev, "projSeason": str(lg_season), "statsSrc": src,
