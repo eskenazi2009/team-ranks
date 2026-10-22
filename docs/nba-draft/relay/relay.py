@@ -358,6 +358,56 @@ def fetch_espn_bundle(players, top_n=250, workers=8, gamelog_season=None):
     return bundle
 
 
+# ---------------- diario: stats y proyecciones por fecha, matchups, calendario ----------------
+def fetch_daily(core, season, days_back=7, days_fwd=3):
+    """Stats reales y proyecciones de Sleeper por fecha (ventana alrededor de hoy), matchups de la
+    semana en curso y calendario/marcadores de ESPN. Devuelve el dict que se escribe en daily.json."""
+    today = dt.datetime.now(dt.timezone.utc).date()
+    out = {"generated_at": now_iso(), "season": str(season), "today": today.isoformat(), "days": {}, "matchups": {}, "state": core.get("state")}
+    for off in range(-days_back, days_fwd + 1):
+        d = (today + dt.timedelta(days=off)).isoformat()
+        day = {"stats": {}, "proj": {}, "games": []}
+        if off <= 0:
+            j = try_get(f"stats {d}", f"{SLEEPER2}/stats/nba/{season}?season_type=regular&date={d}&{POS_Q}&order_by=pts", timeout=60)
+            for r in (j if isinstance(j, list) else []):
+                if r and r.get("player_id") and r.get("stats"):
+                    day["stats"][r["player_id"]] = {**r["stats"], "opponent": r.get("opponent"), "team": r.get("team"), "game_id": r.get("game_id")}
+        j = try_get(f"proyecciones {d}", f"{SLEEPER2}/projections/nba/{season}?season_type=regular&date={d}&{POS_Q}&order_by=pts", timeout=60)
+        for r in (j if isinstance(j, list) else []):
+            if r and r.get("player_id") and r.get("stats"):
+                day["proj"][r["player_id"]] = {**r["stats"], "opponent": r.get("opponent"), "team": r.get("team"), "game_id": r.get("game_id")}
+        sb = try_get(f"ESPN scoreboard {d}", f"{ESPN_SITE}/scoreboard?dates={d.replace('-', '')}")
+        for ev in (sb or {}).get("events") or []:
+            try:
+                comp = ev["competitions"][0]
+                cs = {c.get("homeAway"): c for c in comp.get("competitors") or []}
+                h, a = cs.get("home", {}), cs.get("away", {})
+                day["games"].append({"id": ev.get("id"), "start": ev.get("date"), "state": ((ev.get("status") or {}).get("type") or {}).get("state"),
+                                     "detail": ((ev.get("status") or {}).get("type") or {}).get("shortDetail"),
+                                     "home": (h.get("team") or {}).get("abbreviation"), "away": (a.get("team") or {}).get("abbreviation"),
+                                     "hs": h.get("score"), "as": a.get("score")})
+            except Exception:
+                pass
+        if day["stats"] or day["proj"] or day["games"]:
+            out["days"][d] = day
+    st_ = core.get("state") or {}
+    weeks = []
+    for w in (st_.get("week"), st_.get("display_week"), st_.get("leg")):
+        try:
+            w = int(w)
+        except (TypeError, ValueError):
+            continue
+        if w >= 1 and w not in weeks:
+            weeks.append(w)
+    lid = core["league"]["league_id"]
+    for w in weeks[:2]:
+        m = try_get(f"matchups semana {w}", f"{SLEEPER}/league/{lid}/matchups/{w}")
+        if isinstance(m, list):
+            out["matchups"][str(w)] = m
+    log(f"diario: {len(out['days'])} fechas, matchups semanas {list(out['matchups'])}")
+    return out
+
+
 # ---------------- git ----------------
 def sh(cmd, cwd=None, check=True):
     print("$", cmd, flush=True)
@@ -409,6 +459,10 @@ def do_snapshot(args):
     write_json(f"{out}/players.json", players)
     write_json(f"{out}/stats.json", stats)
     write_json(f"{out}/proj.json", proj)
+    try:
+        write_json(f"{out}/daily.json", fetch_daily(core, lg_season))
+    except Exception as ex:
+        log(f"diario falló: {ex}", ok=False)
     snap = {"generated_at": now_iso(), "statsSeason": prev, "projSeason": str(lg_season), "statsSrc": src,
             **{k: core[k] for k in ("state", "user", "league", "users", "rosters", "draft", "traded", "picks")},
             "sources": SOURCES}
