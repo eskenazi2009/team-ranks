@@ -398,7 +398,7 @@ def parse_boxscore(summary, by_espn):
     return out
 
 
-def fetch_daily(core, season, players=None, days_back=7, days_fwd=3):
+def fetch_daily(core, season, players=None, days_back=7, days_fwd=6):
     """Stats reales y proyecciones de Sleeper por fecha (ventana alrededor de hoy), matchups de la
     semana en curso y calendario/marcadores de ESPN. Devuelve el dict que se escribe en daily.json."""
     # Nota: Sleeper ignora el parámetro date en stats/projections (devuelve la temporada completa),
