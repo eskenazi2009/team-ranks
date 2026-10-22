@@ -14,5 +14,11 @@
   navegador de Raymond no alcanza Sleeper ni ESPN directo.
 - Las semanas de la liga van de lunes a domingo (la semana 1 empezó el martes 20 de octubre de 2026 y
   cierra el domingo 25). Al contar juegos restantes, cortar siempre en el domingo.
-- Regla de lock que usa Raymond: a cada jugador le cuenta un solo juego por semana y él elige cuál;
-  comparar el puntaje ya logrado contra la probabilidad de superarlo en los juegos restantes.
+- Regla de lock de la liga (explicada por Raymond el 22-oct-2026): cada slot titular fija UN juego por
+  semana. Solo se puede fijar el juego de un jugador que estaba de titular cuando jugó; los puntos de la
+  banca se pierden. Al fijarlo, el jugador queda en ese slot con ese puntaje toda la semana (no se puede
+  cambiar de juego ni de posición). Un titular no fijado conserva como fijable solo su ÚLTIMO juego; si
+  vuelve a jugar de titular, el fijable pasa a ser el nuevo juego. Si se le manda a la banca sin fijar,
+  pierde la opción hasta que vuelva a ser titular y juegue otra vez. Sleeper no expone qué está fijado:
+  Raymond lo dice. Analizar cada slot abierto como parada óptima: fijar ahora vs EV de esperar los juegos
+  restantes de la semana (hasta el domingo), incluyendo cambiar al jugador del slot.
