@@ -20,5 +20,6 @@
   cambiar de juego ni de posición). Un titular no fijado conserva como fijable solo su ÚLTIMO juego; si
   vuelve a jugar de titular, el fijable pasa a ser el nuevo juego. Si se le manda a la banca sin fijar,
   pierde la opción hasta que vuelva a ser titular y juegue otra vez. Sleeper no expone qué está fijado:
-  Raymond lo dice. Analizar cada slot abierto como parada óptima: fijar ahora vs EV de esperar los juegos
+  Raymond lo dice. Verificado el 24-oct-2026: starters_points de los matchups de Sleeper NO refleja los
+  locks (George estaba fijado en 62.5 y Sleeper mostraba 32.4), así que nunca inferir locks de ahí. Analizar cada slot abierto como parada óptima: fijar ahora vs EV de esperar los juegos
   restantes de la semana (hasta el domingo), incluyendo cambiar al jugador del slot.
