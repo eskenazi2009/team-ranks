@@ -548,13 +548,25 @@ async function renderInjuries() {
   const mateRows = (list, gain) => `<table class="tbl mini mates"><thead><tr><th>${gain ? 'Gana minutos' : 'Pierde minutos'}</th><th>Dueño</th><th class="num" title="Promedio de sus 5 mejores juegos del año pasado, puntos de la liga">Techo</th><th class="num hm">Proy/J</th><th>Últimos juegos</th></tr></thead><tbody>${list.map((m) => `<tr><td>${nm(m.pid, m.name)}<div class="small muted">${(m.pos || []).join('/')} · ${esc((m.depth || []).join(''))}</div></td><td>${ownerCell(m.owner, m.free)}</td><td class="num">${m.top5 ?? '—'}</td><td class="num hm">${m.proj ?? '—'}</td><td class="small">${recentCell(m.recent)}</td></tr>`).join('')}</tbody></table>`;
   const card = (c, list, gain, emptyMsg) => `<div class="icard"><div class="ihead"><div>${whoCell(c)}</div><div>${gain ? changeCell(c) : `${sevTag(c.from)} → ${sevTag(c.to)}`}</div><div class="small">Dueño: ${ownerCell(c.owner)}</div></div>${list.length ? mateRows(list, gain) : `<div class="small muted" style="padding:6px 0">${emptyMsg}</div>`}</div>`;
 
-  const cards1 = [];
-  for (const c of worse) {
+  // lesiones nuevas de los últimos días (relay: recent_injuries); si no existe, solo los cambios del día
+  const recent = rep.recent_injuries || worse.map((c) => ({ ...c, day: rep.today }));
+  const todayPA = rep.today || new Date(Date.now() - 5 * 3600e3).toISOString().slice(0, 10);
+  const dayLabel = (d) => {
+    const diff = Math.round((Date.parse(todayPA) - Date.parse(d)) / 864e5);
+    const f = new Date(`${d}T12:00:00Z`).toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'short', timeZone: 'UTC' });
+    return diff === 0 ? `Hoy · ${f}` : diff === 1 ? `Ayer · ${f}` : f.charAt(0).toUpperCase() + f.slice(1);
+  };
+  const byDay = new Map();
+  for (const c of recent) {
     const bens = (c.beneficiaries || []).filter((m) => passes(m.name, m.owner, m.free));
     if (!bens.length && !passes(c.name, c.owner, !c.owner)) continue;
-    cards1.push(card(c, bens, true, (c.beneficiaries || []).length ? 'sin beneficiarios que pasen el filtro' : 'baja sin impacto claro en la rotación'));
+    const d = c.day || todayPA;
+    if (!byDay.has(d)) byDay.set(d, []);
+    byDay.get(d).push(card(c, bens, true, (c.beneficiaries || []).length ? 'sin beneficiarios que pasen el filtro' : 'baja sin impacto claro en la rotación'));
   }
-  setHTML('#gainList', cards1.join('') || '<p class="muted">Sin lesiones nuevas o agravadas en el período.</p>');
+  const days = [...byDay.keys()].sort().reverse();
+  setHTML('#gainList', days.map((d) => `<div class="dayhead">${esc(dayLabel(d))} <span class="muted">(${byDay.get(d).length})</span></div>${byDay.get(d).join('')}`).join('')
+    || `<p class="muted">Sin lesiones nuevas o agravadas ${rep.recent_injuries ? 'en los últimos 3 días' : 'en el período'}.</p>`);
 
   const cards2 = [];
   for (const c of better) {
