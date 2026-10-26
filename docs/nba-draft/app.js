@@ -127,7 +127,7 @@ function fantasyPoints(st) {
   for (const [k, w] of Object.entries(sc)) { if (!w) continue; t += Number(w) * statVal(st, k); }
   return t;
 }
-const STAT_LABELS = { pts: 'PTS', reb: 'REB', ast: 'AST', stl: 'ROB', blk: 'TAP', to: 'PÉRD', tpm: '3PM', tpa: '3PA', fgm: 'FGM', fga: 'FGA', fgmi: 'FG fall.', ftm: 'FTM', fta: 'FTA', ftmi: 'FT fall.', tpmi: '3P fall.', oreb: 'REB OF', dreb: 'REB DEF', dd: 'Doble-doble', td: 'Triple-doble', qd: 'Cuádruple', pf: 'Faltas', tf: 'Técnicas', ff: 'Flagrantes', ej: 'Expulsión', min: 'Minutos', gp: 'Juegos', gs: 'Titular', fg_pct: 'FG%', ft_pct: 'FT%', tp_pct: '3P%', pts_std: 'FP std' };
+const STAT_LABELS = { pts: 'PTS', reb: 'REB', ast: 'AST', stl: 'ROB', blk: 'TAP', to: 'PÉRD', tpm: '3PM', tpa: '3PA', fgm: 'FGM', fga: 'FGA', fgmi: 'FG fall.', ftm: 'FTM', fta: 'FTA', ftmi: 'FT fall.', tpmi: '3P fall.', oreb: 'REB OF', dreb: 'REB DEF', dd: 'Doble-doble', td: 'Triple-doble', qd: 'Cuádruple', pf: 'Faltas', tf: 'Técnicas', ff: 'Flagrantes', ej: 'Expulsión', min: 'Minutos', gp: 'Juegos', gs: 'Titular', fg_pct: 'FG%', ft_pct: 'FT%', tp_pct: '3P%', pts_std: 'pts std' };
 
 // ---------- carga Sleeper ----------
 async function loadSnapshot() {
@@ -287,7 +287,7 @@ function playerValue(p) {
   const gpLast = st && Number(st.gp) > 1.5 ? Number(st.gp) : null;
   const games = expectedGames(p, st);
   const basePG = projPG ?? lastPG ?? 0;
-  const V = basePG * games;                 // FP esperados en la temporada
+  const V = basePG * games;                 // pts esperados en la temporada
   return { V, games, basePG, projPG, projTot: projPG != null ? projPG * games : null, lastTot, lastPG, gpLast, adp: adpOf(p) };
 }
 function injuryFactor(p) {
@@ -383,7 +383,7 @@ function depthChartHTML(p) {
     if (!e) return '<td></td>';
     const q = e.q; const st = S.stats[q.player_id]; const pv = playerValue(q);
     const own = ownerTag(q.player_id);
-    return `<td class="${q.player_id === p.player_id ? 'me' : ''}">${nameCell(q)} ${injTag(q)}<div class="small muted">${fmt(pv.basePG)} FP/J${st?.gp ? ` · ${fmt0(st.gp)} JJ` : ''} ${own}</div></td>`;
+    return `<td class="${q.player_id === p.player_id ? 'me' : ''}">${nameCell(q)} ${injTag(q)}<div class="small muted">${fmt(pv.basePG)} pts/J${st?.gp ? ` · ${fmt0(st.gp)} JJ` : ''} ${own}</div></td>`;
   };
   let html = `<div class="table-wrap"><table class="tbl mini depth"><thead><tr><th></th>${cols.map((c) => `<th>${c}</th>`).join('')}</tr></thead><tbody>`;
   for (let i = 1; i <= depth; i++) {
@@ -407,7 +407,7 @@ async function openPlayer(pid) {
     if (!s) return `<p class="muted small">Sin ${lbl}.</p>`;
     const gp = perGame ? (Number(s.gp) > 1.5 ? Number(s.gp) : 1) : (Number(s.gp) || 1);
     const fppg = fantasyPoints(s) / gp;
-    return `<div class="statline"><div class="s"><b>${perGame ? pv.games : fmt0(s.gp)}</b><span>${perGame ? 'JJ esp.' : 'JJ'}</span></div><div class="s"><b>${fmt(fppg)}</b><span>FP/J</span></div><div class="s"><b>${fmt0(perGame ? fppg * pv.games : fantasyPoints(s))}</b><span>${perGame ? 'FP esperados' : 'FP total'}</span></div></div>`;
+    return `<div class="statline"><div class="s"><b>${perGame ? pv.games : fmt0(s.gp)}</b><span>${perGame ? 'JJ esp.' : 'JJ'}</span></div><div class="s"><b>${fmt(fppg)}</b><span>pts/J</span></div><div class="s"><b>${fmt0(perGame ? fppg * pv.games : fantasyPoints(s))}</b><span>${perGame ? 'pts esperados' : 'pts total'}</span></div></div>`;
   };
   box.innerHTML = `
     <div class="phead"><img src="${img}" onerror="this.style.display='none'" alt=""><div>
@@ -416,9 +416,9 @@ async function openPlayer(pid) {
       ${inj}
       ${ownerOf(pid) ? `<div class="small">En la liga: <b>${esc(ownerOf(pid))}</b></div>` : `<div class="small" style="color:var(--good)">LIBRE en la liga · ADP Sleeper ${pv.adp != null ? fmt(pv.adp, 1) : '—'}</div>`}
     </div></div>
-    ${pr ? `<div class="pbox"><h3>Proyección ${S.projSeason || ''}-${String(Number(S.projSeason) + 1).slice(2)} por juego (puntos de esta liga)</h3>${sline(pr, 'proyección', true)}</div>` : ''}
+    ${pr ? `<div class="pbox"><h3>Proyección ${S.projSeason || ''}-${String(Number(S.projSeason) + 1).slice(2)} por juego (pts de esta liga)</h3>${sline(pr, 'proyección', true)}</div>` : ''}
     <div class="pbox" style="margin-top:10px"><h3>Temporada pasada ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (promedios por juego, puntos de esta liga)</h3>${sline(st, 'stats del año pasado', false)}</div>
-    <div class="pbox" style="margin-top:10px"><h3 id="pBestTitle">Mejores 5 juegos ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (puntos de esta liga)</h3><div id="pBest" class="loading">Cargando…</div></div>
+    <div class="pbox" style="margin-top:10px"><h3 id="pBestTitle">Mejores 5 juegos ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (pts de esta liga)</h3><div id="pBest" class="loading">Cargando…</div></div>
     <div class="pgrid" style="margin-top:10px">
       <div class="pbox"><h3>Noticias recientes</h3><div id="pNews" class="news loading">Cargando…</div></div>
       <div class="pbox"><h3>Lesiones (ESPN)</h3><div id="pInj" class="loading">Cargando…</div><h3 style="margin-top:12px">Temporadas anteriores</h3><div id="pSeasons" class="loading">Cargando…</div></div>
@@ -435,7 +435,7 @@ async function openPlayer(pid) {
     const bestEl = $('#pBest'); bestEl.classList.remove('loading');
     const games = eid ? bundle?.athletes?.[eid]?.games : null;
     const gs = eid ? bundle?.athletes?.[eid]?.games_season : null;
-    if (gs && games?.length) { const yr = Number(gs) - 1; $('#pBestTitle').textContent = `Mejores 5 juegos ${yr}-${String(yr + 1).slice(2)}${String(yr + 1) !== String(Number(S.statsSeason) + 1) ? ' (su última temporada con juegos)' : ''} (puntos de esta liga)`; }
+    if (gs && games?.length) { const yr = Number(gs) - 1; $('#pBestTitle').textContent = `Mejores 5 juegos ${yr}-${String(yr + 1).slice(2)}${String(yr + 1) !== String(Number(S.statsSeason) + 1) ? ' (su última temporada con juegos)' : ''} (pts de esta liga)`; }
     if (!games || !games.length) { bestEl.innerHTML = `<span class="muted small">${bundle ? 'Sin registro juego a juego para este jugador (se baja para los ~350 mejores por ADP).' : 'Registro no disponible.'}</span>`; return; }
     const rows = games.map((g) => {
       const [date, opp, min, pts, reb, ast, stl, blk, to, tpm, fgm, fga, ftm, fta, res] = g;
@@ -448,7 +448,7 @@ async function openPlayer(pid) {
     const avg = rows.reduce((a, r) => a + r.fp, 0) / rows.length;
     const over = (n) => rows.filter((r) => r.fp >= n).length;
     bestEl.innerHTML = `<div class="statline">${top.map((r, i) => `<div class="s" title="${esc(r.date)} ${esc(r.opp)}"><b>${fmt(r.fp)}</b><span>#${i + 1} · ${esc(r.date.slice(5))} ${esc(r.opp)}</span></div>`).join('')}</div>
-      <div class="small muted" style="margin-top:6px">${rows.length} juegos registrados · promedio ${fmt(avg)} FP · top 5 promedio ${fmt(top.reduce((a, r) => a + r.fp, 0) / top.length)} FP · juegos de 50+ FP: ${over(50)} · 40+: ${over(40)} · menos de 20: ${rows.filter((r) => r.fp < 20).length}</div>`;
+      <div class="small muted" style="margin-top:6px">${rows.length} juegos registrados · promedio ${fmt(avg)} pts · top 5 promedio ${fmt(top.reduce((a, r) => a + r.fp, 0) / top.length)} pts · juegos de 50+ pts: ${over(50)} · 40+: ${over(40)} · menos de 20: ${rows.filter((r) => r.fp < 20).length}</div>`;
   })());
   tasks.push((async () => {
     let news = [];
@@ -536,55 +536,41 @@ function whoCell(c) { return `<b>${nm(c.pid, c.name)}</b> <span class="muted sma
 
 async function renderInjuries() {
   let rep = null, log = null;
-  try { rep = await fetchJSON(`${DATA}injury_report.json?v=${Date.now()}`); } catch (e) { $('#gainTable').innerHTML = `<p class="muted">Sin reporte todavía (${esc(e.message)}).</p>`; return; }
+  try { rep = await fetchJSON(`${DATA}injury_report.json?v=${Date.now()}`); } catch (e) { $('#gainList').innerHTML = `<p class="muted">Sin reporte todavía (${esc(e.message)}).</p>`; return; }
   try { log = await fetchJSON(`${DATA}injury_log.json?v=${Date.now()}`); } catch {}
   S.report = rep;
-  const since = rep.since ? new Date(rep.since).toLocaleString() : 'el reporte anterior';
-  $('#repMeta').textContent = `Cambios desde ${since} · generado ${rep.generated_at ? new Date(rep.generated_at).toLocaleString() : ''}`;
+  const since = rep.since ? new Date(rep.since).toLocaleString('es', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'el reporte anterior';
+  $('#repMeta').textContent = `Cambios desde ${since} · actualizado ${rep.generated_at ? new Date(rep.generated_at).toLocaleString('es', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''}`;
   const worse = (rep.changes || []).filter((c) => c.kind === 'peor');
   const better = (rep.changes || []).filter((c) => c.kind === 'mejor');
 
-  // Tabla 1: se lesionó -> quién gana minutos
-  const rows1 = [];
+  const mateRows = (list, gain) => `<table class="tbl mini mates"><thead><tr><th>${gain ? 'Gana minutos' : 'Pierde minutos'}</th><th>Dueño</th><th class="num" title="Promedio de sus 5 mejores juegos del año pasado, puntos de la liga">Techo</th><th class="num hm">Proy/J</th><th>Últimos juegos</th></tr></thead><tbody>${list.map((m) => `<tr><td>${nm(m.pid, m.name)}<div class="small muted">${(m.pos || []).join('/')} · ${esc((m.depth || []).join(''))}</div></td><td>${ownerCell(m.owner, m.free)}</td><td class="num">${m.top5 ?? '—'}</td><td class="num hm">${m.proj ?? '—'}</td><td class="small">${recentCell(m.recent)}</td></tr>`).join('')}</tbody></table>`;
+  const card = (c, list, gain, emptyMsg) => `<div class="icard"><div class="ihead"><div>${whoCell(c)}</div><div>${gain ? changeCell(c) : `${sevTag(c.from)} → ${sevTag(c.to)}`}</div><div class="small">Dueño: ${ownerCell(c.owner)}</div></div>${list.length ? mateRows(list, gain) : `<div class="small muted" style="padding:6px 0">${emptyMsg}</div>`}</div>`;
+
+  const cards1 = [];
   for (const c of worse) {
     const bens = (c.beneficiaries || []).filter((m) => passes(m.name, m.owner, m.free));
-    if (!bens.length) {
-      if (passes(c.name, c.owner, !c.owner)) rows1.push(`<tr class="grp"><td>${whoCell(c)}</td><td>${changeCell(c)}</td><td>${ownerCell(c.owner)}</td><td colspan="7" class="muted small">${(c.beneficiaries || []).length ? 'sin beneficiarios que pasen el filtro' : 'baja sin impacto claro en la rotación'}</td></tr>`);
-      continue;
-    }
-    bens.forEach((m, i) => {
-      rows1.push(`<tr class="${i === 0 ? 'grp' : ''}">${i === 0 ? `<td rowspan="${bens.length}">${whoCell(c)}</td><td rowspan="${bens.length}">${changeCell(c)}</td><td rowspan="${bens.length}">${ownerCell(c.owner)}</td>` : ''}<td>${nm(m.pid, m.name)}</td><td>${(m.pos || []).join('/')} <span class="muted small">${esc((m.depth || []).join(''))}</span></td><td>${ownerCell(m.owner, m.free)}</td><td class="num">${m.top5 ?? '—'}</td><td class="num">${m.p90 ?? '—'}</td><td class="num">${m.proj ?? '—'}</td><td class="small">${recentCell(m.recent)}</td></tr>`);
-    });
+    if (!bens.length && !passes(c.name, c.owner, !c.owner)) continue;
+    cards1.push(card(c, bens, true, (c.beneficiaries || []).length ? 'sin beneficiarios que pasen el filtro' : 'baja sin impacto claro en la rotación'));
   }
-  $('#gainTable').innerHTML = rows1.length
-    ? `<table class="tbl grid"><thead><tr><th>Se lesionó</th><th>Cambio</th><th>Dueño</th><th>Gana minutos</th><th>Pos · depth</th><th>Dueño</th><th class="num" title="Promedio de sus 5 mejores juegos del año pasado, puntos de la liga">Techo top5</th><th class="num" title="Percentil 90 de sus juegos del año pasado">P90</th><th class="num">Proy/J</th><th>Últimos juegos (FP, min)</th></tr></thead><tbody>${rows1.join('')}</tbody></table>`
-    : '<p class="muted">Sin lesiones nuevas o agravadas en el período.</p>';
+  $('#gainList').innerHTML = cards1.join('') || '<p class="muted">Sin lesiones nuevas o agravadas en el período.</p>';
 
-  // Tabla 2: regresa -> quién pierde minutos
-  const rows2 = [];
+  const cards2 = [];
   for (const c of better) {
     const los = (c.losers || []).filter((m) => passes(m.name, m.owner, m.free));
-    if (!los.length) {
-      if (passes(c.name, c.owner, !c.owner)) rows2.push(`<tr class="grp"><td>${whoCell(c)}</td><td>${sevTag(c.from)} → ${sevTag(c.to)}</td><td>${ownerCell(c.owner)}</td><td colspan="6" class="muted small">${c.losers ? 'nadie pierde minutos claros' : 'mejora leve, sin cambio de rotación'}</td></tr>`);
-      continue;
-    }
-    los.forEach((m, i) => {
-      rows2.push(`<tr class="${i === 0 ? 'grp' : ''}">${i === 0 ? `<td rowspan="${los.length}">${whoCell(c)}</td><td rowspan="${los.length}">${sevTag(c.from)} → ${sevTag(c.to)}</td><td rowspan="${los.length}">${ownerCell(c.owner)}</td>` : ''}<td>${nm(m.pid, m.name)}</td><td>${(m.pos || []).join('/')} <span class="muted small">${esc((m.depth || []).join(''))}</span></td><td>${ownerCell(m.owner, m.free)}</td><td class="num">${m.proj ?? '—'}</td><td class="num">${m.top5 ?? '—'}</td><td class="small">${recentCell(m.recent)}</td></tr>`);
-    });
+    if (!los.length && !passes(c.name, c.owner, !c.owner)) continue;
+    cards2.push(card(c, los, false, c.losers ? 'nadie pierde minutos claros' : 'mejora leve, sin cambio de rotación'));
   }
-  $('#loseTable').innerHTML = rows2.length
-    ? `<table class="tbl grid"><thead><tr><th>Regresa</th><th>Cambio</th><th>Dueño</th><th>Pierde minutos</th><th>Pos · depth</th><th>Dueño</th><th class="num">Proy/J</th><th class="num">Techo top5</th><th>Últimos juegos (FP, min)</th></tr></thead><tbody>${rows2.join('')}</tbody></table>`
-    : '<p class="muted">Sin regresos en el período.</p>';
+  $('#loseList').innerHTML = cards2.join('') || '<p class="muted">Sin regresos en el período.</p>';
 
-  // Tabla 3: lesionados actuales
   const cur = (rep.current_out || []).filter((c) => passes(c.name, c.owner, !c.owner));
   $('#outTable').innerHTML = cur.length
-    ? `<table class="tbl"><thead><tr><th>Jugador</th><th>Eq</th><th>Pos</th><th>Estado</th><th>Parte</th><th>Regreso est.</th><th class="num">Proy/J</th><th>Dueño</th></tr></thead><tbody>${cur.map((c) => `<tr><td>${nm(c.pid, c.name)}</td><td>${esc(c.team)}</td><td>${(c.pos || []).join('/')}</td><td>${sevTag(c.status)}</td><td>${esc(c.part || '')}</td><td>${esc(c.return || '—')}</td><td class="num">${c.proj}</td><td>${ownerCell(c.owner)}</td></tr>`).join('')}</tbody></table>`
+    ? `<table class="tbl"><thead><tr><th>Jugador</th><th class="hm">Pos</th><th>Estado</th><th class="hm">Parte</th><th>Regreso</th><th class="num hm">Proy/J</th><th>Dueño</th></tr></thead><tbody>${cur.map((c) => `<tr><td>${nm(c.pid, c.name)}<div class="small muted">${esc(c.team)}${c.part ? ' · ' + esc(c.part) : ''}</div></td><td class="hm">${(c.pos || []).join('/')}</td><td>${sevTag(c.status)}</td><td class="hm">${esc(c.part || '')}</td><td class="small">${esc(c.return || '—')}</td><td class="num hm">${c.proj}</td><td>${ownerCell(c.owner)}</td></tr>`).join('')}</tbody></table>`
     : '<p class="muted">Nadie relevante en Out.</p>';
   $('#outCount').textContent = `(${cur.length})`;
 
   if (log) $('#injLog').innerHTML = Object.keys(log).sort().reverse().slice(0, 10).map((k) => `<div style="margin-bottom:6px"><b>${esc(k)}</b>: ${(log[k] || []).map((c) => `${esc(c.name)} <span class="muted">(${esc(c.team)})</span> ${esc(c.from || 'sano')}→${esc(c.to || 'sano')}`).join(' · ') || 'sin cambios'}</div>`).join('');
-  ['#gainTable', '#loseTable', '#outTable'].forEach((sel) => bindNames($(sel)));
+  ['#gainList', '#loseList', '#outTable'].forEach((sel) => bindNames($(sel)));
 }
 
 // ---------- arranque ----------
