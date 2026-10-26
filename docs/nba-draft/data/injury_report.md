@@ -1,5 +1,5 @@
 # Lesiones 2026-10-26 · Benchwarmers
-Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-26T22:50:49Z)
+Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-26T23:17:33Z)
 
 ## Nuevas o agravadas
 - **Andrew Nembhard** IND PG/SG (de Shalommeyer): GTD → **Out** · Neck. 
@@ -16,3 +16,4 @@ Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-26T22:50:49Z)
 
 ## Mejoran o regresan
 - Cooper Flagg DAL (de Cooper Troopers): GTD → sano
+- Aaron Nesmith IND (LIBRE): GTD → sano
