@@ -23,3 +23,6 @@
   Raymond lo dice. Verificado el 24-oct-2026: starters_points de los matchups de Sleeper NO refleja los
   locks (George estaba fijado en 62.5 y Sleeper mostraba 32.4), así que nunca inferir locks de ahí. Analizar cada slot abierto como parada óptima: fijar ahora vs EV de esperar los juegos
   restantes de la semana (hasta el domingo), incluyendo cambiar al jugador del slot.
+- Raymond está en Panamá (UTC-5, sin horario de verano). El relay diario corre a las 4:00 PM de Panamá
+  (21:00 UTC) y la tarea programada de lesiones le notifica a las 4:12 PM de Panamá por push y correo
+  (trigger trig_01MFQi4UpVq8sQ4ANuJYMKbm).
