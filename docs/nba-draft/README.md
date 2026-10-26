@@ -27,7 +27,7 @@ manualmente, y commitea en `data/`:
 | `players.json` | jugadores de Sleeper (equipo, posiciones, lesión, depth chart, `espn_id` cruzado por nombre) |
 | `stats.json`, `proj.json` | totales de la temporada pasada y proyección por juego de Sleeper |
 | `espn.json` | lesiones, rosters NBA, noticias, historial y registro juego a juego de ESPN (top 350 por ADP) |
-| `daily.json` | box scores de ESPN por fecha (últimos 7 días) y calendario (9 días), matchups de la semana |
+| `daily.json` | box scores de ESPN por fecha (últimos 7 días) y calendario (35 días, para contar juegos que se pierde cada lesionado), matchups de la semana |
 | `injury_report.json` / `.md` | cambios de lesión vs. la línea base de 24 h, beneficiarios, perdedores al regresar, lesionados actuales |
 | `injury_log.json` | historial de cambios (30 días) |
 | `injury_baseline.json` | línea base del diff; solo la mueve la corrida programada (o si tiene 20+ h) |
