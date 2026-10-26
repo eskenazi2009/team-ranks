@@ -610,6 +610,30 @@ async function loadClaudeLive() {
   } catch { /* sin archivo todavía */ }
 }
 
+// ---------- render: lesiones ----------
+async function renderInjuries() {
+  const el = $('#injList'), lg = $('#injLog');
+  let rep = null, log = null;
+  try { rep = await fetchJSON(`${DATA}injury_report.json?v=${Date.now()}`); } catch (e) { el.innerHTML = `<p class="muted">Sin reporte todavía (${esc(e.message)}).</p>`; return; }
+  try { log = await fetchJSON(`${DATA}injury_log.json?v=${Date.now()}`); } catch {}
+  $('#injDate').textContent = `· ${rep.today || ''} · generado ${rep.generated_at || ''}`;
+  const sevTag = (s) => s ? `<span class="inj ${esc(String(s).replace(/\s/g, ''))}">${esc(s)}</span>` : '<span class="muted small">sano</span>';
+  const worse = (rep.changes || []).filter((c) => c.kind === 'peor'), better = (rep.changes || []).filter((c) => c.kind === 'mejor');
+  const pl = (c) => S.players[c.pid] ? nameCell(S.players[c.pid]) : esc(c.name);
+  let html = '';
+  if (!rep.changes?.length) html += '<p class="muted">Sin cambios de lesión relevantes desde el último reporte.</p>';
+  if (worse.length) {
+    html += '<h3>Nuevas o agravadas</h3>' + worse.map((c) => `<div class="item" style="display:block;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px">
+      <div><b>${pl(c)}</b> <span class="muted">${esc(c.team)} · ${(c.pos || []).filter(Boolean).join('/')}</span> · ${sevTag(c.from)} → ${sevTag(c.to)} ${c.part ? '· ' + esc(c.part) : ''} ${c.return ? '· regreso est. ' + esc(c.return) : ''} · <span class="small ${c.owner ? 'muted' : ''}" style="${c.owner ? '' : 'color:var(--good)'}">${c.owner ? 'de ' + esc(c.owner) : 'LIBRE'}</span></div>
+      ${c.detail ? `<div class="small muted">${esc(c.detail)}</div>` : ''}
+      ${(c.beneficiaries || []).length ? `<table class="tbl mini" style="margin-top:6px"><thead><tr><th>Se beneficia</th><th>Pos</th><th>Depth</th><th>Dueño</th><th class="num">Techo top5</th><th class="num">P90</th><th class="num">Proy/J</th><th>Últimos juegos (FP, min)</th></tr></thead><tbody>${c.beneficiaries.map((m) => `<tr><td>${S.players[m.pid] ? nameCell(S.players[m.pid]) : esc(m.name)}</td><td>${(m.pos || []).join('/')}</td><td>${esc((m.depth || []).join(''))}</td><td style="${m.free ? 'color:var(--good)' : ''}">${m.free ? 'LIBRE' : esc(m.owner || '')}</td><td class="num">${m.top5 ?? '—'}</td><td class="num">${m.p90 ?? '—'}</td><td class="num">${m.proj ?? '—'}</td><td class="small">${(m.recent || []).map((r) => `${r.fp} (${r.min}m)`).join(', ') || '—'}</td></tr>`).join('')}</tbody></table>` : ''}
+    </div>`).join('');
+  }
+  if (better.length) html += '<h3>Mejoran o regresan</h3>' + better.map((c) => `<div class="small" style="padding:4px 0">${pl(c)} <span class="muted">${esc(c.team)}</span> · ${sevTag(c.from)} → ${sevTag(c.to)} · ${c.owner ? 'de ' + esc(c.owner) : '<span style="color:var(--good)">LIBRE</span>'}</div>`).join('');
+  el.innerHTML = html; bindNames(el);
+  if (log) lg.innerHTML = Object.keys(log).sort().reverse().slice(0, 7).map((k) => `<div style="margin-bottom:6px"><b>${esc(k)}</b>: ${(log[k] || []).map((c) => `${esc(c.name)} (${esc(c.team)}) ${esc(c.from || 'sano')}→${esc(c.to || 'sano')}`).join(' · ') || 'sin cambios'}</div>`).join('');
+}
+
 // ---------- render: liga ----------
 function renderLeague() {
   const lg = S.league; if (!lg) return;
@@ -915,6 +939,7 @@ document.querySelectorAll('.tab').forEach((b) => b.onclick = () => {
   document.querySelectorAll('.panel').forEach((p) => p.classList.toggle('hidden', p.id !== 'tab-' + b.dataset.tab));
   if (b.dataset.tab === 'players') renderPlayersTable();
   if (b.dataset.tab === 'picks') { renderReco(); loadClaudeLive(); }
+  if (b.dataset.tab === 'injuries') renderInjuries();
 });
 $('#setupBtn').onclick = () => $('#setup').classList.toggle('hidden');
 $('#applySetup').onclick = () => { S.cfg = { user: $('#inUser').value.trim(), league: $('#inLeague').value.trim(), season: $('#inSeason').value.trim(), poll: Number($('#inPoll').value) || 15 }; lsSet('draft_cfg', S.cfg); boot(); };

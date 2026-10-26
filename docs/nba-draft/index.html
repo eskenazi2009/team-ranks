@@ -30,6 +30,7 @@
   <button data-tab="draft" class="tab active">Draft en vivo</button>
   <button data-tab="players" class="tab">Jugadores</button>
   <button data-tab="picks" class="tab">Picks sugeridos</button>
+  <button data-tab="injuries" class="tab">Lesiones</button>
   <button data-tab="league" class="tab">Liga</button>
 </nav>
 
@@ -101,6 +102,15 @@
         <textarea id="manualNote" rows="4" placeholder="Pega aquí lo que Claude te mande en el chat…"></textarea>
       </div>
     </div>
+  </section>
+
+  <!-- ===== INJURIES ===== -->
+  <section id="tab-injuries" class="panel hidden">
+    <div class="card">
+      <div class="card-head"><h2>Cambios de lesión <span id="injDate" class="muted"></span></h2><span class="muted small">Detectados por el relay al comparar con el reporte anterior. Debajo de cada lesionado, los compañeros que pueden ganar minutos, con su techo y si están libres en la liga.</span></div>
+      <div id="injList"></div>
+    </div>
+    <div class="card"><h2>Historial reciente</h2><div id="injLog" class="small"></div></div>
   </section>
 
   <!-- ===== LEAGUE ===== -->
