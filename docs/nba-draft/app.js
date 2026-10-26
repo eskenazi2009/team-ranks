@@ -20,6 +20,7 @@ const REPO = (() => {
 const LIVE_RAW = `https://raw.githubusercontent.com/${REPO.owner}/${REPO.repo}/nba-live/`;
 
 const $ = (s) => document.querySelector(s);
+const setHTML = (s, html) => { const el = $(s); if (el) el.innerHTML = html; };
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = (n, d = 1) => (n == null || isNaN(n)) ? '—' : Number(n).toFixed(d);
 const fmt0 = (n) => (n == null || isNaN(n)) ? '—' : Math.round(n).toString();
@@ -536,7 +537,7 @@ function whoCell(c) { return `<b>${nm(c.pid, c.name)}</b> <span class="muted sma
 
 async function renderInjuries() {
   let rep = null, log = null;
-  try { rep = await fetchJSON(`${DATA}injury_report.json?v=${Date.now()}`); } catch (e) { $('#gainList').innerHTML = `<p class="muted">Sin reporte todavía (${esc(e.message)}).</p>`; return; }
+  try { rep = await fetchJSON(`${DATA}injury_report.json?v=${Date.now()}`); } catch (e) { setHTML('#gainList', `<p class="muted">Sin reporte todavía (${esc(e.message)}).</p>`); return; }
   try { log = await fetchJSON(`${DATA}injury_log.json?v=${Date.now()}`); } catch {}
   S.report = rep;
   const since = rep.since ? new Date(rep.since).toLocaleString('es', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : 'el reporte anterior';
@@ -553,7 +554,7 @@ async function renderInjuries() {
     if (!bens.length && !passes(c.name, c.owner, !c.owner)) continue;
     cards1.push(card(c, bens, true, (c.beneficiaries || []).length ? 'sin beneficiarios que pasen el filtro' : 'baja sin impacto claro en la rotación'));
   }
-  $('#gainList').innerHTML = cards1.join('') || '<p class="muted">Sin lesiones nuevas o agravadas en el período.</p>';
+  setHTML('#gainList', cards1.join('') || '<p class="muted">Sin lesiones nuevas o agravadas en el período.</p>');
 
   const cards2 = [];
   for (const c of better) {
@@ -561,15 +562,15 @@ async function renderInjuries() {
     if (!los.length && !passes(c.name, c.owner, !c.owner)) continue;
     cards2.push(card(c, los, false, c.losers ? 'nadie pierde minutos claros' : 'mejora leve, sin cambio de rotación'));
   }
-  $('#loseList').innerHTML = cards2.join('') || '<p class="muted">Sin regresos en el período.</p>';
+  setHTML('#loseList', cards2.join('') || '<p class="muted">Sin regresos en el período.</p>');
 
   const cur = (rep.current_out || []).filter((c) => passes(c.name, c.owner, !c.owner));
-  $('#outTable').innerHTML = cur.length
+  setHTML('#outTable', cur.length
     ? `<table class="tbl"><thead><tr><th>Jugador</th><th class="hm">Pos</th><th>Estado</th><th class="hm">Parte</th><th>Regreso</th><th class="num hm">Proy/J</th><th>Dueño</th></tr></thead><tbody>${cur.map((c) => `<tr><td>${nm(c.pid, c.name)}<div class="small muted">${esc(c.team)}${c.part ? ' · ' + esc(c.part) : ''}</div></td><td class="hm">${(c.pos || []).join('/')}</td><td>${sevTag(c.status)}</td><td class="hm">${esc(c.part || '')}</td><td class="small">${esc(c.return || '—')}</td><td class="num hm">${c.proj}</td><td>${ownerCell(c.owner)}</td></tr>`).join('')}</tbody></table>`
-    : '<p class="muted">Nadie relevante en Out.</p>';
-  $('#outCount').textContent = `(${cur.length})`;
+    : '<p class="muted">Nadie relevante en Out.</p>');
+  { const oc = $('#outCount'); if (oc) oc.textContent = `(${cur.length})`; }
 
-  if (log) $('#injLog').innerHTML = Object.keys(log).sort().reverse().slice(0, 10).map((k) => `<div style="margin-bottom:6px"><b>${esc(k)}</b>: ${(log[k] || []).map((c) => `${esc(c.name)} <span class="muted">(${esc(c.team)})</span> ${esc(c.from || 'sano')}→${esc(c.to || 'sano')}`).join(' · ') || 'sin cambios'}</div>`).join('');
+  if (log) setHTML('#injLog', Object.keys(log).sort().reverse().slice(0, 10).map((k) => `<div style="margin-bottom:6px"><b>${esc(k)}</b>: ${(log[k] || []).map((c) => `${esc(c.name)} <span class="muted">(${esc(c.team)})</span> ${esc(c.from || 'sano')}→${esc(c.to || 'sano')}`).join(' · ') || 'sin cambios'}</div>`).join(''));
   ['#gainList', '#loseList', '#outTable'].forEach((sel) => bindNames($(sel)));
 }
 
