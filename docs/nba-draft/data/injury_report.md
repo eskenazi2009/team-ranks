@@ -1,8 +1,8 @@
 # Lesiones 2026-10-26 · Benchwarmers
-Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-26T23:17:33Z)
+Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-26T23:26:34Z)
 
 ## Nuevas o agravadas
-- **Andrew Nembhard** IND PG/SG (de Shalommeyer): GTD → **Out** · Neck. 
+- **Andrew Nembhard** IND PG/SG (de Shalommeyer): GTD → **Out** · Back · regreso est. 2026-10-28 (2 días, se pierde 1 juego, 1 de 4 esta semana). Soreness
     - Tyrese Haliburton PG/SG depth PG1 · de TIQUITI · techo top5 70.6 · p90 59.4 · proy 40.7 · últimos: 46.4 (34m), 38.7 (32m), 51.8 (31m)
     - Pascal Siakam C/PF depth PF1 · de Shalommeyer · techo top5 59.3 · p90 53.7 · proy 38.0 · últimos: 42.1 (35m), 29.1 (29m), 42.4 (26m)
     - Kelly Oubre Jr. PF/SF depth SG2 · LIBRE · techo top5 45.4 · p90 39.7 · proy 22.8 · últimos: 13.9 (28m), 11.4 (20m), 19.4 (20m)
