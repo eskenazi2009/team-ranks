@@ -529,12 +529,30 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
                 out.append({"date": date[5:], "opp": l.get("opp"), "fp": round(box_fp(scoring, l), 1), "min": round(l["min"]), "starter": bool(l.get("starter"))})
         return out[-4:]
 
+    today = (daily or {}).get("today") or now_iso()[:10]
+    try:
+        baseline = json.load(open(f"{out_dir}/injury_baseline.json", encoding="utf-8"))
+    except Exception:
+        baseline = None
+    cur_statuses = {}
+    for pid, pl in players.items():
+        if pl.get("team"):
+            cur_statuses[pid] = list(status_of(pl, inj_now))
+    if baseline and baseline.get("statuses"):
+        def prev_of(pid):
+            b = baseline["statuses"].get(pid)
+            return tuple(b) if b else (0, None, None, None, None)
+        since = baseline.get("generated_at")
+    else:
+        def prev_of(pid):
+            return status_of(prev_players.get(pid, {}), inj_prev) if prev_players.get(pid) else (0, None, None, None, None)
+        since = None
     changes = []
     for pid, pl in players.items():
         if not pl.get("team"):
             continue
-        now = status_of(pl, inj_now)
-        prev = status_of(prev_players.get(pid, {}), inj_prev) if prev_players.get(pid) else (0, None, None, None, None)
+        now = tuple(cur_statuses[pid])
+        prev = prev_of(pid)
         if now[0] == prev[0]:
             continue
         relevance = max(per_game_proj(pid), 0)
@@ -566,7 +584,10 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
             m.pop("_s", None)
         c["beneficiaries"] = mates[:5]
     changes.sort(key=lambda c: (c["kind"] != "peor", -sev(c["to"]), -c["proj"]))
-    report = {"generated_at": now_iso(), "today": (daily or {}).get("today"), "league": league.get("name"), "changes": changes}
+    report = {"generated_at": now_iso(), "today": today, "since": since, "league": league.get("name"), "changes": changes}
+    # la primera corrida de cada día fija la nueva línea base (así el reporte matutino cubre 24 h)
+    if not baseline or baseline.get("date") != today:
+        write_json(f"{out_dir}/injury_baseline.json", {"date": today, "generated_at": now_iso(), "statuses": cur_statuses})
     write_json(f"{out_dir}/injury_report.json", report)
     # histórico (últimos 30 días)
     try:
@@ -574,12 +595,13 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
     except Exception:
         log_ = {}
     key = report["today"] or report["generated_at"][:10]
-    log_[key] = [{k: c[k] for k in ("name", "team", "kind", "from", "to", "part", "return")} for c in changes]
+    seen = {(x["name"], x["to"]) for x in log_.get(key, [])}
+    log_[key] = log_.get(key, []) + [{k: c[k] for k in ("name", "team", "kind", "from", "to", "part", "return")} for c in changes if (c["name"], c["to"]) not in seen]
     for k in sorted(log_)[:-30]:
         log_.pop(k, None)
     write_json(f"{out_dir}/injury_log.json", log_)
     # markdown para la notificación
-    md = [f"# Lesiones {key} · {league.get('name')}", ""]
+    md = [f"# Lesiones {key} · {league.get('name')}", f"Cambios desde {since or 'el snapshot anterior'} (generado {report['generated_at']})", ""]
     worse = [c for c in changes if c["kind"] == "peor"]; better = [c for c in changes if c["kind"] == "mejor"]
     if not changes:
         md.append("Sin cambios de lesión relevantes desde el último reporte.")
