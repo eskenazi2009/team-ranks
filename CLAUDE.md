@@ -4,6 +4,8 @@
 
 - El sitio es SOLO de lesiones (desde el 26-oct-2026): tablas de quién gana minutos por cada baja, quién
   pierde al regresar otro, lesionados actuales y ficha por jugador. El draft ya pasó; no hay UI de draft.
+- Al cambiar app.js o styles.css, subir el `?v=` de ambos en index.html; si no, el celular de Raymond
+  mezcla HTML nuevo con JS viejo en caché y la página se rompe (pasó el 26-oct-2026).
 
 - Usuario de Sleeper: raymondesk. Liga: Benchwarmers (puntos, 10 equipos, alineaciones diarias,
   FAAB de 100). Su roster es el roster_id 7, equipo "White". Llamarlo Raymond.
