@@ -1,7 +1,7 @@
-/* Draft en vivo · Sleeper NBA
-   App de una sola página, sin build. Todo corre en el navegador:
-   - Sleeper API (pública, sin login): liga, draft, picks, jugadores, stats, proyecciones
-   - ESPN API (pública): noticias, roster del equipo NBA, temporadas anteriores, lesiones
+/* Lesiones NBA · liga Benchwarmers (Sleeper)
+   Página estática: lee los JSON que deja el relay de GitHub Actions en data/ (lesiones, beneficiarios,
+   jugadores, stats, proyecciones, box scores) y muestra quién gana minutos con cada baja y quién
+   pierde cuando alguien vuelve. Al tocar un nombre se abre la ficha del jugador.
 */
 'use strict';
 
@@ -26,21 +26,11 @@ const fmt0 = (n) => (n == null || isNaN(n)) ? '—' : Math.round(n).toString();
 
 // ---------- estado global ----------
 const S = {
-  cfg: { user: 'raymondesk', league: 'Benchwarmers', season: '', poll: 15 },
-  state: null, user: null, league: null, users: [], rosters: [], draft: null, picks: [], traded: [],
-  players: {},          // player_id -> jugador (recortado)
-  stats: {},            // player_id -> stats temporada pasada (totales)
-  proj: {},             // player_id -> proyección temporada actual (totales)
-  statsSeason: null, projSeason: null,
-  mySlot: null, myRosterId: null,
-  posFilterAvail: new Set(), posFilterPl: new Set(),
-  sortPl: { key: 'fp', dir: -1 },
-  sortAvail: { key: 'V', dir: -1 },
-  timer: null, tick: null,
-  espnTeams: null, espnInjuries: null,
-  cache: {},
-  lastPickCount: -1,
-  diag: [],
+  cfg: { user: 'raymondesk', league: 'Benchwarmers', season: '', poll: 300 },
+  snap: null, league: null, users: [], rosters: [],
+  players: {}, stats: {}, proj: {}, statsSeason: null, projSeason: null,
+  owner: {},            // player_id -> nombre del equipo de la liga que lo tiene
+  espnData: undefined, cache: {}, diag: [], onlyFree: false, query: '',
 };
 
 // ---------- diagnóstico ----------
@@ -151,52 +141,23 @@ async function loadSnapshot() {
   } catch (e) { diag('sin snapshot del relay: ' + e.message, false); return null; }
 }
 function applyCore() {
-  const found = S.league;
-  $('#leagueName').textContent = `${found.name} · ${found.season}`;
-  document.title = `Draft NBA · ${found.name}`;
-  const myRoster = S.rosters.find((r) => r.owner_id === S.user.user_id || (r.co_owners || []).includes(S.user.user_id));
-  S.myRosterId = myRoster?.roster_id ?? null;
-  S.mySlot = S.draft.draft_order?.[S.user.user_id] ?? null;
-  if (S.mySlot == null && S.myRosterId != null && S.draft.slot_to_roster_id) {
-    const ent = Object.entries(S.draft.slot_to_roster_id).find(([, rid]) => rid === S.myRosterId);
-    if (ent) S.mySlot = Number(ent[0]);
+  const lg = S.league;
+  $('#leagueName').textContent = `${lg.name} · ${lg.season}`;
+  document.title = `Lesiones NBA · ${lg.name}`;
+  const users = Object.fromEntries((S.users || []).map((u) => [u.user_id, u]));
+  S.owner = {};
+  for (const r of S.rosters || []) {
+    const u = users[r.owner_id] || {};
+    const name = u.metadata?.team_name || u.display_name || `roster ${r.roster_id}`;
+    for (const pid of r.players || []) S.owner[pid] = name;
   }
-  diag(`draft ${S.draft.draft_id} estado=${S.draft.status} tipo=${S.draft.type} rondas=${S.draft.settings?.rounds} equipos=${S.draft.settings?.teams} mi slot=${S.mySlot}`);
-  renderLeague();
+  diag(`liga ${lg.name}: ${(S.rosters || []).length} equipos, ${Object.keys(S.owner).length} jugadores con dueño`);
 }
 async function loadCore() {
   const snap = await loadSnapshot();
-  if (snap) {
-    S.snap = snap; S.state = snap.state; S.user = snap.user; S.league = snap.league; S.users = snap.users || []; S.rosters = snap.rosters || [];
-    S.draft = snap.draft; S.traded = snap.traded || []; S.picks = (snap.picks || []).slice().sort((a, b) => a.pick_no - b.pick_no);
-    diag(`datos del relay generados ${snap.generated_at} (${S.league.name})`);
-    applyCore(); return;
-  }
-  S.state = await getJSON(`${SLEEPER}/state/nba`).catch((e) => { diag('state/nba: ' + e.message, false); return null; });
-  S.user = await getJSON(`${SLEEPER}/user/${encodeURIComponent(S.cfg.user)}`);
-  diag(`usuario ${S.user.display_name} (${S.user.user_id})`);
-
-  const y = new Date().getFullYear();
-  const seasons = S.cfg.season ? [S.cfg.season] : [...new Set([S.state?.league_season, S.state?.season, String(y), String(y + 1), String(y - 1)].filter(Boolean))];
-  let found = null;
-  for (const se of seasons) {
-    const lgs = await getJSON(`${SLEEPER}/user/${S.user.user_id}/leagues/nba/${se}`).catch(() => []);
-    const hit = (lgs || []).find((l) => l.name.toLowerCase().trim() === S.cfg.league.toLowerCase().trim()) || (lgs || []).find((l) => l.name.toLowerCase().includes(S.cfg.league.toLowerCase()));
-    if (hit) { found = hit; diag(`liga ${hit.name} (${hit.league_id}) temporada ${se}`); break; }
-    if (lgs?.length) diag(`temporada ${se}: ligas ${lgs.map((l) => l.name).join(', ')} (ninguna coincide)`, false);
-  }
-  if (!found) throw new Error(`No encontré la liga "${S.cfg.league}" para ${S.cfg.user}. Revisa el nombre en ⚙.`);
-  S.league = found;
-  const [users, rosters, drafts] = await Promise.all([
-    getJSON(`${SLEEPER}/league/${found.league_id}/users`),
-    getJSON(`${SLEEPER}/league/${found.league_id}/rosters`),
-    getJSON(`${SLEEPER}/league/${found.league_id}/drafts`),
-  ]);
-  S.users = users; S.rosters = rosters;
-  const draftMeta = (drafts || []).sort((a, b) => (b.start_time || 0) - (a.start_time || 0))[0];
-  if (!draftMeta) throw new Error('La liga no tiene draft creado todavía.');
-  S.draft = await getJSON(`${SLEEPER}/draft/${draftMeta.draft_id}`);
-  S.traded = await getJSON(`${SLEEPER}/draft/${draftMeta.draft_id}/traded_picks`).catch(() => []);
+  if (!snap) throw new Error('No encontré los datos del relay (data/snapshot.json). Corre el workflow nba-draft-relay.yml.');
+  S.snap = snap; S.league = snap.league; S.users = snap.users || []; S.rosters = snap.rosters || [];
+  diag(`datos del relay generados ${snap.generated_at}`);
   applyCore();
 }
 
@@ -205,11 +166,7 @@ async function loadPlayers() {
   let all = null;
   try { all = await fetchJSON(`${DATA}players.json?v=${S.snap?.generated_at || Date.now()}`); diag(`jugadores del relay (${Object.keys(all).length})`); }
   catch (e) { diag('players.json del relay: ' + e.message, false); }
-  if (!all) {
-    const c = lsGet('nba_players_v1');
-    if (c && Date.now() - c.ts < 12 * 3600e3 && c.data && Object.keys(c.data).length > 100) { S.players = c.data; diag(`jugadores desde caché (${Object.keys(c.data).length})`); return; }
-    all = await getJSON(`${SLEEPER}/players/nba`);
-  }
+  if (!all) throw new Error('No encontré data/players.json del relay.');
   const trimmed = {};
   for (const [id, p] of Object.entries(all)) {
     if (!p || !p.first_name) continue;
@@ -217,7 +174,6 @@ async function loadPlayers() {
     trimmed[id] = t;
   }
   S.players = trimmed;
-  if (!S.snap) lsSet('nba_players_v1', { ts: Date.now(), data: trimmed });
   const withEspn = Object.values(trimmed).filter((x) => x.espn_id).length;
   diag(`jugadores listos (${Object.keys(trimmed).length}, ${withEspn} con id ESPN)`);
 }
@@ -243,7 +199,7 @@ async function loadStats() {
       S.stats = st; S.statsSrc = S.snap.statsSrc || 'relay'; S.proj = pr || {};
       S.statsSeason = S.snap.statsSeason || prev; S.projSeason = S.snap.projSeason || String(lgSeason);
       diag(`stats ${S.statsSeason} (${Object.keys(st).length}) y proyecciones (${Object.keys(S.proj).length}) del relay`);
-      $('#statsSeasonLbl').textContent = `temporada ${S.statsSeason}-${String(Number(S.statsSeason) + 1).slice(2)}${S.statsSrc === 'espn' ? ' (ESPN)' : ''}`;
+      const _lbl = $('#statsSeasonLbl'); if (_lbl) _lbl.textContent = `temporada ${S.statsSeason}-${String(Number(S.statsSeason) + 1).slice(2)}${S.statsSrc === 'espn' ? ' (ESPN)' : ''}`;
       return;
     }
   }
@@ -268,7 +224,7 @@ async function loadStats() {
     S.proj = r ? (Array.isArray(r.data) ? parseSleeperStatsArray(r.data) : r.data) : {};
     if (Object.keys(S.proj).length) lsSet('nba_proj_' + lgSeason, { ts: Date.now(), data: S.proj });
   }
-  $('#statsSeasonLbl').textContent = `temporada ${prev}-${String(lgSeason).slice(2)}${S.statsSrc === 'espn' ? ' (ESPN)' : ''}`;
+  const _lbl = $('#statsSeasonLbl'); if (_lbl) _lbl.textContent = `temporada ${prev}-${String(lgSeason).slice(2)}${S.statsSrc === 'espn' ? ' (ESPN)' : ''}`;
 }
 
 // ESPN bulk (respaldo si Sleeper no da stats): promedios por juego -> totales
@@ -297,75 +253,7 @@ async function loadEspnBulkStats(season) {
   return out;
 }
 
-async function loadPicks() {
-  if (!S.draft) return;
-  const did = S.draft.draft_id;
-  const cands = [];
-  const tasks = [
-    fetchJSON(`${LIVE_RAW}live.json?t=${Date.now()}`).then((j) => { if (j?.picks && j?.draft?.draft_id === did) cands.push({ src: 'relay en vivo', ...j }); }).catch(() => {}),
-    hostOk('api.sleeper.app')
-      ? Promise.all([getJSON(`${SLEEPER}/draft/${did}`), getJSON(`${SLEEPER}/draft/${did}/picks`)]).then(([d, p]) => { if (Array.isArray(p)) cands.push({ src: 'Sleeper directo', draft: d, picks: p, fetched_at: new Date().toISOString() }); }).catch(() => {})
-      : Promise.resolve(),
-  ];
-  await Promise.all(tasks);
-  if (!cands.length && !S.picksLoadedOnce) {
-    try { const j = await fetchJSON(`${DATA}live.json?v=${Date.now()}`); if (j?.picks) cands.push({ src: 'snapshot', ...j }); } catch {}
-  }
-  if (!cands.length) { if (!S.picksLoadedOnce) diag('picks: ninguna fuente respondió', false); return; }
-  cands.sort((a, b) => (b.picks.length - a.picks.length) || ((b.fetched_at || '') > (a.fetched_at || '') ? 1 : -1));
-  const best = cands[0];
-  if (best.draft) S.draft = best.draft;
-  S.picks = best.picks.slice().sort((a, b) => a.pick_no - b.pick_no);
-  if (S.liveSrc !== best.src) { S.liveSrc = best.src; diag(`picks vía ${best.src}` + (best.fetched_at ? ` (${best.fetched_at})` : '')); }
-  S.picksLoadedOnce = true;
-  S.liveFetchedAt = best.fetched_at || null;
-}
-
-// ---------- lógica del draft ----------
-function teams() { return S.draft?.settings?.teams || Object.keys(S.draft?.draft_order || {}).length || S.league?.total_rosters || 10; }
-function rounds() { return S.draft?.settings?.rounds || (S.league?.roster_positions || []).filter((x) => x !== 'IR').length || 13; }
-function slotOwnerRoster(slot, round) {
-  // roster_id que tiene el pick de (slot, round) considerando picks intercambiados
-  const orig = S.draft?.slot_to_roster_id?.[slot] ?? slot;
-  const t = (S.traded || []).find((x) => Number(x.round) === round && Number(x.roster_id) === Number(orig) && String(x.season) === String(S.draft?.season || S.league.season));
-  return t ? Number(t.owner_id) : Number(orig);
-}
-function pickOrder() {
-  const T = teams(), R = rounds(), out = [];
-  for (let r = 1; r <= R; r++) {
-    const slots = Array.from({ length: T }, (_, i) => i + 1);
-    const seq = (S.draft?.type === 'snake' && r % 2 === 0) ? slots.reverse() : slots;
-    // Sleeper permite 3ra ronda invertida (settings.reversal_round)
-    const rev = S.draft?.settings?.reversal_round;
-    const seq2 = (rev && r >= rev && S.draft?.type === 'snake') ? ((r - rev) % 2 === 0 ? [...slots].reverse() : slots) : seq;
-    for (const s of seq2) out.push({ round: r, slot: s, pick_no: out.length + 1, roster_id: slotOwnerRoster(s, r) });
-  }
-  return out;
-}
-function myPicks() { const order = pickOrder(); return order.filter((p) => (S.myRosterId != null && p.roster_id === S.myRosterId) || (S.myRosterId == null && p.slot === S.mySlot)); }
-function nextMyPick() { const n = S.picks.length; return myPicks().find((p) => p.pick_no > n) || null; }
-function currentPick() { const n = S.picks.length; return pickOrder()[n] || null; }
-function userName(uid) { const u = S.users.find((x) => x.user_id === uid); return u?.metadata?.team_name || u?.display_name || uid; }
-function rosterUser(rid) { const r = S.rosters.find((x) => x.roster_id === rid); return r ? userName(r.owner_id) : `Roster ${rid}`; }
-function pickedIds() { return new Set(S.picks.map((p) => p.player_id)); }
-function myPickedPlayers() { return S.picks.filter((p) => (S.myRosterId != null && p.roster_id === S.myRosterId) || p.picked_by === S.user?.user_id || (S.mySlot != null && p.draft_slot === S.mySlot)).map((p) => S.players[p.player_id] || { player_id: p.player_id, first_name: p.metadata?.first_name, last_name: p.metadata?.last_name, position: p.metadata?.position, fantasy_positions: [p.metadata?.position], team: p.metadata?.team }); }
-
-function startingSlots() { return (S.league?.roster_positions || []).filter((x) => !['BN', 'IR'].includes(x)); }
-function assignRoster(players) {
-  // asigna jugadores a slots titulares (específicos primero) y devuelve {slots:[{slot,player}], bench:[...]}
-  const slots = startingSlots().map((s) => ({ slot: s, player: null }));
-  const prio = (s) => (BASE_POS.includes(s) ? 0 : (s === 'G' || s === 'F') ? 1 : 2);
-  const order = [...slots].sort((a, b) => prio(a.slot) - prio(b.slot));
-  const remaining = [...players].sort((a, b) => playerPositions(a).length - playerPositions(b).length);
-  const bench = [];
-  for (const p of remaining) {
-    const slot = order.find((s) => !s.player && eligibleForSlot(p, s.slot));
-    if (slot) slot.player = p; else bench.push(p);
-  }
-  return { slots, bench };
-}
-
-// ---------- valoración y recomendación ----------
+// ---------- valoración (para la ficha) ----------
 // Las proyecciones de Sleeper vienen POR JUEGO (gp = 1); las stats de la temporada pasada son totales.
 function perGameOf(st) {
   if (!st) return null;
@@ -410,258 +298,6 @@ function injuryFactor(p) {
   if (/quest|gtd|dtd|day/.test(s)) return { f: 0.98, txt: `día a día (${p.injury_body_part || ''})` };
   return { f: 1, txt: '' };
 }
-function availablePlayers() {
-  const picked = pickedIds();
-  return Object.values(S.players).filter((p) => !picked.has(p.player_id) && p.team && (p.active !== false) && (p.status !== 'Inactive' || S.stats[p.player_id] || S.proj[p.player_id]));
-}
-function allSlots() { return (S.league?.roster_positions || []).filter((x) => x !== 'IR'); }
-function recommend(limit = 8) {
-  const avail = availablePlayers().map((p) => ({ p, ...playerValue(p) })).filter((x) => x.V > 0);
-  if (!avail.length) return [];
-  const T = teams();
-  const mine = myPickedPlayers();
-  const { slots } = assignRoster(mine);
-  const emptyStart = slots.filter((s) => !s.player).map((s) => s.slot);
-  const bnTotal = allSlots().filter((x) => x === 'BN').length;
-  const bnUsed = Math.max(0, mine.length - (slots.length - emptyStart.length));
-  const bnFree = bnTotal - bnUsed;
-  const nxt = nextMyPick(), cur = currentPick();
-  const n = S.picks.length;
-  const nextPickNo = nxt ? nxt.pick_no : n + 1;
-  const after = myPicks().find((q) => q.pick_no > nextPickNo);
-  const afterNo = after ? after.pick_no : nextPickNo + 2 * T;
-  // ¿Quién estará disponible probablemente en mi SIGUIENTE turno? (ADP > ese pick, con margen)
-  const likelyLater = avail.filter((x) => x.adp == null ? x.V < 1500 : x.adp > afterNo + 1);
-  const bestLaterByPos = {};
-  for (const pos of BASE_POS) bestLaterByPos[pos] = Math.max(0, ...likelyLater.filter((x) => playerPositions(x.p).includes(pos)).map((x) => x.V * injuryFactor(x.p).f));
-  const bestLaterAny = Math.max(0, ...likelyLater.map((x) => x.V * injuryFactor(x.p).f));
-
-  const scored = avail.map((x) => {
-    const pos = playerPositions(x.p);
-    const inj = injuryFactor(x.p);
-    const Vadj = x.V * inj.f;
-    const why = [];
-    // encaje en el roster
-    const slotPrio = (s) => s === x.p.position ? 0 : BASE_POS.includes(s) ? 1 : (s === 'G' || s === 'F') ? 2 : 3;
-    const fills = [...emptyStart].sort((a, b) => slotPrio(a) - slotPrio(b)).find((s) => eligibleForSlot(x.p, s));
-    let fit = 1;
-    if (fills) why.push(`entra de titular en ${fills}`);
-    else if (bnFree > 0) { fit = 0.88; why.push(`iría a la banca (titulares llenos para ${pos.join('/')})`); }
-    else { fit = 0.3; why.push('no cabe en tu roster'); }
-    // ganancia sobre lo que podrías tomar en tu siguiente turno en esas posiciones
-    const later = Math.min(...pos.map((ps) => bestLaterByPos[ps] || bestLaterAny));
-    const gain = Vadj - later;
-    const score = Vadj * fit + Math.max(0, gain) * 0.5;
-    if (gain > 0) why.unshift(`+${fmt0(gain)} FP sobre el mejor ${pos.join('/')} que te esperaría en el pick #${afterNo}`);
-    else why.unshift(`un ${pos.join('/')} parecido seguiría libre en tu siguiente turno`);
-    if (x.adp != null) {
-      if (x.adp <= nextPickNo + 1) why.push(`ADP ${fmt(x.adp, 1)}: hay que tomarlo ahora`);
-      else if (x.adp > afterNo + 3) why.push(`ADP ${fmt(x.adp, 1)}: probablemente llega a tu próximo turno`);
-    }
-    if (inj.txt) why.push(inj.txt);
-    if (x.gpLast != null) { if (x.gpLast < 55) why.push(`solo ${x.gpLast} juegos la temporada pasada`); else if (x.gpLast >= 72) why.push(`${x.gpLast} juegos la temporada pasada (durable)`); }
-    else if (x.p.years_exp === 0) why.push('novato: sin historial NBA');
-    return { ...x, Vadj, score, gain, why, fills, fit };
-  }).sort((a, b) => b.score - a.score);
-  return scored.slice(0, limit);
-}
-
-// ---------- render: cabecera / turno ----------
-function renderStatus() {
-  const st = S.draft?.status || '—';
-  const el = $('#draftStatus');
-  el.textContent = ({ pre_draft: 'Pre-draft', drafting: 'DRAFT EN CURSO', complete: 'Draft terminado', paused: 'Pausado' })[st] || st;
-  el.className = 'pill ' + ({ pre_draft: 'pre', drafting: 'live', complete: 'done' })[st] || '';
-  const cur = currentPick(), nxt = nextMyPick();
-  const T = teams();
-  const turn = $('#myTurn');
-  if (!S.draft) { turn.textContent = '—'; return; }
-  if (st === 'pre_draft') {
-    const when = S.draft.start_time ? new Date(S.draft.start_time).toLocaleString() : 'sin hora';
-    turn.innerHTML = `Empieza: <strong>${esc(when)}</strong><br>Tu posición: <strong>#${S.mySlot ?? '?'}</strong> de ${T}. Tus picks: ${myPicks().slice(0, 4).map((p) => '#' + p.pick_no).join(', ')}…`;
-  } else if (st === 'complete' || !cur) {
-    turn.innerHTML = `Draft completo. Tus jugadores: <strong>${myPickedPlayers().length}</strong>.`;
-  } else {
-    const onClock = rosterUser(cur.roster_id);
-    const isMe = nxt && nxt.pick_no === cur.pick_no;
-    turn.innerHTML = isMe
-      ? `<strong>¡TE TOCA!</strong> Pick #${cur.pick_no} (ronda ${cur.round}). Revisa la pestaña <em>Picks sugeridos</em>.`
-      : `En el reloj: <strong>${esc(onClock)}</strong> (pick #${cur.pick_no}, ronda ${cur.round}).<br>Tu próximo pick: <strong>#${nxt ? nxt.pick_no : '—'}</strong>${nxt ? ` · faltan ${nxt.pick_no - cur.pick_no} picks` : ''}`;
-  }
-}
-function renderClock() {
-  const d = S.draft; const el = $('#clock');
-  if (!d) { el.textContent = '—'; return; }
-  if (d.status === 'pre_draft' && d.start_time) {
-    const ms = d.start_time - Date.now();
-    if (ms > 0) { const h = Math.floor(ms / 3.6e6), m = Math.floor(ms % 3.6e6 / 6e4), s = Math.floor(ms % 6e4 / 1e3); el.textContent = `Empieza en ${h}h ${m}m ${s}s`; return; }
-  }
-  if (d.status === 'drafting' && d.settings?.pick_timer && d.last_picked) {
-    const left = Math.max(0, Math.round((d.last_picked + d.settings.pick_timer * 1000 - Date.now()) / 1000));
-    el.textContent = `Reloj del pick: ${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}`; return;
-  }
-  el.textContent = `Picks: ${S.picks.length}/${teams() * rounds()}`;
-  if (S.liveSrc && S.liveSrc !== 'Sleeper directo') el.title = `Fuente: ${S.liveSrc} ${S.liveFetchedAt || ''}`;
-}
-
-// ---------- render: tabla disponibles ----------
-function posChips(container, set, onChange) {
-  const slotsInLeague = [...new Set((S.league?.roster_positions || []).filter((x) => !['BN', 'IR'].includes(x)))];
-  const list = slotsInLeague.length ? slotsInLeague : [...BASE_POS, 'G', 'F', 'UTIL'];
-  container.innerHTML = list.map((p) => `<span class="chip ${set.has(p) ? 'on' : ''}" data-p="${p}">${p}</span>`).join('');
-  container.querySelectorAll('.chip').forEach((c) => c.onclick = () => { const p = c.dataset.p; set.has(p) ? set.delete(p) : set.add(p); posChips(container, set, onChange); onChange(); });
-}
-function passesPos(p, set) { if (!set.size) return true; return [...set].some((slot) => eligibleForSlot(p, slot)); }
-function injTag(p) { return p.injury_status ? `<span class="inj ${esc(p.injury_status.replace(/\s/g, ''))}">${esc(p.injury_status)}</span>` : ''; }
-function posTags(p) { return playerPositions(p).map((x) => `<span class="pos">${x}</span>`).join(''); }
-function nameCell(p) { return `<span class="name" data-pid="${p.player_id}">${esc(p.first_name)} ${esc(p.last_name)}</span>`; }
-
-function renderAvail() {
-  const q = $('#availSearch').value.trim().toLowerCase();
-  let rows = availablePlayers().map((p) => ({ p, ...playerValue(p) }));
-  rows = rows.filter((x) => (x.V > 0 || (x.adp != null && x.adp < 600)) && passesPos(x.p, S.posFilterAvail) && (!q || `${x.p.first_name} ${x.p.last_name} ${x.p.team}`.toLowerCase().includes(q)));
-  const { key, dir } = S.sortAvail;
-  let recMap = null;
-  if (key === 'rec') recMap = new Map(recommend(500).map((r) => [r.p.player_id, r.score]));
-  const val = (x) => {
-    switch (key) {
-      case 'name': return `${x.p.last_name} ${x.p.first_name}`;
-      case 'team': return x.p.team || '';
-      case 'pos': return playerPositions(x.p).join('/');
-      case 'inj': return x.p.injury_status || '';
-      case 'rec': return recMap.get(x.p.player_id) ?? -1;
-      case 'adp': return x.adp ?? 1e7;
-      default: return x[key] ?? (dir < 0 ? -1e9 : 1e9);
-    }
-  };
-  rows.sort((a, b) => { const va = val(a), vb = val(b); return typeof va === 'string' ? dir * va.localeCompare(vb) : dir * (va - vb); });
-  rows = rows.slice(0, 300);
-  $('#availCount').textContent = `(${rows.length})`;
-  const nxt = nextMyPick();
-  const th = (k, label, num = true, title = '') => `<th class="${num ? 'num' : ''}" data-k="${k}" title="${esc(title)}">${label}${S.sortAvail.key === k ? (dir < 0 ? ' ▼' : ' ▲') : ''}</th>`;
-  $('#availTable').innerHTML = `<thead><tr><th>#</th>${th('name', 'Jugador', false)}${th('team', 'Eq', false)}${th('pos', 'Pos', false)}${th('V', '<b>FP esp.</b>', true, 'Puntos de la liga esperados esta temporada = proyección por juego × juegos esperados')}${th('projPG', 'Proy/J', true, 'Proyección de Sleeper por juego con la puntuación de la liga')}${th('games', 'JJ esp.', true, 'Juegos esperados')}${th('lastTot', `FP ${S.statsSeason || ''}`, true, 'Temporada pasada, puntos de la liga')}${th('lastPG', 'FP/J')}${th('gpLast', 'JJ')}${th('adp', 'ADP', true, 'ADP de Sleeper · 🔥 = por ADP no llegaría a tu próximo turno')}${th('rec', 'Rec.', true, 'Puntuación de la recomendación para tu equipo')}${th('inj', 'Lesión', false)}</tr></thead><tbody>` +
-    rows.map((x, i) => {
-      const risk = x.adp != null && nxt ? (x.adp <= nxt.pick_no + 1 ? '🔥' : '') : '';
-      return `<tr><td class="muted">${i + 1}</td><td>${nameCell(x.p)} ${risk}</td><td>${esc(x.p.team)}</td><td>${posTags(x.p)}</td><td class="num"><b>${fmt0(x.V)}</b></td><td class="num">${fmt(x.projPG)}</td><td class="num">${x.games}</td><td class="num">${fmt0(x.lastTot)}</td><td class="num">${fmt(x.lastPG)}</td><td class="num">${x.gpLast ?? '—'}</td><td class="num">${x.adp != null ? fmt(x.adp, 1) : '—'}</td><td class="num">${recMap ? fmt0(recMap.get(x.p.player_id)) : ''}</td><td>${injTag(x.p)}</td></tr>`;
-    }).join('') + '</tbody>';
-  $('#availTable').querySelectorAll('th[data-k]').forEach((h) => h.onclick = () => { const k = h.dataset.k; const strCol = ['name', 'team', 'pos', 'inj', 'adp'].includes(k); S.sortAvail = { key: k, dir: S.sortAvail.key === k ? -S.sortAvail.dir : (strCol ? 1 : -1) }; renderAvail(); });
-  bindNames($('#availTable'));
-}
-
-// ---------- render: roster y feed ----------
-function renderRoster() {
-  const mine = myPickedPlayers();
-  const { slots, bench } = assignRoster(mine);
-  const bn = (S.league?.roster_positions || []).filter((x) => x === 'BN').length;
-  let html = slots.map((s) => `<div class="slot">${s.slot}</div><div>${s.player ? `${nameCell(s.player)} <span class="muted small">${esc(s.player.team || '')}</span>` : '<span class="empty">vacío</span>'}</div>`).join('');
-  for (let i = 0; i < Math.max(bn, bench.length); i++) html += `<div class="slot">BN</div><div>${bench[i] ? nameCell(bench[i]) : '<span class="empty">vacío</span>'}</div>`;
-  $('#myRoster').innerHTML = html || '<span class="muted">Sin jugadores todavía</span>';
-  bindNames($('#myRoster'));
-  const feed = [...S.picks].reverse().slice(0, 40);
-  $('#pickFeed').innerHTML = feed.map((p) => {
-    const me = p.roster_id === S.myRosterId || p.picked_by === S.user?.user_id;
-    const nm = p.metadata ? `${p.metadata.first_name} ${p.metadata.last_name}` : (S.players[p.player_id] ? `${S.players[p.player_id].first_name} ${S.players[p.player_id].last_name}` : p.player_id);
-    return `<li class="${me ? 'me' : ''}" value="${p.pick_no}"><b>${esc(nm)}</b> <span class="muted">${esc(p.metadata?.position || '')} ${esc(p.metadata?.team || '')}</span> · ${esc(rosterUser(p.roster_id))} <span class="muted small">(R${p.round})</span></li>`;
-  }).join('') || '<li class="muted">Aún no hay picks</li>';
-}
-
-// ---------- render: tabla de jugadores ----------
-function renderPlayersTable() {
-  const q = $('#plSearch').value.trim().toLowerCase();
-  const onlyAvail = $('#plOnlyAvail').checked, pg = $('#plPerGame').checked;
-  const picked = pickedIds();
-  const cols = ['gp', 'min', 'pts', 'reb', 'ast', 'stl', 'blk', 'to', 'tpm', 'fgm', 'fga', 'ftm', 'fta'];
-  const scoringKeys = Object.keys(S.league?.scoring_settings || {}).filter((k) => S.league.scoring_settings[k]);
-  for (const k of scoringKeys) if (!cols.includes(k) && !['fgmi', 'ftmi', 'tpmi'].includes(k)) cols.push(k);
-  let rows = Object.values(S.players).filter((p) => S.stats[p.player_id]).map((p) => {
-    const st = S.stats[p.player_id]; const gp = st.gp || 0; const fp = fantasyPoints(st); const pr = S.proj[p.player_id];
-    const pv = playerValue(p);
-    return { p, st, gp, fp, fppg: gp ? fp / gp : 0, proj: pv.V || null, projPG: pv.projPG, picked: picked.has(p.player_id) };
-  });
-  rows = rows.filter((r) => (!onlyAvail || !r.picked) && passesPos(r.p, S.posFilterPl) && (!q || `${r.p.first_name} ${r.p.last_name} ${r.p.team}`.toLowerCase().includes(q)));
-  const { key, dir } = S.sortPl;
-  const val = (r) => key === 'fp' ? (pg ? r.fppg : r.fp) : key === 'fppg' ? r.fppg : key === 'proj' ? (pg ? (r.projPG ?? -1) : (r.proj ?? -1)) : key === 'name' ? `${r.p.last_name} ${r.p.first_name}` : key === 'team' ? (r.p.team || '') : key === 'pos' ? playerPositions(r.p).join('/') : key === 'inj' ? (r.p.injury_status || '') : key === 'gp' ? r.gp : (pg && r.gp && key !== 'gp' ? statVal(r.st, key) / r.gp : statVal(r.st, key));
-  rows.sort((a, b) => { const x = val(a), y = val(b); return (typeof x === 'string') ? dir * x.localeCompare(y) : dir * (x - y); });
-  rows = rows.slice(0, 400);
-  const titles = { fp: 'Puntos de la liga en la temporada pasada', fppg: 'Puntos de la liga por juego en la temporada pasada', proj: 'Puntos esperados esta temporada (proyección × juegos esperados)' };
-  const th = (k, label, num = true) => `<th class="${num ? 'num' : ''} ${S.sortPl.key === k ? 'sorted' : ''}" data-k="${k}" title="${esc(titles[k] || '')}">${label}${S.sortPl.key === k ? (dir < 0 ? ' ▼' : ' ▲') : ''}</th>`;
-  $('#plTable').innerHTML = `<thead><tr>${th('name', 'Jugador', false)}${th('team', 'Eq', false)}${th('pos', 'Pos', false)}${th('fp', `FP liga${pg ? '/J' : ''}`)}${th('fppg', 'FP/J', true)}${th('proj', pg ? 'Proy/J' : 'FP esp.')}${cols.map((c) => th(c, STAT_LABELS[c] || c.toUpperCase())).join('')}${th('inj', 'Lesión', false)}</tr></thead><tbody>` +
-    rows.map((r) => `<tr class="${r.picked ? 'muted' : ''}"><td>${nameCell(r.p)}${r.picked ? ' <span class="small muted">(tomado)</span>' : ''}</td><td>${esc(r.p.team)}</td><td>${posTags(r.p)}</td><td class="num"><b>${fmt(pg ? r.fppg : r.fp, pg ? 1 : 0)}</b></td><td class="num"><b>${fmt(r.fppg)}</b></td><td class="num">${pg ? fmt(r.projPG) : fmt0(r.proj)}</td>${cols.map((c) => `<td class="num">${c === 'gp' || !pg || !r.gp ? fmt(statVal(r.st, c), c === 'gp' || c === 'dd' || c === 'td' ? 0 : (pg ? 1 : 0)) : fmt(statVal(r.st, c) / r.gp)}</td>`).join('')}<td>${injTag(r.p)}</td></tr>`).join('') + '</tbody>';
-  $('#plTable').querySelectorAll('th[data-k]').forEach((h) => h.onclick = () => { const k = h.dataset.k; S.sortPl = { key: k, dir: S.sortPl.key === k ? -S.sortPl.dir : (['name', 'team', 'pos', 'inj'].includes(k) ? 1 : -1) }; renderPlayersTable(); });
-  bindNames($('#plTable'));
-}
-
-// ---------- render: recomendaciones ----------
-function renderReco() {
-  const recs = recommend(8);
-  const item = (r, i) => `<div class="item"><div class="rank">${i + 1}</div><div><div class="nm" data-pid="${r.p.player_id}">${esc(r.p.first_name)} ${esc(r.p.last_name)} <span class="muted small">${esc(r.p.team)} · ${playerPositions(r.p).join('/')}</span> ${injTag(r.p)}</div><div class="small"><b>${fmt0(r.V)} FP esperados</b> (${fmt(r.basePG)}/J × ${r.games} JJ) · temporada pasada ${fmt0(r.lastTot)} FP en ${r.gpLast ?? '—'} JJ · ADP ${r.adp != null ? fmt(r.adp, 1) : '—'}</div><div class="why">${r.why.map(esc).join(' · ')}</div></div></div>`;
-  $('#recoList').innerHTML = recs.slice(0, 3).map(item).join('') || '<p class="muted">Sin datos suficientes todavía.</p>';
-  $('#recoMore').innerHTML = recs.slice(3).map((r, i) => item(r, i + 3)).join('');
-  document.querySelectorAll('#recoList .nm, #recoMore .nm').forEach((el) => el.onclick = () => openPlayer(el.dataset.pid));
-}
-async function loadClaudeLive() {
-  try {
-    let j;
-    try { j = await fetchJSON(`${LIVE_RAW}claude.json?t=${Date.now()}`); }
-    catch { j = await fetchJSON(`live/claude.json?t=${Date.now()}`); }
-    const el = $('#claudeLive');
-    const picks = (j.top3 || []).map((t, i) => `<div class="pick"><b>${i + 1}. ${esc(t.player)}</b>${t.reason ? ` — ${esc(t.reason)}` : ''}</div>`).join('');
-    el.innerHTML = `<div class="ts">Actualizado: ${esc(j.updated || '—')}${j.pick ? ` · para el pick #${esc(j.pick)}` : ''}</div>${picks}${j.notes ? `<div>${esc(j.notes)}</div>` : ''}`;
-  } catch { /* sin archivo todavía */ }
-}
-
-// ---------- render: lesiones ----------
-async function renderInjuries() {
-  const el = $('#injList'), lg = $('#injLog');
-  let rep = null, log = null;
-  try { rep = await fetchJSON(`${DATA}injury_report.json?v=${Date.now()}`); } catch (e) { el.innerHTML = `<p class="muted">Sin reporte todavía (${esc(e.message)}).</p>`; return; }
-  try { log = await fetchJSON(`${DATA}injury_log.json?v=${Date.now()}`); } catch {}
-  $('#injDate').textContent = `· ${rep.today || ''} · generado ${rep.generated_at || ''}`;
-  const sevTag = (s) => s ? `<span class="inj ${esc(String(s).replace(/\s/g, ''))}">${esc(s)}</span>` : '<span class="muted small">sano</span>';
-  const worse = (rep.changes || []).filter((c) => c.kind === 'peor'), better = (rep.changes || []).filter((c) => c.kind === 'mejor');
-  const pl = (c) => S.players[c.pid] ? nameCell(S.players[c.pid]) : esc(c.name);
-  let html = '';
-  if (!rep.changes?.length) html += '<p class="muted">Sin cambios de lesión relevantes desde el último reporte.</p>';
-  if (worse.length) {
-    html += '<h3>Nuevas o agravadas</h3>' + worse.map((c) => `<div class="item" style="display:block;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px">
-      <div><b>${pl(c)}</b> <span class="muted">${esc(c.team)} · ${(c.pos || []).filter(Boolean).join('/')}</span> · ${sevTag(c.from)} → ${sevTag(c.to)} ${c.part ? '· ' + esc(c.part) : ''} ${c.return ? '· regreso est. ' + esc(c.return) : ''} · <span class="small ${c.owner ? 'muted' : ''}" style="${c.owner ? '' : 'color:var(--good)'}">${c.owner ? 'de ' + esc(c.owner) : 'LIBRE'}</span></div>
-      ${c.detail ? `<div class="small muted">${esc(c.detail)}</div>` : ''}
-      ${(c.beneficiaries || []).length ? `<table class="tbl mini" style="margin-top:6px"><thead><tr><th>Se beneficia</th><th>Pos</th><th>Depth</th><th>Dueño</th><th class="num">Techo top5</th><th class="num">P90</th><th class="num">Proy/J</th><th>Últimos juegos (FP, min)</th></tr></thead><tbody>${c.beneficiaries.map((m) => `<tr><td>${S.players[m.pid] ? nameCell(S.players[m.pid]) : esc(m.name)}</td><td>${(m.pos || []).join('/')}</td><td>${esc((m.depth || []).join(''))}</td><td style="${m.free ? 'color:var(--good)' : ''}">${m.free ? 'LIBRE' : esc(m.owner || '')}</td><td class="num">${m.top5 ?? '—'}</td><td class="num">${m.p90 ?? '—'}</td><td class="num">${m.proj ?? '—'}</td><td class="small">${(m.recent || []).map((r) => `${r.fp} (${r.min}m)`).join(', ') || '—'}</td></tr>`).join('')}</tbody></table>` : ''}
-    </div>`).join('');
-  }
-  if (better.length) html += '<h3>Mejoran o regresan</h3>' + better.map((c) => `<div class="small" style="padding:4px 0">${pl(c)} <span class="muted">${esc(c.team)}</span> · ${sevTag(c.from)} → ${sevTag(c.to)} · ${c.owner ? 'de ' + esc(c.owner) : '<span style="color:var(--good)">LIBRE</span>'}</div>`).join('');
-  el.innerHTML = html; bindNames(el);
-  if (log) lg.innerHTML = Object.keys(log).sort().reverse().slice(0, 7).map((k) => `<div style="margin-bottom:6px"><b>${esc(k)}</b>: ${(log[k] || []).map((c) => `${esc(c.name)} (${esc(c.team)}) ${esc(c.from || 'sano')}→${esc(c.to || 'sano')}`).join(' · ') || 'sin cambios'}</div>`).join('');
-}
-
-// ---------- render: liga ----------
-function renderLeague() {
-  const lg = S.league; if (!lg) return;
-  const sc = lg.scoring_settings || {};
-  const entries = Object.entries(sc).filter(([, v]) => v).sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
-  $('#lgScoring').innerHTML = `<div class="kv">${entries.map(([k, v]) => `<div class="k">${esc(STAT_LABELS[k] || k)}</div><div><b>${v > 0 ? '+' : ''}${v}</b></div>`).join('')}</div>
-    <p class="small muted">Ejemplo: un jugador con 25 pts, 8 reb, 6 ast, 1 rob, 1 tap, 3 pérd, 2 triples, 9/18 FG, 5/6 FT vale <b>${fmt(fantasyPoints({ pts: 25, reb: 8, ast: 6, stl: 1, blk: 1, to: 3, tpm: 2, tpa: 5, fgm: 9, fga: 18, ftm: 5, fta: 6 }))}</b> FP por juego con esta configuración.</p>`;
-  const rp = lg.roster_positions || [];
-  const counts = rp.reduce((m, x) => (m[x] = (m[x] || 0) + 1, m), {});
-  const d = S.draft || {};
-  const typeLbl = { snake: 'Serpiente', linear: 'Lineal', auction: 'Subasta' }[d.type] || d.type;
-  $('#lgRoster').innerHTML = `<div class="kv">
-    <div class="k">Equipos</div><div>${lg.total_rosters}</div>
-    <div class="k">Roster</div><div>${Object.entries(counts).map(([k, v]) => `${v}× ${k}`).join(', ')}</div>
-    <div class="k">Titulares</div><div>${startingSlots().length} · Banca ${counts.BN || 0} · IR ${lg.settings?.reserve_slots ?? counts.IR ?? 0}</div>
-    <div class="k">Alineaciones</div><div>${lg.settings?.daily_waivers ? 'diarias' : 'semanales'}${lg.settings?.bench_lock ? ' · banca se bloquea al iniciar cada juego' : ''}${lg.settings?.league_average_match ? ' · además juegas contra el promedio de la liga' : ''}</div>
-    <div class="k">Keepers</div><div>${lg.settings?.max_keepers ? `hasta ${lg.settings.max_keepers}` : 'no'} · deadline de cambios semana ${lg.settings?.trade_deadline ?? '—'}</div>
-    <div class="k">Draft</div><div>${esc(typeLbl || '—')} · ${d.settings?.rounds || '—'} rondas · ${d.settings?.pick_timer ? d.settings.pick_timer + ' s por pick' : 'sin reloj'}${d.settings?.reversal_round ? ` · inversión en ronda ${d.settings.reversal_round}` : ''}</div>
-    <div class="k">Inicio</div><div>${d.start_time ? new Date(d.start_time).toLocaleString() : '—'}</div>
-    <div class="k">Mi posición</div><div>#${S.mySlot ?? '?'}</div>
-    <div class="k">Formato</div><div>${esc(lg.settings?.type === 2 ? 'Dinastía/Keeper' : lg.settings?.type === 1 ? 'Keeper' : 'Redraft')} · playoffs ${lg.settings?.playoff_teams || '—'} equipos · semana ${lg.settings?.playoff_week_start || '—'}</div>
-    <div class="k">Waivers</div><div>${esc(String(lg.settings?.waiver_type ?? '—'))} · presupuesto ${lg.settings?.waiver_budget ?? '—'}</div>
-    <div class="k">Scoring</div><div>${esc(lg.scoring_type || d.metadata?.scoring_type || 'points')} · liga de puntos${d.settings?.enforce_position_limits ? ' · Sleeper exige que cada pick quepa en un slot' : ''}${d.settings?.cpu_autopick ? ' · autopick si se acaba el reloj' : ''}</div>
-  </div>`;
-  const order = Object.entries(d.draft_order || {}).sort((a, b) => a[1] - b[1]);
-  $('#lgTeams').innerHTML = `<table class="tbl mini"><thead><tr><th>Slot</th><th>Equipo</th><th>Usuario</th></tr></thead><tbody>${order.map(([uid, slot]) => { const u = S.users.find((x) => x.user_id === uid); return `<tr class="${uid === S.user?.user_id ? 'me' : ''}"><td>${slot}</td><td>${esc(u?.metadata?.team_name || '—')}</td><td>${esc(u?.display_name || uid)}</td></tr>`; }).join('')}</tbody></table>`;
-}
-
 // ---------- modal de jugador ----------
 const TEAM_ALIAS = { GSW: 'GS', NOP: 'NO', NYK: 'NY', SAS: 'SA', UTA: 'UTAH', WAS: 'WSH', PHO: 'PHX', BRK: 'BKN', CHO: 'CHA' };
 async function espnTeams() {
@@ -729,9 +365,10 @@ function injuryNews(n, p) {
   if (!t.includes(p.last_name)) return false;
   return /\b(injur\w*|sprain\w*|strain\w*|tweak\w*|surgery|torn|fractur\w*|sidelined|ruled out|day-to-day|knee|ankle|hamstring|calf|achilles|foot|shoulder|wrist|hip|groin|quad\w*|thigh|concussion|illness|soreness|lower back|back spasms?)\b/i.test(t);
 }
+function ownerOf(pid) { return S.owner[pid] || null; }
+function ownerTag(pid) { const o = ownerOf(pid); return o ? `<span class="muted small">· ${esc(o)}</span>` : '<span class="small" style="color:var(--good)">· LIBRE</span>'; }
 function depthChartHTML(p) {
   if (!p.team) return '<span class="muted small">Sin equipo.</span>';
-  const picked = pickedIds();
   const team = Object.values(S.players).filter((q) => q.team === p.team && (q.active !== false));
   const byPos = {};
   for (const q of team) {
@@ -745,7 +382,7 @@ function depthChartHTML(p) {
   const cell = (e) => {
     if (!e) return '<td></td>';
     const q = e.q; const st = S.stats[q.player_id]; const pv = playerValue(q);
-    const own = picked.has(q.player_id) ? `<span class="muted small">· ${esc(rosterUser(S.picks.find((x) => x.player_id === q.player_id).roster_id))}</span>` : '<span class="small" style="color:var(--good)">· libre</span>';
+    const own = ownerTag(q.player_id);
     return `<td class="${q.player_id === p.player_id ? 'me' : ''}">${nameCell(q)} ${injTag(q)}<div class="small muted">${fmt(pv.basePG)} FP/J${st?.gp ? ` · ${fmt0(st.gp)} JJ` : ''} ${own}</div></td>`;
   };
   let html = `<div class="table-wrap"><table class="tbl mini depth"><thead><tr><th></th>${cols.map((c) => `<th>${c}</th>`).join('')}</tr></thead><tbody>`;
@@ -772,13 +409,12 @@ async function openPlayer(pid) {
     const fppg = fantasyPoints(s) / gp;
     return `<div class="statline"><div class="s"><b>${perGame ? pv.games : fmt0(s.gp)}</b><span>${perGame ? 'JJ esp.' : 'JJ'}</span></div><div class="s"><b>${fmt(fppg)}</b><span>FP/J</span></div><div class="s"><b>${fmt0(perGame ? fppg * pv.games : fantasyPoints(s))}</b><span>${perGame ? 'FP esperados' : 'FP total'}</span></div></div>`;
   };
-  const picked = S.picks.find((x) => x.player_id === pid);
   box.innerHTML = `
     <div class="phead"><img src="${img}" onerror="this.style.display='none'" alt=""><div>
       <h2>${esc(p.first_name)} ${esc(p.last_name)} <span class="muted">#${esc(p.number ?? '')}</span></h2>
       <div>${posTags(p)} <b>${esc(p.team || 'Sin equipo')}</b> · ${p.age ? p.age + ' años' : ''} · ${p.years_exp != null ? (p.years_exp === 0 ? 'novato' : p.years_exp + ' temporadas') : ''} ${p.height ? '· ' + esc(p.height) : ''} ${p.college ? '· ' + esc(p.college) : ''}</div>
       ${inj}
-      ${picked ? `<div class="small">Draftеado por <b>${esc(rosterUser(picked.roster_id))}</b> (pick #${picked.pick_no})</div>` : `<div class="small" style="color:var(--good)">Disponible · ADP Sleeper ${pv.adp != null ? fmt(pv.adp, 1) : '—'}</div>`}
+      ${ownerOf(pid) ? `<div class="small">En la liga: <b>${esc(ownerOf(pid))}</b></div>` : `<div class="small" style="color:var(--good)">LIBRE en la liga · ADP Sleeper ${pv.adp != null ? fmt(pv.adp, 1) : '—'}</div>`}
     </div></div>
     ${pr ? `<div class="pbox"><h3>Proyección ${S.projSeason || ''}-${String(Number(S.projSeason) + 1).slice(2)} por juego (puntos de esta liga)</h3>${sline(pr, 'proyección', true)}</div>` : ''}
     <div class="pbox" style="margin-top:10px"><h3>Temporada pasada ${S.statsSeason || ''}-${String(Number(S.statsSeason) + 1).slice(2)} (promedios por juego, puntos de esta liga)</h3>${sline(st, 'stats del año pasado', false)}</div>
@@ -883,73 +519,93 @@ async function openPlayer(pid) {
   await Promise.allSettled(tasks);
 }
 
-// ---------- ciclo principal ----------
-function renderAll() {
-  renderStatus(); renderClock(); renderAvail(); renderRoster(); renderReco();
-  if (!$('#tab-players').classList.contains('hidden')) renderPlayersTable();
-}
-async function refresh() {
-  try {
-    await loadPicks();
-    if (S.picks.length !== S.lastPickCount) {
-      S.lastPickCount = S.picks.length; renderAll();
-      const cur = currentPick(), nxt = nextMyPick();
-      if (S.draft?.status === 'drafting' && cur && nxt && cur.pick_no === nxt.pick_no) notifyTurn(cur);
-    } else { renderStatus(); renderClock(); }
-    loadClaudeLive();
-  } catch (e) { diag('refresh: ' + e.message, false); }
-}
-function notifyTurn(cur) {
-  try { if (Notification?.permission === 'granted') new Notification('¡Te toca draftear!', { body: `Pick #${cur.pick_no}, ronda ${cur.round}` }); } catch {}
-  try { const ctx = new (window.AudioContext || window.webkitAudioContext)(); const o = ctx.createOscillator(); o.frequency.value = 880; o.connect(ctx.destination); o.start(); setTimeout(() => { o.stop(); ctx.close(); }, 350); } catch {}
-}
-function schedule() {
-  clearInterval(S.timer); clearInterval(S.tick);
-  const ms = Math.max(5, Number(S.cfg.poll) || 15) * 1000;
-  S.timer = setInterval(refresh, S.draft?.status === 'complete' ? ms * 8 : ms);
-  S.tick = setInterval(renderClock, 1000);
+
+// ---------- celdas reutilizables ----------
+function injTag(p) { return p.injury_status ? `<span class="inj ${esc(p.injury_status.replace(/\s/g, ''))}">${esc(p.injury_status)}</span>` : ''; }
+function posTags(p) { return playerPositions(p).map((x) => `<span class="pos">${x}</span>`).join(''); }
+function nameCell(p) { return `<span class="name" data-pid="${p.player_id}">${esc(p.first_name)} ${esc(p.last_name)}</span>`; }
+
+// ---------- lesiones: tablas ----------
+function sevTag(s) { return s ? `<span class="inj ${esc(String(s).replace(/\s/g, ''))}">${esc(s)}</span>` : '<span class="muted small">sano</span>'; }
+function nm(pid, fallback) { const p = S.players[pid]; return p ? nameCell(p) : esc(fallback || pid); }
+function ownerCell(owner, free) { return free || !owner ? '<span style="color:var(--good)"><b>LIBRE</b></span>' : esc(owner); }
+function recentCell(rec) { return (rec || []).map((r) => `<span title="${esc(r.date)} vs ${esc(r.opp)}">${fmt(r.fp)} <span class="muted">(${r.min}m)</span></span>`).join(', ') || '<span class="muted">sin juegos</span>'; }
+function passes(name, owner, free) { if (S.onlyFree && !(free || !owner)) return false; if (S.query && !String(name).toLowerCase().includes(S.query)) return false; return true; }
+function changeCell(c) { return `${sevTag(c.from)} → ${sevTag(c.to)}${c.part ? ' · ' + esc(c.part) : ''}${c.return ? '<div class="small muted">regreso est. ' + esc(c.return) + '</div>' : ''}${c.detail ? `<div class="small muted" title="${esc(c.detail)}">${esc(c.detail.slice(0, 70))}${c.detail.length > 70 ? '…' : ''}</div>` : ''}`; }
+function whoCell(c) { return `<b>${nm(c.pid, c.name)}</b> <span class="muted small">${esc(c.team)} · ${(c.pos || []).filter(Boolean).join('/')}</span>`; }
+
+async function renderInjuries() {
+  let rep = null, log = null;
+  try { rep = await fetchJSON(`${DATA}injury_report.json?v=${Date.now()}`); } catch (e) { $('#gainTable').innerHTML = `<p class="muted">Sin reporte todavía (${esc(e.message)}).</p>`; return; }
+  try { log = await fetchJSON(`${DATA}injury_log.json?v=${Date.now()}`); } catch {}
+  S.report = rep;
+  const since = rep.since ? new Date(rep.since).toLocaleString() : 'el reporte anterior';
+  $('#repMeta').textContent = `Cambios desde ${since} · generado ${rep.generated_at ? new Date(rep.generated_at).toLocaleString() : ''}`;
+  const worse = (rep.changes || []).filter((c) => c.kind === 'peor');
+  const better = (rep.changes || []).filter((c) => c.kind === 'mejor');
+
+  // Tabla 1: se lesionó -> quién gana minutos
+  const rows1 = [];
+  for (const c of worse) {
+    const bens = (c.beneficiaries || []).filter((m) => passes(m.name, m.owner, m.free));
+    if (!bens.length) {
+      if (passes(c.name, c.owner, !c.owner)) rows1.push(`<tr class="grp"><td>${whoCell(c)}</td><td>${changeCell(c)}</td><td>${ownerCell(c.owner)}</td><td colspan="7" class="muted small">${(c.beneficiaries || []).length ? 'sin beneficiarios que pasen el filtro' : 'baja sin impacto claro en la rotación'}</td></tr>`);
+      continue;
+    }
+    bens.forEach((m, i) => {
+      rows1.push(`<tr class="${i === 0 ? 'grp' : ''}">${i === 0 ? `<td rowspan="${bens.length}">${whoCell(c)}</td><td rowspan="${bens.length}">${changeCell(c)}</td><td rowspan="${bens.length}">${ownerCell(c.owner)}</td>` : ''}<td>${nm(m.pid, m.name)}</td><td>${(m.pos || []).join('/')} <span class="muted small">${esc((m.depth || []).join(''))}</span></td><td>${ownerCell(m.owner, m.free)}</td><td class="num">${m.top5 ?? '—'}</td><td class="num">${m.p90 ?? '—'}</td><td class="num">${m.proj ?? '—'}</td><td class="small">${recentCell(m.recent)}</td></tr>`);
+    });
+  }
+  $('#gainTable').innerHTML = rows1.length
+    ? `<table class="tbl grid"><thead><tr><th>Se lesionó</th><th>Cambio</th><th>Dueño</th><th>Gana minutos</th><th>Pos · depth</th><th>Dueño</th><th class="num" title="Promedio de sus 5 mejores juegos del año pasado, puntos de la liga">Techo top5</th><th class="num" title="Percentil 90 de sus juegos del año pasado">P90</th><th class="num">Proy/J</th><th>Últimos juegos (FP, min)</th></tr></thead><tbody>${rows1.join('')}</tbody></table>`
+    : '<p class="muted">Sin lesiones nuevas o agravadas en el período.</p>';
+
+  // Tabla 2: regresa -> quién pierde minutos
+  const rows2 = [];
+  for (const c of better) {
+    const los = (c.losers || []).filter((m) => passes(m.name, m.owner, m.free));
+    if (!los.length) {
+      if (passes(c.name, c.owner, !c.owner)) rows2.push(`<tr class="grp"><td>${whoCell(c)}</td><td>${sevTag(c.from)} → ${sevTag(c.to)}</td><td>${ownerCell(c.owner)}</td><td colspan="6" class="muted small">${c.losers ? 'nadie pierde minutos claros' : 'mejora leve, sin cambio de rotación'}</td></tr>`);
+      continue;
+    }
+    los.forEach((m, i) => {
+      rows2.push(`<tr class="${i === 0 ? 'grp' : ''}">${i === 0 ? `<td rowspan="${los.length}">${whoCell(c)}</td><td rowspan="${los.length}">${sevTag(c.from)} → ${sevTag(c.to)}</td><td rowspan="${los.length}">${ownerCell(c.owner)}</td>` : ''}<td>${nm(m.pid, m.name)}</td><td>${(m.pos || []).join('/')} <span class="muted small">${esc((m.depth || []).join(''))}</span></td><td>${ownerCell(m.owner, m.free)}</td><td class="num">${m.proj ?? '—'}</td><td class="num">${m.top5 ?? '—'}</td><td class="small">${recentCell(m.recent)}</td></tr>`);
+    });
+  }
+  $('#loseTable').innerHTML = rows2.length
+    ? `<table class="tbl grid"><thead><tr><th>Regresa</th><th>Cambio</th><th>Dueño</th><th>Pierde minutos</th><th>Pos · depth</th><th>Dueño</th><th class="num">Proy/J</th><th class="num">Techo top5</th><th>Últimos juegos (FP, min)</th></tr></thead><tbody>${rows2.join('')}</tbody></table>`
+    : '<p class="muted">Sin regresos en el período.</p>';
+
+  // Tabla 3: lesionados actuales
+  const cur = (rep.current_out || []).filter((c) => passes(c.name, c.owner, !c.owner));
+  $('#outTable').innerHTML = cur.length
+    ? `<table class="tbl"><thead><tr><th>Jugador</th><th>Eq</th><th>Pos</th><th>Estado</th><th>Parte</th><th>Regreso est.</th><th class="num">Proy/J</th><th>Dueño</th></tr></thead><tbody>${cur.map((c) => `<tr><td>${nm(c.pid, c.name)}</td><td>${esc(c.team)}</td><td>${(c.pos || []).join('/')}</td><td>${sevTag(c.status)}</td><td>${esc(c.part || '')}</td><td>${esc(c.return || '—')}</td><td class="num">${c.proj}</td><td>${ownerCell(c.owner)}</td></tr>`).join('')}</tbody></table>`
+    : '<p class="muted">Nadie relevante en Out.</p>';
+  $('#outCount').textContent = `(${cur.length})`;
+
+  if (log) $('#injLog').innerHTML = Object.keys(log).sort().reverse().slice(0, 10).map((k) => `<div style="margin-bottom:6px"><b>${esc(k)}</b>: ${(log[k] || []).map((c) => `${esc(c.name)} <span class="muted">(${esc(c.team)})</span> ${esc(c.from || 'sano')}→${esc(c.to || 'sano')}`).join(' · ') || 'sin cambios'}</div>`).join('');
+  ['#gainTable', '#loseTable', '#outTable'].forEach((sel) => bindNames($(sel)));
 }
 
+// ---------- arranque ----------
 async function boot() {
-  const saved = lsGet('draft_cfg'); if (saved) Object.assign(S.cfg, saved);
-  $('#inUser').value = S.cfg.user; $('#inLeague').value = S.cfg.league; $('#inSeason').value = S.cfg.season || ''; $('#inPoll').value = S.cfg.poll;
   $('#leagueName').textContent = 'cargando…';
   try {
     await loadCore();
     await loadPlayers();
-    posChips($('#availPos'), S.posFilterAvail, renderAvail);
-    posChips($('#plPos'), S.posFilterPl, renderPlayersTable);
-    await loadPicks(); S.lastPickCount = S.picks.length;
-    renderStatus(); renderClock(); renderRoster();
     await loadStats();
-    renderAll(); loadClaudeLive(); schedule();
-    try { if (Notification && Notification.permission === 'default') Notification.requestPermission(); } catch {}
+    await renderInjuries();
+    setInterval(renderInjuries, 5 * 60e3);
   } catch (e) {
     diag(e.message, false);
-    const hint = /conectar|fetch/i.test(e.message) ? ' · Revisa tu conexión o prueba en otro navegador (Chrome/Safari normal, no una vista dentro de otra app).' : '';
-    $('#leagueName').innerHTML = `<span class="err">${esc(e.message)}${esc(hint)}</span>`;
-    $('#setup').classList.remove('hidden');
-    const d = document.querySelector('#setup .diag'); if (d) d.open = true;
+    $('#leagueName').innerHTML = `<span class="err">${esc(e.message)}</span>`;
+    const d = document.querySelector('.diag'); if (d) d.open = true;
   }
 }
-
-// ---------- UI ----------
-document.querySelectorAll('.tab').forEach((b) => b.onclick = () => {
-  document.querySelectorAll('.tab').forEach((x) => x.classList.toggle('active', x === b));
-  document.querySelectorAll('.panel').forEach((p) => p.classList.toggle('hidden', p.id !== 'tab-' + b.dataset.tab));
-  if (b.dataset.tab === 'players') renderPlayersTable();
-  if (b.dataset.tab === 'picks') { renderReco(); loadClaudeLive(); }
-  if (b.dataset.tab === 'injuries') renderInjuries();
-});
-$('#setupBtn').onclick = () => $('#setup').classList.toggle('hidden');
-$('#applySetup').onclick = () => { S.cfg = { user: $('#inUser').value.trim(), league: $('#inLeague').value.trim(), season: $('#inSeason').value.trim(), poll: Number($('#inPoll').value) || 15 }; lsSet('draft_cfg', S.cfg); boot(); };
-$('#refreshBtn').onclick = () => { S.lastPickCount = -1; refresh(); };
-$('#availSearch').oninput = renderAvail; $('#availSort').onchange = () => { const v = $('#availSort').value; S.sortAvail = v === 'proj' ? { key: 'V', dir: -1 } : v === 'last' ? { key: 'lastTot', dir: -1 } : v === 'adp' ? { key: 'adp', dir: 1 } : { key: 'rec', dir: -1 }; renderAvail(); };
-$('#plSearch').oninput = renderPlayersTable; $('#plOnlyAvail').onchange = renderPlayersTable; $('#plPerGame').onchange = renderPlayersTable;
+$('#refreshBtn').onclick = () => renderInjuries();
+$('#onlyFree').onchange = (e) => { S.onlyFree = e.target.checked; renderInjuries(); };
+$('#search').oninput = (e) => { S.query = e.target.value.trim().toLowerCase(); renderInjuries(); };
 $('#modalClose').onclick = () => $('#modal').classList.add('hidden');
 $('#modal').onclick = (e) => { if (e.target.id === 'modal') $('#modal').classList.add('hidden'); };
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('#modal').classList.add('hidden'); });
-$('#manualNote').value = lsGet('manual_note') || '';
-$('#manualNote').oninput = () => lsSet('manual_note', $('#manualNote').value);
-
 boot();

@@ -100,3 +100,7 @@ textarea{width:100%}
 
 .tbl.depth td{vertical-align:top;white-space:normal;min-width:120px}
 .tbl.depth tr:first-child td{background:#1b1f2a}
+.tbl.grid td{vertical-align:top;white-space:normal}
+.tbl.grid tr.grp td{border-top:2px solid var(--line)}
+.status input{background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:13px;min-width:180px}
+.diag pre{max-height:180px;overflow:auto;font-size:11px;background:var(--bg);padding:8px;border-radius:8px}
