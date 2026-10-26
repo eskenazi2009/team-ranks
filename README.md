@@ -82,7 +82,8 @@ python -m http.server --directory docs 8000
 - The build script runs sanity assertions (30 teams, no nulls, plausible ranges,
   complete 1–30 ranks) and fails loudly if ESPN changes shape.
 
-## 🏀 Draft NBA en vivo (Sleeper)
+## 🩹 Lesiones NBA (Sleeper)
 
-En `docs/nba-draft/` vive un asistente de draft para la liga **Benchwarmers** de Sleeper,
+En `docs/nba-draft/` vive el tablero de lesiones de la liga **Benchwarmers** de Sleeper (quién gana
+minutos con cada baja, quién pierde al regresar otro, lesionados actuales y ficha por jugador),
 publicado en `https://eskenazi2009.github.io/team-ranks/nba-draft/`. Ver `docs/nba-draft/README.md`.

@@ -584,8 +584,50 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
         for m in mates:
             m.pop("_s", None)
         c["beneficiaries"] = mates[:5]
+    # quién pierde minutos cuando alguien vuelve (de Out/Doubtful a sano o día a día)
+    def recent_min(pid):
+        r = recent(pid)
+        return sum(x["min"] for x in r) / len(r) if r else 0
+    for c in changes:
+        if c["kind"] != "mejor" or sev(c["from"]) < 3 or sev(c["to"]) > 2:
+            continue
+        if c["proj"] < 15 and (c["depth"][1] or 9) > 2:
+            continue
+        team = c["team"]; pos = c["depth"][0]
+        mates = []
+        for pid, pl in players.items():
+            if pl.get("team") != team or pid == c["pid"]:
+                continue
+            if status_of(pl, inj_now)[0] >= 3:
+                continue
+            rec = recent(pid)
+            if not rec:
+                continue
+            ce = ceiling(pl)
+            score = recent_min(pid) + (12 if pl.get("depth_chart_position") == pos else 0) - (8 if (pl.get("depth_chart_order") or 9) == 1 and pl.get("depth_chart_position") != pos else 0)
+            mates.append({"pid": pid, "name": f"{pl.get('first_name')} {pl.get('last_name')}", "pos": pl.get("fantasy_positions") or [], "depth": [pl.get("depth_chart_position"), pl.get("depth_chart_order")],
+                          "proj": round(per_game_proj(pid), 1), "top5": ce and round(ce["top5"], 1), "p90": ce and round(ce["p90"], 1),
+                          "recent": rec, "owner": owner_of.get(pid), "free": pid not in owner_of, "_s": score})
+        mates.sort(key=lambda m: -m["_s"])
+        for m in mates:
+            m.pop("_s", None)
+        c["losers"] = mates[:4]
     changes.sort(key=lambda c: (c["kind"] != "peor", -sev(c["to"]), -c["proj"]))
-    report = {"generated_at": now_iso(), "today": today, "since": since, "league": league.get("name"), "changes": changes}
+    # lesionados actuales (Out/Doubtful) con rol relevante
+    current = []
+    for pid, pl in players.items():
+        if not pl.get("team"):
+            continue
+        st_ = tuple(cur_statuses[pid])
+        if st_[0] < 3:
+            continue
+        pr_ = per_game_proj(pid)
+        if pr_ < 15 and (pl.get("depth_chart_order") or 9) > 2:
+            continue
+        current.append({"pid": pid, "name": f"{pl.get('first_name')} {pl.get('last_name')}", "team": pl.get("team"), "pos": pl.get("fantasy_positions") or [],
+                        "status": st_[1], "part": st_[2], "return": st_[3], "detail": (st_[4] or "")[:140], "proj": round(pr_, 1), "owner": owner_of.get(pid)})
+    current.sort(key=lambda x: -x["proj"])
+    report = {"generated_at": now_iso(), "today": today, "since": since, "league": league.get("name"), "changes": changes, "current_out": current}
     # la línea base se mueve solo en la corrida programada (RELAY_BASELINE=1) o si tiene 20+ horas,
     # así el reporte diario cubre 24 h aunque haya corridas manuales intermedias
     age_h = None
@@ -642,6 +684,10 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
         for c in better:
             own = f" (de {c['owner']})" if c.get("owner") else " (LIBRE)"
             md.append(f"- {c['name']} {c['team']}{own}: {c['from']} → {c['to'] or 'sano'}")
+            for m in c.get("losers") or []:
+                tag = "LIBRE" if m["free"] else f"de {m['owner']}"
+                rec = ", ".join(f"{r['fp']} ({r['min']}m)" for r in m["recent"]) or "sin juegos"
+                md.append(f"    - pierde minutos: {m['name']} {'/'.join(m['pos'])} depth {m['depth'][0]}{m['depth'][1]} · {tag} · últimos: {rec}")
     with open(f"{out_dir}/injury_report.md", "w", encoding="utf-8") as fh:
         fh.write("\n".join(md) + "\n")
     log(f"reporte de lesiones: {len(worse)} peor, {len(better)} mejor")

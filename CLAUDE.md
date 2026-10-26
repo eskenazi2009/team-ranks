@@ -2,6 +2,9 @@
 
 ## Asistente de fantasy NBA de Raymond (docs/nba-draft)
 
+- El sitio es SOLO de lesiones (desde el 26-oct-2026): tablas de quién gana minutos por cada baja, quién
+  pierde al regresar otro, lesionados actuales y ficha por jugador. El draft ya pasó; no hay UI de draft.
+
 - Usuario de Sleeper: raymondesk. Liga: Benchwarmers (puntos, 10 equipos, alineaciones diarias,
   FAAB de 100). Su roster es el roster_id 7, equipo "White". Llamarlo Raymond.
 - Raymond pregunta durante la temporada a quién startear y a quién agregar de los libres.

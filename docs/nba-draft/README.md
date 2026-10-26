@@ -1,94 +1,48 @@
-# 🏀 Fantasy NBA · Draft en vivo (Sleeper)
+# 🩹 Lesiones NBA · liga Benchwarmers (Sleeper)
 
-Sitio estático que acompaña el draft de la liga **Benchwarmers** en Sleeper.
-Corre 100% en el navegador, sin servidor ni claves: usa la API pública de Sleeper
-y los endpoints públicos de ESPN.
+Página estática (GitHub Pages, `main` / `/docs`) que muestra, para la liga **Benchwarmers**:
 
-## Qué hace
+- **Se lesionó → quién gana minutos.** Lesiones nuevas o agravadas a Out/Doubtful en las últimas 24 h y,
+  para cada una, los compañeros que suben en la rotación (primero el siguiente en su posición del depth
+  chart, luego por techo), con su techo (promedio de sus 5 mejores juegos del año pasado y percentil 90,
+  ambos con la puntuación de la liga), proyección por juego, últimos juegos con minutos y si están
+  **libres en la liga** o quién los tiene.
+- **Regresa → quién pierde minutos.** Jugadores que vuelven de Out/Doubtful y los compañeros que venían
+  jugando en su posición, ordenados por minutos recientes.
+- **Lesionados actuales** con rol relevante, fecha estimada de regreso y dueño en la liga.
+- Historial de 30 días. Al tocar cualquier nombre se abre la **ficha del jugador** (proyección, temporada
+  pasada, mejores 5 juegos, lesión actual y última ausencia, noticias, depth chart de su equipo NBA).
 
-- **Draft en vivo**: jugadores disponibles (se actualiza cada 15 s), tu roster por
-  slot, quién está en el reloj, cuántos picks faltan para tu turno, reloj del pick,
-  aviso sonoro y notificación cuando te toca.
-- **Ficha de jugador** (clic en cualquier nombre): proyección por juego y stats del año
-  pasado con los puntos de la liga, juegos esperados, **mejores 5 juegos de la temporada
-  pasada** con los puntos de la liga (registro juego a juego de ESPN para los ~350 mejores
-  por ADP), lesión actual (Sleeper + ESPN), noticias, temporadas anteriores y el **depth
-  chart** de su equipo NBA (titulares y banca según Sleeper) con quién está libre.
-- **Jugadores**: tabla con los stats de la temporada pasada y los **puntos de fantasía
-  calculados con la configuración exacta de la liga**, totales o por juego, filtrable
-  por los slots del roster (PG, SG, SF, PF, C, G, F, UTIL) y ordenable por cualquier
-  encabezado (igual que la tabla de disponibles).
-- **Picks sugeridos**: top 3 para tu equipo en este momento, en orden, con la razón
-  (valor sobre el reemplazo, huecos del roster, lesiones, ADP y si llegaría a tu
-  siguiente turno). Al lado, el panel **Claude en vivo** lee `live/claude.json`,
-  que Claude actualiza durante el draft, más un cuadro para pegar notas.
-- **Liga**: puntuación, roster, formato del draft y orden de los equipos.
-- **Lesiones**: cambios de lesión detectados por el relay (nuevas, agravadas, regresos) y, para cada
-  baja, los compañeros que ganan minutos con su techo y si están libres en la liga. El relay escribe
-  `data/injury_report.json`, `data/injury_report.md` e `data/injury_log.json` en cada snapshot; una
-  tarea programada diaria (4:12 PM de Panamá) lee el reporte y notifica a Raymond por push y correo.
-  La línea base del diff solo se mueve en la corrida programada o si tiene 20+ horas.
+URL: `https://eskenazi2009.github.io/team-ranks/nba-draft/`
 
-## Publicación
+## Datos: relay en GitHub Actions
 
-Vive en `docs/nba-draft/` del repo `team-ranks`, que ya publica GitHub Pages desde
-`main` / `/docs`. URL: `https://eskenazi2009.github.io/team-ranks/nba-draft/`.
+El navegador no llama a Sleeper ni a ESPN. El workflow `.github/workflows/nba-draft-relay.yml`
+(`relay/relay.py`, solo librería estándar) corre a diario a las **21:00 UTC (4:00 PM de Panamá)** o
+manualmente, y commitea en `data/`:
 
-También funciona abriendo `index.html` desde un servidor local, por ejemplo
-`python3 -m http.server` dentro de la carpeta.
-
-## Configuración
-
-Botón ⚙ arriba a la derecha: usuario de Sleeper, nombre de la liga, temporada (auto)
-y segundos entre refrescos. El panel *Diagnóstico de fuentes* muestra qué endpoint
-respondió y cuál falló.
-
-## Relay en GitHub Actions (sin depender del navegador)
-
-El navegador de algunos usuarios no puede llamar a Sleeper/ESPN directamente (CORS o
-bloqueos de red). Por eso el workflow `.github/workflows/nba-draft-relay.yml` baja los
-datos desde GitHub y la página los lee de su mismo origen:
-
-- **snapshot** (diario a las 21:00 UTC, 4:00 PM de Panamá, o manual): escribe `data/snapshot.json` (liga,
-  draft, usuarios, rosters, picks), `data/players.json`, `data/stats.json`,
-  `data/proj.json`, `data/espn.json` (lesiones, rosters NBA, noticias e historial de
-  los 250 mejores por ADP) y `data/live.json`, y los commitea en `main`.
-- **live** (manual, el día del draft): cada 15 s consulta draft + picks y, si cambian,
-  los publica en `live.json` de la rama `nba-live`. La página lo lee desde
-  `raw.githubusercontent.com` con cache-busting. `claude.json` en esa misma rama es el
-  panel "Claude en vivo".
-
-La página intenta en este orden: datos del relay, Sleeper/ESPN directo, proxy CORS
-público. El diagnóstico (⚙) muestra qué fuente se usó.
-
-Prueba local del relay: `python3 test/mock.py <fixtures.json> 8799` y luego
-`SLEEPER_BASE=http://127.0.0.1:8799/api.sleeper.app/v1 … python3 relay/relay.py snapshot --out data`.
-
-## Fuentes de datos
-
-| Dato | Endpoint |
+| Archivo | Contenido |
 |---|---|
-| Usuario, ligas, draft, picks, jugadores | `api.sleeper.app/v1/...` |
-| Stats temporada pasada / proyecciones | `api.sleeper.com/stats|projections/nba/<temporada>` (respaldo: ESPN `statistics/byathlete`) |
-| Noticias, temporadas anteriores | `site.web.api.espn.com/.../athletes/<espn_id>/overview` y `/stats` |
-| Roster del equipo NBA, lesiones | `site.api.espn.com/.../teams/<id>/roster` y `/injuries` |
+| `snapshot.json` | liga (puntuación, roster, settings), usuarios, rosters |
+| `players.json` | jugadores de Sleeper (equipo, posiciones, lesión, depth chart, `espn_id` cruzado por nombre) |
+| `stats.json`, `proj.json` | totales de la temporada pasada y proyección por juego de Sleeper |
+| `espn.json` | lesiones, rosters NBA, noticias, historial y registro juego a juego de ESPN (top 350 por ADP) |
+| `daily.json` | box scores de ESPN por fecha (últimos 7 días) y calendario (9 días), matchups de la semana |
+| `injury_report.json` / `.md` | cambios de lesión vs. la línea base de 24 h, beneficiarios, perdedores al regresar, lesionados actuales |
+| `injury_log.json` | historial de cambios (30 días) |
+| `injury_baseline.json` | línea base del diff; solo la mueve la corrida programada (o si tiene 20+ h) |
 
-Los jugadores, stats y proyecciones se guardan en `localStorage` (12 h / 7 d / 1 d).
+Una tarea programada de Claude (4:12 PM de Panamá) lee `injury_report.md/json` de `main` y notifica a
+Raymond por push y correo con la recomendación de adds.
 
-Si el navegador no puede llamar a un host directamente, el sitio reintenta por un
-servicio CORS público de respaldo y lo indica en el diagnóstico.
+## Puntuación
 
-## Notas de Claude en vivo
+Todo se calcula con `scoring_settings` de la liga en Sleeper (`snapshot.json`). Los puntos por partido
+salen del box score de ESPN y coinciden con Sleeper salvo las faltas técnicas/flagrantes, que el box score
+no incluye.
 
-`live/claude.json` tiene esta forma; el sitio lo relee cada refresco:
+## Pruebas
 
-```json
-{ "updated": "2026-10-20 20:15", "pick": 21,
-  "top3": [ { "player": "Victor Wembanyama", "reason": "mejor valor en C y te falta el slot" } ],
-  "notes": "texto libre" }
-```
-
-## Prueba local con datos simulados
-
-`node test/run.js .` abre el sitio (`BLOCK_DIRECT=1` simula Sleeper bloqueado; `BLOCK_ALL=1` bloquea todo lo externo y obliga a usar el relay) en Chromium (Playwright) interceptando Sleeper y
-ESPN con `test/fixtures.js`, imprime las vistas y guarda capturas.
+- `node test/run_inj.js .` abre la página en Chromium con todo lo externo bloqueado y usa los datos de `data/`.
+- Relay contra un mock: `python3 test/mock.py <fixtures.json> 8799` y luego
+  `SLEEPER_BASE=http://127.0.0.1:8799/api.sleeper.app/v1 SLEEPER2_BASE=http://127.0.0.1:8799/api.sleeper.com ESPN_SITE=http://127.0.0.1:8799/site.api.espn.com/apis/site/v2/sports/basketball/nba ESPN_WEB=http://127.0.0.1:8799/site.web.api.espn.com/apis/common/v3/sports/basketball/nba python3 relay/relay.py snapshot --out data`.
