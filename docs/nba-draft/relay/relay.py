@@ -564,7 +564,8 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
                         "from": prev[1], "to": now[1], "part": now[2], "return": now[3], "detail": (now[4] or "")[:160]})
     # beneficiarios: compañeros del mismo equipo, por posición de depth chart y techo
     for c in changes:
-        if c["kind"] != "peor" or sev(c["to"]) < 3:
+        # beneficiarios solo cuando se cae alguien con rol real (titular o ≥20 FP/J proyectados)
+        if c["kind"] != "peor" or sev(c["to"]) < 3 or (c["proj"] < 20 and (c["depth"][1] or 9) > 1):
             continue
         team = c["team"]; pos = c["depth"][0]
         mates = []
