@@ -11,7 +11,7 @@
   <div class="brand">🩹 <strong>Lesiones NBA</strong> <span id="leagueName" class="muted">cargando liga…</span></div>
   <div class="status">
     <input id="search" placeholder="Buscar jugador…">
-    <label class="chk"><input type="checkbox" id="onlyFree"> Solo libres en la liga</label>
+    <label class="chk"><input type="checkbox" id="onlyFree"><span>Solo libres</span></label>
     <button id="refreshBtn" class="btn" title="Actualizar">↻</button>
   </div>
 </header>
@@ -21,14 +21,14 @@
 
   <section class="card">
     <h2>Se lesionó → quién gana minutos</h2>
-    <p class="muted small">Lesiones nuevas o agravadas a Out o Doubtful. Para cada una, los compañeros que suben en la rotación: primero el siguiente en su posición del depth chart, luego por techo. Techo = promedio de sus 5 mejores juegos del año pasado con la puntuación de la liga; P90 = lo que supera 1 de cada 10 noches.</p>
-    <div id="gainTable" class="table-wrap">Cargando…</div>
+    <p class="muted small">Lesiones nuevas o agravadas a Out o Doubtful. Para cada una, los compañeros que suben en la rotación: primero el siguiente en su posición del depth chart, luego por techo. Techo = promedio de sus 5 mejores juegos del año pasado, en puntos de la liga.</p>
+    <div id="gainList">Cargando…</div>
   </section>
 
   <section class="card">
     <h2>Regresa → quién pierde minutos</h2>
     <p class="muted small">Jugadores que vuelven de Out o Doubtful. Los que pierden son los compañeros que venían jugando en su posición mientras no estaba, ordenados por minutos recientes.</p>
-    <div id="loseTable" class="table-wrap">Cargando…</div>
+    <div id="loseList">Cargando…</div>
   </section>
 
   <section class="card">

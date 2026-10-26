@@ -104,3 +104,35 @@ textarea{width:100%}
 .tbl.grid tr.grp td{border-top:2px solid var(--line)}
 .status input{background:var(--bg);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:13px;min-width:180px}
 .diag pre{max-height:180px;overflow:auto;font-size:11px;background:var(--bg);padding:8px;border-radius:8px}
+
+/* ---- lesiones: tarjetas y móvil ---- */
+.icard{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+.ihead{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;margin-bottom:6px}
+.ihead > div:first-child{font-size:15px}
+.tbl.mates{margin-top:4px}
+.tbl.mates td{white-space:normal;vertical-align:top}
+.tbl.mates th,.tbl.mates td{padding:6px 6px}
+.chk input{margin:0}
+main{max-width:1100px;margin:0 auto}
+@media (max-width:760px){
+  header.top{padding:8px 12px;gap:8px}
+  .brand{font-size:15px;flex-basis:100%}
+  .status{width:100%;gap:6px}
+  .status input{flex:1;min-width:0}
+  main{padding:10px 12px 40px}
+  .card{padding:10px;border-radius:10px}
+  .card h2{font-size:15px}
+  .hm{display:none}
+  .tbl{font-size:12px}
+  .tbl th,.tbl td{padding:5px 5px}
+  .icard{padding:8px 10px}
+  .ihead > div:first-child{flex-basis:100%}
+  .modal{padding:10px 6px}
+  .modal-box{padding:12px}
+  .phead{gap:10px}
+  .phead img{width:72px;height:54px}
+  .phead h2{font-size:17px}
+  .statline .s{min-width:48px;padding:5px 7px}
+  .statline .s b{font-size:14px}
+  .pgrid{grid-template-columns:1fr}
+}
