@@ -459,6 +459,40 @@ def sev(status):
     return SEV.get((status or "").strip().lower(), 2 if status else 0)
 
 
+def status_of(pl, injmap):
+    """(severidad, estado, parte, regreso, detalle): lo peor entre Sleeper y ESPN."""
+    eid = str(pl.get("espn_id") or "")
+    a = injmap.get(eid) or {}
+    cands = [(sev(pl.get("injury_status")), pl.get("injury_status"), pl.get("injury_body_part"), None, None),
+             (sev(a.get("status")), a.get("status"), a.get("type"), a.get("returnDate"), a.get("detail"))]
+    return max(cands, key=lambda c: c[0])
+
+
+RECENT_DAYS = 3  # ventana de "lesiones nuevas" en la página: hoy y los 2 días anteriores (hora de Panamá)
+
+
+def update_streaks(out_dir, cur_statuses, prev_status_of, have_espn):
+    """Guarda cuándo cada jugador cayó a Out/Doubtful por primera vez desde que estaba sano.
+    Bajar a day-to-day no cierra la racha (los equipos alternan Out/GTD según el juego);
+    solo se cierra al volver a sano o Probable."""
+    try:
+        streaks = json.load(open(f"{out_dir}/injury_streaks.json", encoding="utf-8"))
+    except Exception:
+        streaks = {}
+    now = now_iso()
+    for pid, st in cur_statuses.items():
+        if st[0] >= 3:
+            if pid not in streaks:
+                streaks[pid] = {"since": now, "from": prev_status_of(pid)}
+        elif st[0] <= 1 and have_espn:
+            # sin datos de ESPN no se cierran rachas: un fallo parcial no debe "curar" a nadie
+            streaks.pop(pid, None)
+    for pid in [p for p in streaks if p not in cur_statuses]:
+        streaks.pop(pid, None)
+    write_json(f"{out_dir}/injury_streaks.json", streaks)
+    return streaks
+
+
 def league_fp(scoring, line):
     t = 0.0
     for k, w in (scoring or {}).items():
@@ -499,13 +533,6 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
     inj_now = (bundle or {}).get("injuries") or {}
     inj_prev = (prev_bundle or {}).get("injuries") or {}
     athletes = (bundle or {}).get("athletes") or {}
-
-    def status_of(pl, injmap):
-        eid = str(pl.get("espn_id") or "")
-        a = injmap.get(eid) or {}
-        cands = [(sev(pl.get("injury_status")), pl.get("injury_status"), pl.get("injury_body_part"), None, None),
-                 (sev(a.get("status")), a.get("status"), a.get("type"), a.get("returnDate"), a.get("detail"))]
-        return max(cands, key=lambda c: c[0])
 
     def per_game_proj(pid):
         pr = proj.get(pid)
@@ -563,10 +590,10 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
                         "proj": round(relevance, 1), "owner": owner_of.get(pid), "kind": "peor" if now[0] > prev[0] else "mejor",
                         "from": prev[1], "to": now[1], "part": now[2], "return": now[3], "detail": (now[4] or "")[:160]})
     # beneficiarios: compañeros del mismo equipo, por posición de depth chart y techo
-    for c in changes:
-        # beneficiarios solo cuando se cae alguien con rol real (titular o ≥20 FP/J proyectados)
+    def gainers(c):
+        # beneficiarios solo cuando se cae alguien con rol real (titular o ≥20 pts/J proyectados)
         if c["kind"] != "peor" or sev(c["to"]) < 3 or (c["proj"] < 20 and (c["depth"][1] or 9) > 1):
-            continue
+            return None
         team = c["team"]; pos = c["depth"][0]
         mates = []
         for pid, pl in players.items():
@@ -583,7 +610,11 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
         mates.sort(key=lambda m: -m["_s"])
         for m in mates:
             m.pop("_s", None)
-        c["beneficiaries"] = mates[:5]
+        return mates[:5]
+    for c in changes:
+        g = gainers(c)
+        if g is not None:
+            c["beneficiaries"] = g
     # quién pierde minutos cuando alguien vuelve (de Out/Doubtful a sano o día a día)
     def recent_min(pid):
         r = recent(pid)
@@ -613,6 +644,42 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
             m.pop("_s", None)
         c["losers"] = mates[:4]
     changes.sort(key=lambda c: (c["kind"] != "peor", -sev(c["to"]), -c["proj"]))
+    # lesiones nuevas de los últimos RECENT_DAYS días (rachas de Out/Doubtful + cambios de hoy)
+    def prev_status(pid):
+        pp = prev_players.get(pid)
+        return status_of(pp, inj_prev)[1] if pp else None
+    streaks = update_streaks(out_dir, cur_statuses, prev_status, bool(inj_now))
+    def pa_day(iso):  # día en Panamá (UTC-5)
+        try:
+            return (dt.datetime.strptime(iso, "%Y-%m-%dT%H:%M:%SZ") - dt.timedelta(hours=5)).strftime("%Y-%m-%d")
+        except Exception:
+            return (iso or "")[:10]
+    today_pa = pa_day(now_iso())
+    first_day = (dt.date.fromisoformat(today_pa) - dt.timedelta(days=RECENT_DAYS - 1)).isoformat()
+    recent_inj = {}
+    for pid, stk in streaks.items():
+        pl = players.get(pid) or {}
+        if pa_day(stk.get("since") or "") < first_day or not pl.get("team"):
+            continue
+        st_ = tuple(cur_statuses[pid]); pr_ = max(per_game_proj(pid), 0)
+        if st_[0] < 3:
+            continue
+        if pr_ < 15 and (pl.get("depth_chart_order") or 9) > 2:
+            continue
+        e = {"pid": pid, "name": f"{pl.get('first_name')} {pl.get('last_name')}", "team": pl.get("team"),
+             "pos": pl.get("fantasy_positions") or [pl.get("position")], "depth": [pl.get("depth_chart_position"), pl.get("depth_chart_order")],
+             "proj": round(pr_, 1), "owner": owner_of.get(pid), "kind": "peor", "from": stk.get("from"), "to": st_[1],
+             "part": st_[2], "return": st_[3], "detail": (st_[4] or "")[:160], "since": stk.get("since")}
+        g = gainers(e)
+        if g is not None:
+            e["beneficiaries"] = g
+        recent_inj[pid] = e
+    for c in changes:
+        if c["kind"] == "peor" and c["pid"] not in recent_inj:
+            recent_inj[c["pid"]] = {**c, "since": (streaks.get(c["pid"]) or {}).get("since") or now_iso()}
+    for e in recent_inj.values():
+        e["day"] = pa_day(e["since"])
+    recent_list = sorted(recent_inj.values(), key=lambda e: (e["day"], e["proj"]), reverse=True)
     # lesionados actuales (Out/Doubtful) con rol relevante
     current = []
     for pid, pl in players.items():
@@ -627,7 +694,8 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
         current.append({"pid": pid, "name": f"{pl.get('first_name')} {pl.get('last_name')}", "team": pl.get("team"), "pos": pl.get("fantasy_positions") or [],
                         "status": st_[1], "part": st_[2], "return": st_[3], "detail": (st_[4] or "")[:140], "proj": round(pr_, 1), "owner": owner_of.get(pid)})
     current.sort(key=lambda x: -x["proj"])
-    report = {"generated_at": now_iso(), "today": today, "since": since, "league": league.get("name"), "changes": changes, "current_out": current}
+    report = {"generated_at": now_iso(), "today": today, "since": since, "league": league.get("name"), "changes": changes, "recent_injuries": recent_list,
+              "recent_days": RECENT_DAYS, "recent_from": first_day, "current_out": current}
     # la línea base se mueve solo en la corrida programada (RELAY_BASELINE=1) o si tiene 20+ horas,
     # así el reporte diario cubre 24 h aunque haya corridas manuales intermedias
     age_h = None

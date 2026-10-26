@@ -31,6 +31,7 @@ manualmente, y commitea en `data/`:
 | `injury_report.json` / `.md` | cambios de lesión vs. la línea base de 24 h, beneficiarios, perdedores al regresar, lesionados actuales |
 | `injury_log.json` | historial de cambios (30 días) |
 | `injury_baseline.json` | línea base del diff; solo la mueve la corrida programada (o si tiene 20+ h) |
+| `injury_streaks.json` | desde cuándo cada jugador está en Out/Doubtful (se cierra al volver a sano o Probable); alimenta `recent_injuries` del reporte, las bajas de los últimos 3 días |
 
 Una tarea programada de Claude (4:12 PM de Panamá) lee `injury_report.md/json` de `main` y notifica a
 Raymond por push y correo con la recomendación de adds.

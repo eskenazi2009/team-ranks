@@ -136,3 +136,7 @@ main{max-width:1100px;margin:0 auto}
   .statline .s b{font-size:14px}
   .pgrid{grid-template-columns:1fr}
 }
+
+/* encabezado de día en "Se lesionó" */
+.dayhead{font-weight:700;font-size:13px;letter-spacing:.02em;margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line, #2a2f3a)}
+.dayhead:first-child{margin-top:4px}
