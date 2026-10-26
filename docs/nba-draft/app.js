@@ -532,7 +532,23 @@ function nm(pid, fallback) { const p = S.players[pid]; return p ? nameCell(p) : 
 function ownerCell(owner, free) { return free || !owner ? '<span style="color:var(--good)"><b>LIBRE</b></span>' : esc(owner); }
 function recentCell(rec) { return (rec || []).map((r) => `<span title="${esc(r.date)} vs ${esc(r.opp)}">${fmt(r.fp)} <span class="muted">(${r.min}m)</span></span>`).join(', ') || '<span class="muted">sin juegos</span>'; }
 function passes(name, owner, free) { if (S.onlyFree && !(free || !owner)) return false; if (S.query && !String(name).toLowerCase().includes(S.query)) return false; return true; }
-function changeCell(c) { return `${sevTag(c.from)} → ${sevTag(c.to)}${c.part ? ' · ' + esc(c.part) : ''}${c.return ? '<div class="small muted">regreso est. ' + esc(c.return) + '</div>' : ''}${c.detail ? `<div class="small muted" title="${esc(c.detail)}">${esc(c.detail.slice(0, 70))}${c.detail.length > 70 ? '…' : ''}</div>` : ''}`; }
+// tiempo fuera proyectado (fecha estimada de ESPN + calendario del equipo)
+const fmtDay = (d, wd) => new Date(`${d}T12:00:00Z`).toLocaleDateString('es', { ...(wd ? { weekday: 'short' } : {}), day: 'numeric', month: 'short', ...(d.slice(0, 4) !== String(new Date().getFullYear()) ? { year: 'numeric' } : {}), timeZone: 'UTC' });
+function outlookLine(o) {
+  if (!o || !o.return) return '<div class="outlook muted">Sin fecha estimada de regreso</div>';
+  const g = o.games ?? 0, ap = o.approx ? '~' : '';
+  const when = o.season ? 'toda la temporada' : o.days === 0 ? 'podría volver hoy' : `fuera ${o.days} día${o.days === 1 ? '' : 's'}`;
+  const games = o.days === 0 ? '' : ` · se pierde <b>${ap}${g} juego${g === 1 ? '' : 's'}</b>`;
+  const week = o.week_games != null && o.days !== 0 ? ` · <b>${o.games_week ?? 0} de ${o.week_games}</b> esta semana` : '';
+  return `<div class="outlook">⏱ <b>${when}</b>${games}${week}<div class="small muted">regreso estimado ${esc(fmtDay(o.return, true))} (ESPN)</div></div>`;
+}
+function outlookShort(o) {
+  if (!o || !o.return) return '<span class="muted">sin fecha</span>';
+  const g = o.games ?? 0;
+  return `${esc(fmtDay(o.return))}<div class="small muted">${o.season ? 'temporada' : `${o.approx ? '~' : ''}${g} J · ${o.games_week ?? 0}/${o.week_games ?? 0} sem`}</div>`;
+}
+function changeCell(c) { return `${sevTag(c.from)} → ${sevTag(c.to)}${c.part ? ' · ' + esc(c.part) : ''}${sev(c.to) >= 3 ? outlookLine(c.outlook) : ''}${c.detail ? `<div class="small muted" title="${esc(c.detail)}">${esc(c.detail.slice(0, 140))}${c.detail.length > 140 ? '…' : ''}</div>` : ''}`; }
+function sev(s) { const k = String(s || '').toLowerCase(); return { probable: 1, questionable: 2, dtd: 2, 'day-to-day': 2, gtd: 2, doubtful: 3, out: 4, ir: 4, ofs: 4, sus: 4, suspended: 4 }[k] ?? (s ? 2 : 0); }
 function whoCell(c) { return `<b>${nm(c.pid, c.name)}</b> <span class="muted small">${esc(c.team)} · ${(c.pos || []).filter(Boolean).join('/')}</span>`; }
 
 async function renderInjuries() {
@@ -578,7 +594,7 @@ async function renderInjuries() {
 
   const cur = (rep.current_out || []).filter((c) => passes(c.name, c.owner, !c.owner));
   setHTML('#outTable', cur.length
-    ? `<table class="tbl"><thead><tr><th>Jugador</th><th class="hm">Pos</th><th>Estado</th><th class="hm">Parte</th><th>Regreso</th><th class="num hm">Proy/J</th><th>Dueño</th></tr></thead><tbody>${cur.map((c) => `<tr><td>${nm(c.pid, c.name)}<div class="small muted">${esc(c.team)}${c.part ? ' · ' + esc(c.part) : ''}</div></td><td class="hm">${(c.pos || []).join('/')}</td><td>${sevTag(c.status)}</td><td class="hm">${esc(c.part || '')}</td><td class="small">${esc(c.return || '—')}</td><td class="num hm">${c.proj}</td><td>${ownerCell(c.owner)}</td></tr>`).join('')}</tbody></table>`
+    ? `<table class="tbl"><thead><tr><th>Jugador</th><th class="hm">Pos</th><th>Estado</th><th class="hm">Parte</th><th>Regreso</th><th class="num hm">Proy/J</th><th>Dueño</th></tr></thead><tbody>${cur.map((c) => `<tr><td>${nm(c.pid, c.name)}<div class="small muted">${esc(c.team)}${c.part ? ' · ' + esc(c.part) : ''}</div></td><td class="hm">${(c.pos || []).join('/')}</td><td>${sevTag(c.status)}</td><td class="hm">${esc(c.part || '')}</td><td class="small">${outlookShort(c.outlook)}</td><td class="num hm">${c.proj}</td><td>${ownerCell(c.owner)}</td></tr>`).join('')}</tbody></table>`
     : '<p class="muted">Nadie relevante en Out.</p>');
   { const oc = $('#outCount'); if (oc) oc.textContent = `(${cur.length})`; }
 

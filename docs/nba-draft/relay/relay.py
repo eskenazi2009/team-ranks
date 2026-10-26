@@ -398,7 +398,7 @@ def parse_boxscore(summary, by_espn):
     return out
 
 
-def fetch_daily(core, season, players=None, days_back=7, days_fwd=9):
+def fetch_daily(core, season, players=None, days_back=7, days_fwd=35):
     """Stats reales y proyecciones de Sleeper por fecha (ventana alrededor de hoy), matchups de la
     semana en curso y calendario/marcadores de ESPN. Devuelve el dict que se escribe en daily.json."""
     # Nota: Sleeper ignora el parámetro date en stats/projections (devuelve la temporada completa),
@@ -460,12 +460,14 @@ def sev(status):
 
 
 def status_of(pl, injmap):
-    """(severidad, estado, parte, regreso, detalle): lo peor entre Sleeper y ESPN."""
+    """(severidad, estado, parte, regreso, detalle): el estado más grave entre Sleeper y ESPN.
+    Fecha estimada de regreso y detalle salen siempre de ESPN (Sleeper no los trae)."""
     eid = str(pl.get("espn_id") or "")
     a = injmap.get(eid) or {}
-    cands = [(sev(pl.get("injury_status")), pl.get("injury_status"), pl.get("injury_body_part"), None, None),
-             (sev(a.get("status")), a.get("status"), a.get("type"), a.get("returnDate"), a.get("detail"))]
-    return max(cands, key=lambda c: c[0])
+    s_sl, s_es = sev(pl.get("injury_status")), sev(a.get("status"))
+    if s_es >= s_sl and a:
+        return (s_es, a.get("status"), a.get("type") or pl.get("injury_body_part"), a.get("returnDate"), a.get("detail"))
+    return (s_sl, pl.get("injury_status"), pl.get("injury_body_part") or a.get("type"), a.get("returnDate"), a.get("detail"))
 
 
 RECENT_DAYS = 3  # ventana de "lesiones nuevas" en la página: hoy y los 2 días anteriores (hora de Panamá)
@@ -557,6 +559,50 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
         return out[-4:]
 
     today = (daily or {}).get("today") or now_iso()[:10]
+    # calendario por equipo (abreviatura de Sleeper) para contar juegos que se pierde
+    espn_to_sl = {"GS": "GSW", "NO": "NOP", "NY": "NYK", "SA": "SAS", "UTAH": "UTA", "WSH": "WAS"}
+    sched = {}
+    last_sched = today
+    for date, day in ((daily or {}).get("days") or {}).items():
+        if date < today:
+            continue
+        last_sched = max(last_sched, date)
+        for gm in day.get("games") or []:
+            if gm.get("state") == "post":
+                continue
+            for ab in (gm.get("home"), gm.get("away")):
+                sched.setdefault(espn_to_sl.get(ab, ab), []).append(date)
+    t0 = dt.date.fromisoformat(today)
+    week_end = (t0 + dt.timedelta(days=6 - t0.weekday())).isoformat()  # semanas de la liga: lunes a domingo
+
+    def outlook(team, ret):
+        """Cuánto tiempo estará fuera según la fecha estimada de ESPN."""
+        games = sorted(sched.get(team) or [])
+        week_left = [g for g in games if g <= week_end]
+        o = {"week_games": len(week_left)}
+        if not ret:
+            return o
+        ret = str(ret)[:10]
+        try:
+            r = dt.date.fromisoformat(ret)
+        except ValueError:
+            return o
+        o["return"] = ret
+        o["days"] = max((r - t0).days, 0)
+        o["games_week"] = sum(1 for g in week_left if g < ret)
+        if ret >= "2027-04-12":
+            o["season"] = True
+        if ret <= last_sched:
+            o["games"] = sum(1 for g in games if g < ret)
+        else:
+            known = sum(1 for g in games)
+            span = max((dt.date.fromisoformat(last_sched) - t0).days + 1, 1)
+            rate = known / span if known else 82 / 174
+            end = min(r, dt.date(2027, 4, 12))
+            o["games"] = known + round(rate * max((end - dt.date.fromisoformat(last_sched)).days, 0))
+            o["approx"] = True
+        return o
+
     try:
         baseline = json.load(open(f"{out_dir}/injury_baseline.json", encoding="utf-8"))
     except Exception:
@@ -588,7 +634,8 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
         changes.append({"pid": pid, "name": f"{pl.get('first_name')} {pl.get('last_name')}", "team": pl.get("team"),
                         "pos": pl.get("fantasy_positions") or [pl.get("position")], "depth": [pl.get("depth_chart_position"), pl.get("depth_chart_order")],
                         "proj": round(relevance, 1), "owner": owner_of.get(pid), "kind": "peor" if now[0] > prev[0] else "mejor",
-                        "from": prev[1], "to": now[1], "part": now[2], "return": now[3], "detail": (now[4] or "")[:160]})
+                        "from": prev[1], "to": now[1], "part": now[2], "return": now[3], "detail": (now[4] or "")[:240],
+                        "outlook": outlook(pl.get("team"), now[3]) if now[0] >= 2 else None})
     # beneficiarios: compañeros del mismo equipo, por posición de depth chart y techo
     def gainers(c):
         # beneficiarios solo cuando se cae alguien con rol real (titular o ≥20 pts/J proyectados)
@@ -669,7 +716,8 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
         e = {"pid": pid, "name": f"{pl.get('first_name')} {pl.get('last_name')}", "team": pl.get("team"),
              "pos": pl.get("fantasy_positions") or [pl.get("position")], "depth": [pl.get("depth_chart_position"), pl.get("depth_chart_order")],
              "proj": round(pr_, 1), "owner": owner_of.get(pid), "kind": "peor", "from": stk.get("from"), "to": st_[1],
-             "part": st_[2], "return": st_[3], "detail": (st_[4] or "")[:160], "since": stk.get("since")}
+             "part": st_[2], "return": st_[3], "detail": (st_[4] or "")[:240], "since": stk.get("since"),
+             "outlook": outlook(pl.get("team"), st_[3])}
         g = gainers(e)
         if g is not None:
             e["beneficiaries"] = g
@@ -692,7 +740,8 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
         if pr_ < 15 and (pl.get("depth_chart_order") or 9) > 2:
             continue
         current.append({"pid": pid, "name": f"{pl.get('first_name')} {pl.get('last_name')}", "team": pl.get("team"), "pos": pl.get("fantasy_positions") or [],
-                        "status": st_[1], "part": st_[2], "return": st_[3], "detail": (st_[4] or "")[:140], "proj": round(pr_, 1), "owner": owner_of.get(pid)})
+                        "status": st_[1], "part": st_[2], "return": st_[3], "detail": (st_[4] or "")[:240], "proj": round(pr_, 1), "owner": owner_of.get(pid),
+                        "outlook": outlook(pl.get("team"), st_[3])})
     current.sort(key=lambda x: -x["proj"])
     report = {"generated_at": now_iso(), "today": today, "since": since, "league": league.get("name"), "changes": changes, "recent_injuries": recent_list,
               "recent_days": RECENT_DAYS, "recent_from": first_day, "current_out": current}
@@ -722,13 +771,22 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
     # markdown para la notificación
     md = [f"# Lesiones {key} · {league.get('name')}", f"Cambios desde {since or 'el snapshot anterior'} (generado {report['generated_at']})", ""]
     worse = [c for c in changes if c["kind"] == "peor"]; better = [c for c in changes if c["kind"] == "mejor"]
+
+    def out_txt(o):
+        if not o or not o.get("return"):
+            return ""
+        if o.get("season"):
+            return f" · fuera toda la temporada (regreso est. {o['return']})"
+        ap = "~" if o.get("approx") else ""; n = o.get("games", 0)
+        return (f" · regreso est. {o['return']} ({o['days']} días, se pierde {ap}{n} juego{'' if n == 1 else 's'},"
+                f" {o.get('games_week', 0)} de {o.get('week_games', 0)} esta semana)")
     if not changes:
         md.append("Sin cambios de lesión relevantes desde el último reporte.")
     if worse:
         md.append("## Nuevas o agravadas")
         for c in worse:
             own = f" (de {c['owner']})" if c.get("owner") else " (LIBRE)"
-            md.append(f"- **{c['name']}** {c['team']} {'/'.join(x for x in c['pos'] if x)}{own}: {c['from'] or 'sano'} → **{c['to']}**{' · ' + c['part'] if c.get('part') else ''}{' · regreso est. ' + c['return'] if c.get('return') else ''}. {c.get('detail') or ''}")
+            md.append(f"- **{c['name']}** {c['team']} {'/'.join(x for x in c['pos'] if x)}{own}: {c['from'] or 'sano'} → **{c['to']}**{' · ' + c['part'] if c.get('part') else ''}{out_txt(c.get('outlook'))}. {c.get('detail') or ''}")
             for m in c.get("beneficiaries") or []:
                 tag = "LIBRE" if m["free"] else f"de {m['owner']}"
                 rec = ", ".join(f"{r['fp']} ({r['min']}m)" for r in m["recent"]) or "sin juegos"
