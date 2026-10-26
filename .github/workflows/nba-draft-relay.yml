@@ -19,7 +19,7 @@ on:
         type: boolean
         default: false
   schedule:
-    - cron: "0 11 * * *"   # snapshot diario (lesiones, noticias, proyecciones)
+    - cron: "0 21 * * *"   # snapshot diario a las 4:00 PM de Panamá (UTC-5): lesiones, noticias, proyecciones
 
 permissions:
   contents: write
@@ -43,6 +43,9 @@ jobs:
 
       - name: Snapshot de datos (Sleeper + ESPN) a docs/nba-draft/data
         if: ${{ (inputs.mode || 'snapshot') == 'snapshot' }}
+        env:
+          # solo la corrida programada mueve la línea base del reporte de lesiones (diff de 24 h)
+          RELAY_BASELINE: ${{ github.event_name == 'schedule' && '1' || '' }}
         run: |
           python docs/nba-draft/relay/relay.py snapshot --push ${{ inputs.skip_espn == true && '--skip-espn' || '' }}
 

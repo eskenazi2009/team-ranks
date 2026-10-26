@@ -586,9 +586,17 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
         c["beneficiaries"] = mates[:5]
     changes.sort(key=lambda c: (c["kind"] != "peor", -sev(c["to"]), -c["proj"]))
     report = {"generated_at": now_iso(), "today": today, "since": since, "league": league.get("name"), "changes": changes}
-    # la primera corrida de cada día fija la nueva línea base (así el reporte matutino cubre 24 h)
-    if not baseline or baseline.get("date") != today:
+    # la línea base se mueve solo en la corrida programada (RELAY_BASELINE=1) o si tiene 20+ horas,
+    # así el reporte diario cubre 24 h aunque haya corridas manuales intermedias
+    age_h = None
+    if baseline and baseline.get("generated_at"):
+        try:
+            age_h = (dt.datetime.now(dt.timezone.utc) - dt.datetime.strptime(baseline["generated_at"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc)).total_seconds() / 3600
+        except Exception:
+            age_h = None
+    if not baseline or os.environ.get("RELAY_BASELINE") == "1" or (age_h is not None and age_h >= 20):
         write_json(f"{out_dir}/injury_baseline.json", {"date": today, "generated_at": now_iso(), "statuses": cur_statuses})
+        log("línea base de lesiones actualizada")
     write_json(f"{out_dir}/injury_report.json", report)
     # histórico (últimos 30 días)
     try:

@@ -26,7 +26,8 @@ y los endpoints públicos de ESPN.
 - **Lesiones**: cambios de lesión detectados por el relay (nuevas, agravadas, regresos) y, para cada
   baja, los compañeros que ganan minutos con su techo y si están libres en la liga. El relay escribe
   `data/injury_report.json`, `data/injury_report.md` e `data/injury_log.json` en cada snapshot; una
-  tarea programada diaria lee el reporte y notifica a Raymond.
+  tarea programada diaria (4:12 PM de Panamá) lee el reporte y notifica a Raymond por push y correo.
+  La línea base del diff solo se mueve en la corrida programada o si tiene 20+ horas.
 
 ## Publicación
 
@@ -48,7 +49,7 @@ El navegador de algunos usuarios no puede llamar a Sleeper/ESPN directamente (CO
 bloqueos de red). Por eso el workflow `.github/workflows/nba-draft-relay.yml` baja los
 datos desde GitHub y la página los lee de su mismo origen:
 
-- **snapshot** (diario a las 11:00 UTC o manual): escribe `data/snapshot.json` (liga,
+- **snapshot** (diario a las 21:00 UTC, 4:00 PM de Panamá, o manual): escribe `data/snapshot.json` (liga,
   draft, usuarios, rosters, picks), `data/players.json`, `data/stats.json`,
   `data/proj.json`, `data/espn.json` (lesiones, rosters NBA, noticias e historial de
   los 250 mejores por ADP) y `data/live.json`, y los commitea en `main`.
