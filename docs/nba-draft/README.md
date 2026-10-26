@@ -23,6 +23,10 @@ y los endpoints públicos de ESPN.
   siguiente turno). Al lado, el panel **Claude en vivo** lee `live/claude.json`,
   que Claude actualiza durante el draft, más un cuadro para pegar notas.
 - **Liga**: puntuación, roster, formato del draft y orden de los equipos.
+- **Lesiones**: cambios de lesión detectados por el relay (nuevas, agravadas, regresos) y, para cada
+  baja, los compañeros que ganan minutos con su techo y si están libres en la liga. El relay escribe
+  `data/injury_report.json`, `data/injury_report.md` e `data/injury_log.json` en cada snapshot; una
+  tarea programada diaria lee el reporte y notifica a Raymond.
 
 ## Publicación
 

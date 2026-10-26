@@ -451,6 +451,194 @@ def fetch_daily(core, season, players=None, days_back=7, days_fwd=9):
     return out
 
 
+# ---------------- reporte diario de lesiones ----------------
+SEV = {None: 0, "": 0, "probable": 1, "questionable": 2, "dtd": 2, "day-to-day": 2, "gtd": 2, "doubtful": 3, "out": 4, "ir": 4, "ofs": 4, "sus": 4, "suspended": 4}
+
+
+def sev(status):
+    return SEV.get((status or "").strip().lower(), 2 if status else 0)
+
+
+def league_fp(scoring, line):
+    t = 0.0
+    for k, w in (scoring or {}).items():
+        if not w:
+            continue
+        v = line.get(k)
+        if v is None and k == "fgmi":
+            v = max(0.0, float(line.get("fga") or 0) - float(line.get("fgm") or 0))
+        if v is None and k == "ftmi":
+            v = max(0.0, float(line.get("fta") or 0) - float(line.get("ftm") or 0))
+        if v is None and k == "tpmi":
+            v = max(0.0, float(line.get("tpa") or 0) - float(line.get("tpm") or 0))
+        t += float(w) * float(v or 0)
+    return t
+
+
+def game_fp(scoring, g):
+    """g = fila compacta del gamelog de ESPN"""
+    d, opp, mn, pts, reb, ast, stl, blk, to, tpm = g[:10]
+    n = sum(1 for q in (pts, reb, ast, stl, blk) if (q or 0) >= 10)
+    return league_fp(scoring, {"pts": pts or 0, "reb": reb or 0, "ast": ast or 0, "stl": stl or 0, "blk": blk or 0, "to": to or 0, "tpm": tpm or 0, "dd": 1 if n >= 2 else 0, "td": 1 if n >= 3 else 0})
+
+
+def box_fp(scoring, l):
+    n = sum(1 for q in (l.get("pts"), l.get("reb"), l.get("ast"), l.get("stl"), l.get("blk")) if (q or 0) >= 10)
+    return league_fp(scoring, {"pts": l.get("pts") or 0, "reb": l.get("reb") or 0, "ast": l.get("ast") or 0, "stl": l.get("stl") or 0, "blk": l.get("blk") or 0, "to": l.get("to") or 0, "tpm": l.get("tpm") or 0, "dd": 1 if n >= 2 else 0, "td": 1 if n >= 3 else 0})
+
+
+def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, proj, daily):
+    league = core["league"]; scoring = league.get("scoring_settings") or {}
+    users = {u["user_id"]: u for u in core.get("users") or []}
+    owner_of = {}
+    for r in core.get("rosters") or []:
+        u = users.get(r.get("owner_id")) or {}
+        name = (u.get("metadata") or {}).get("team_name") or u.get("display_name") or f"roster {r.get('roster_id')}"
+        for pid in r.get("players") or []:
+            owner_of[pid] = name
+    inj_now = (bundle or {}).get("injuries") or {}
+    inj_prev = (prev_bundle or {}).get("injuries") or {}
+    athletes = (bundle or {}).get("athletes") or {}
+
+    def status_of(pl, injmap):
+        eid = str(pl.get("espn_id") or "")
+        a = injmap.get(eid) or {}
+        cands = [(sev(pl.get("injury_status")), pl.get("injury_status"), pl.get("injury_body_part"), None, None),
+                 (sev(a.get("status")), a.get("status"), a.get("type"), a.get("returnDate"), a.get("detail"))]
+        return max(cands, key=lambda c: c[0])
+
+    def per_game_proj(pid):
+        pr = proj.get(pid)
+        return league_fp(scoring, pr) if pr else 0.0
+
+    def ceiling(pl):
+        a = athletes.get(str(pl.get("espn_id") or "")) or {}
+        g = [x for x in (a.get("games") or []) if (x[2] or 0) > 0]
+        if len(g) < 10:
+            return None
+        f = sorted((game_fp(scoring, x) for x in g), reverse=True)
+        return {"top5": sum(f[:5]) / 5, "p90": f[int(len(f) * 0.1)], "avg": sum(f) / len(f), "n": len(f)}
+
+    def recent(pid):
+        out = []
+        for date in sorted((daily or {}).get("days") or {}):
+            if date < "2026-10-20":
+                continue
+            l = daily["days"][date].get("box", {}).get(pid)
+            if l and l.get("min"):
+                out.append({"date": date[5:], "opp": l.get("opp"), "fp": round(box_fp(scoring, l), 1), "min": round(l["min"]), "starter": bool(l.get("starter"))})
+        return out[-4:]
+
+    today = (daily or {}).get("today") or now_iso()[:10]
+    try:
+        baseline = json.load(open(f"{out_dir}/injury_baseline.json", encoding="utf-8"))
+    except Exception:
+        baseline = None
+    cur_statuses = {}
+    for pid, pl in players.items():
+        if pl.get("team"):
+            cur_statuses[pid] = list(status_of(pl, inj_now))
+    if baseline and baseline.get("statuses"):
+        def prev_of(pid):
+            b = baseline["statuses"].get(pid)
+            return tuple(b) if b else (0, None, None, None, None)
+        since = baseline.get("generated_at")
+    else:
+        def prev_of(pid):
+            return status_of(prev_players.get(pid, {}), inj_prev) if prev_players.get(pid) else (0, None, None, None, None)
+        since = None
+    changes = []
+    for pid, pl in players.items():
+        if not pl.get("team"):
+            continue
+        now = tuple(cur_statuses[pid])
+        prev = prev_of(pid)
+        if now[0] == prev[0]:
+            continue
+        relevance = max(per_game_proj(pid), 0)
+        if relevance < 15 and (pl.get("depth_chart_order") or 9) > 2:
+            continue
+        changes.append({"pid": pid, "name": f"{pl.get('first_name')} {pl.get('last_name')}", "team": pl.get("team"),
+                        "pos": pl.get("fantasy_positions") or [pl.get("position")], "depth": [pl.get("depth_chart_position"), pl.get("depth_chart_order")],
+                        "proj": round(relevance, 1), "owner": owner_of.get(pid), "kind": "peor" if now[0] > prev[0] else "mejor",
+                        "from": prev[1], "to": now[1], "part": now[2], "return": now[3], "detail": (now[4] or "")[:160]})
+    # beneficiarios: compañeros del mismo equipo, por posición de depth chart y techo
+    for c in changes:
+        if c["kind"] != "peor" or sev(c["to"]) < 3:
+            continue
+        team = c["team"]; pos = c["depth"][0]
+        mates = []
+        for pid, pl in players.items():
+            if pl.get("team") != team or pid == c["pid"]:
+                continue
+            st_now = status_of(pl, inj_now)
+            if st_now[0] >= 3:
+                continue
+            ce = ceiling(pl); rec = recent(pid)
+            score = (ce["top5"] if ce else per_game_proj(pid)) + (10 if pl.get("depth_chart_position") == pos else 0) + (6 if (pl.get("depth_chart_order") or 9) <= 2 else 0)
+            mates.append({"pid": pid, "name": f"{pl.get('first_name')} {pl.get('last_name')}", "pos": pl.get("fantasy_positions") or [], "depth": [pl.get("depth_chart_position"), pl.get("depth_chart_order")],
+                          "proj": round(per_game_proj(pid), 1), "top5": ce and round(ce["top5"], 1), "p90": ce and round(ce["p90"], 1), "avg": ce and round(ce["avg"], 1),
+                          "recent": rec, "owner": owner_of.get(pid), "free": pid not in owner_of, "_s": score})
+        mates.sort(key=lambda m: -m["_s"])
+        for m in mates:
+            m.pop("_s", None)
+        c["beneficiaries"] = mates[:5]
+    changes.sort(key=lambda c: (c["kind"] != "peor", -sev(c["to"]), -c["proj"]))
+    report = {"generated_at": now_iso(), "today": today, "since": since, "league": league.get("name"), "changes": changes}
+    # la primera corrida de cada día fija la nueva línea base (así el reporte matutino cubre 24 h)
+    if not baseline or baseline.get("date") != today:
+        write_json(f"{out_dir}/injury_baseline.json", {"date": today, "generated_at": now_iso(), "statuses": cur_statuses})
+    write_json(f"{out_dir}/injury_report.json", report)
+    # histórico (últimos 30 días)
+    try:
+        log_ = json.load(open(f"{out_dir}/injury_log.json", encoding="utf-8"))
+    except Exception:
+        log_ = {}
+    key = report["today"] or report["generated_at"][:10]
+    seen = {(x["name"], x["to"]) for x in log_.get(key, [])}
+    log_[key] = log_.get(key, []) + [{k: c[k] for k in ("name", "team", "kind", "from", "to", "part", "return")} for c in changes if (c["name"], c["to"]) not in seen]
+    for k in sorted(log_)[:-30]:
+        log_.pop(k, None)
+    write_json(f"{out_dir}/injury_log.json", log_)
+    # markdown para la notificación
+    md = [f"# Lesiones {key} · {league.get('name')}", f"Cambios desde {since or 'el snapshot anterior'} (generado {report['generated_at']})", ""]
+    worse = [c for c in changes if c["kind"] == "peor"]; better = [c for c in changes if c["kind"] == "mejor"]
+    if not changes:
+        md.append("Sin cambios de lesión relevantes desde el último reporte.")
+    if worse:
+        md.append("## Nuevas o agravadas")
+        for c in worse:
+            own = f" (de {c['owner']})" if c.get("owner") else " (LIBRE)"
+            md.append(f"- **{c['name']}** {c['team']} {'/'.join(x for x in c['pos'] if x)}{own}: {c['from'] or 'sano'} → **{c['to']}**{' · ' + c['part'] if c.get('part') else ''}{' · regreso est. ' + c['return'] if c.get('return') else ''}. {c.get('detail') or ''}")
+            for m in c.get("beneficiaries") or []:
+                tag = "LIBRE" if m["free"] else f"de {m['owner']}"
+                rec = ", ".join(f"{r['fp']} ({r['min']}m)" for r in m["recent"]) or "sin juegos"
+                md.append(f"    - {m['name']} {'/'.join(m['pos'])} depth {m['depth'][0]}{m['depth'][1]} · {tag} · techo top5 {m['top5']} · p90 {m['p90']} · proy {m['proj']} · últimos: {rec}")
+    frees = {}
+    for c in worse:
+        for m in c.get("beneficiaries") or []:
+            if m["free"]:
+                frees.setdefault(m["pid"], {**m, "por": c["name"]})
+    report["free_beneficiaries"] = sorted(frees.values(), key=lambda m: -(m.get("top5") or m.get("proj") or 0))
+    if frees:
+        md.append("")
+        md.append("## Libres de la liga que ganan minutos hoy")
+        for m in report["free_beneficiaries"]:
+            rec = ", ".join(f"{r['fp']} ({r['min']}m)" for r in m["recent"]) or "sin juegos"
+            md.append(f"- **{m['name']}** {'/'.join(m['pos'])} · por la baja de {m['por']} · techo top5 {m['top5']} · p90 {m['p90']} · proy {m['proj']} · últimos: {rec}")
+    write_json(f"{out_dir}/injury_report.json", report)
+    if better:
+        md.append("")
+        md.append("## Mejoran o regresan")
+        for c in better:
+            own = f" (de {c['owner']})" if c.get("owner") else " (LIBRE)"
+            md.append(f"- {c['name']} {c['team']}{own}: {c['from']} → {c['to'] or 'sano'}")
+    with open(f"{out_dir}/injury_report.md", "w", encoding="utf-8") as fh:
+        fh.write("\n".join(md) + "\n")
+    log(f"reporte de lesiones: {len(worse)} peor, {len(better)} mejor")
+    return report
+
+
 # ---------------- git ----------------
 def sh(cmd, cwd=None, check=True):
     print("$", cmd, flush=True)
@@ -488,8 +676,17 @@ def do_snapshot(args):
         stats, src = fetch_espn_bulk_stats(prev, players), "espn"
     proj, _ = fetch_stats_like("projections", str(lg_season))
     out = args.out
+    def load_prev(name):
+        try:
+            return json.load(open(f"{out}/{name}", encoding="utf-8"))
+        except Exception:
+            return None
+    prev_players = load_prev("players.json") or {}
+    prev_bundle = load_prev("espn.json")
+    bundle = None
     if not args.skip_espn:
-        write_json(f"{out}/espn.json", fetch_espn_bundle(players, top_n=args.top_n, gamelog_season=int(prev) + 1))
+        bundle = fetch_espn_bundle(players, top_n=args.top_n, gamelog_season=int(prev) + 1)
+        write_json(f"{out}/espn.json", bundle)
     elif os.path.exists(f"{out}/players.json"):
         # conserva los espn_id ya asignados en un snapshot anterior
         try:
@@ -502,10 +699,17 @@ def do_snapshot(args):
     write_json(f"{out}/players.json", players)
     write_json(f"{out}/stats.json", stats)
     write_json(f"{out}/proj.json", proj)
+    daily = None
     try:
-        write_json(f"{out}/daily.json", fetch_daily(core, lg_season, players=players))
+        daily = fetch_daily(core, lg_season, players=players)
+        write_json(f"{out}/daily.json", daily)
     except Exception as ex:
         log(f"diario falló: {ex}", ok=False)
+    try:
+        # sin ESPN nuevo, ESPN previo sirve de 'actual' y de 'previo' (solo cambia Sleeper)
+        injury_report(out, core, players, prev_players, bundle or prev_bundle, prev_bundle, proj, daily)
+    except Exception as ex:
+        log(f"reporte de lesiones falló: {ex}", ok=False)
     snap = {"generated_at": now_iso(), "statsSeason": prev, "projSeason": str(lg_season), "statsSrc": src,
             **{k: core[k] for k in ("state", "user", "league", "users", "rosters", "draft", "traded", "picks")},
             "sources": SOURCES}
