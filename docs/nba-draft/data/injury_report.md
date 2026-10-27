@@ -1,12 +1,21 @@
 # Lesiones 2026-10-27 · Benchwarmers
-Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-27T14:48:14Z)
+Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-27T17:01:41Z)
 
 ## Nuevas o agravadas
+- **Kawhi Leonard** TOR SF/SG (de White): DTD → **Out** · Knee · regreso est. 2026-11-23 (27 días, se pierde 13 juegos, 3 de 3 esta semana). Inflammation
+    - Scottie Barnes PF/SF depth PF1 · de Levy heat 🔥 · techo top5 67.6 · p90 59.5 · proy 40.3 · últimos: 37.7 (26m), 55.3 (37m), 15.1 (28m)
+    - Immanuel Quickley PG/SG depth PG1 · de Boozer Beater · techo top5 53.7 · p90 46.3 · proy 33.4 · últimos: 46.3 (28m), 21.2 (29m), 28.6 (28m)
+    - Jakob Poeltl C depth C1 · LIBRE · techo top5 44.9 · p90 40.7 · proy 25.1 · últimos: 14.2 (22m), 22.8 (27m), 0.2 (19m)
+    - RJ Barrett PF/SF/SG depth SG1 · de Cooper Troopers · techo top5 44.7 · p90 42.6 · proy 30.6 · últimos: 28.3 (26m), 42.8 (34m), 30.4 (32m)
+    - Collin Murray-Boyles C/PF depth C2 · de Boozer Beater · techo top5 40.6 · p90 33.1 · proy 24.8 · últimos: 24.1 (20m), 16.6 (18m), 14.4 (19m)
 - **Lauri Markkanen** UTA PF/SF (de TIQUITI): sano → **Day-To-Day** · Wrist · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Not Specified
 - **Jaren Jackson Jr.** UTA C/PF (de Boozer Beater): sano → **Day-To-Day** · Knee · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Not Specified
 - **Scoot Henderson** POR PG (LIBRE): sano → **Day-To-Day** · Ankle · regreso est. 2026-10-27 (0 días, se pierde 0 juegos, 0 de 3 esta semana). Soreness
 - **Justin Champagnie** WAS PF (LIBRE): sano → **Day-To-Day** · Foot · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Not Specified
 - **Alex Caruso** OKC PF/SF (de TIQUITI): sano → **Day-To-Day** · Ankle · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Caruso won't return to Monday's game against the Suns due to a right ankle sprain, Marc J. Spears of ESPN.com reports. He'll finish with nine points (3-5 FG, 3-5 3Pt), three assists and two rebounds in nine minutes.
+
+## Libres de la liga que ganan minutos hoy
+- **Jakob Poeltl** C · por la baja de Kawhi Leonard · techo top5 44.9 · p90 40.7 · proy 25.1 · últimos: 14.2 (22m), 22.8 (27m), 0.2 (19m)
 
 ## Mejoran o regresan
 - Chet Holmgren OKC (de Levy heat 🔥): Out → Day-To-Day
