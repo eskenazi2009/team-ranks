@@ -29,7 +29,10 @@
   locks (George estaba fijado en 62.5 y Sleeper mostraba 32.4), así que nunca inferir locks de ahí. Tampoco
   sirven los totales de la API (`points` de /matchups): el 28-oct-2026 la semana 1 de White salía 388.5
   y el real era 414.7 (la API mostraba el último juego de Randle, 27.9, en vez de su lock de 54.1), y
-  Magic Wonder Year salía 267.3 contra 307.3 real. Los marcadores finales reales solo los sabe Raymond. Analizar cada slot abierto como parada óptima: fijar ahora vs EV de esperar los juegos
+  Magic Wonder Year salía 267.3 contra 307.3 real. Los marcadores oficiales (con locks) están en
+  los rosters: `settings.fpts` + `fpts_decimal`/100 es el acumulado de la temporada por equipo (y
+  `fpts_against` el del rival); el total de una semana es la diferencia contra la semana anterior.
+  Verificado con Raymond: White 414.7 y Magic Wonder Year 307.3 en la semana 1. Analizar cada slot abierto como parada óptima: fijar ahora vs EV de esperar los juegos
   restantes de la semana (hasta el domingo), incluyendo cambiar al jugador del slot.
 - Regla de Raymond (28-oct-2026): un fijable que no se va a fijar no vale nada. Si el plan es esperar otro
   juego de un titular, no tiene sentido dejarlo en el slot los días que no juega para "conservar" su score:
