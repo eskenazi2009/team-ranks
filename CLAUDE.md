@@ -26,7 +26,10 @@
   vuelve a jugar de titular, el fijable pasa a ser el nuevo juego. Si se le manda a la banca sin fijar,
   pierde la opción hasta que vuelva a ser titular y juegue otra vez. Sleeper no expone qué está fijado:
   Raymond lo dice. Verificado el 24-oct-2026: starters_points de los matchups de Sleeper NO refleja los
-  locks (George estaba fijado en 62.5 y Sleeper mostraba 32.4), así que nunca inferir locks de ahí. Analizar cada slot abierto como parada óptima: fijar ahora vs EV de esperar los juegos
+  locks (George estaba fijado en 62.5 y Sleeper mostraba 32.4), así que nunca inferir locks de ahí. Tampoco
+  sirven los totales de la API (`points` de /matchups): el 28-oct-2026 la semana 1 de White salía 388.5
+  y el real era 414.7 (la API mostraba el último juego de Randle, 27.9, en vez de su lock de 54.1), y
+  Magic Wonder Year salía 267.3 contra 307.3 real. Los marcadores finales reales solo los sabe Raymond. Analizar cada slot abierto como parada óptima: fijar ahora vs EV de esperar los juegos
   restantes de la semana (hasta el domingo), incluyendo cambiar al jugador del slot.
 - Regla de Raymond (28-oct-2026): un fijable que no se va a fijar no vale nada. Si el plan es esperar otro
   juego de un titular, no tiene sentido dejarlo en el slot los días que no juega para "conservar" su score:
