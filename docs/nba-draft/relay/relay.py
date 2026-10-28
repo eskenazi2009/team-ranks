@@ -441,8 +441,10 @@ def fetch_daily(core, season, players=None, days_back=7, days_fwd=35):
             continue
         if w >= 1 and w not in weeks:
             weeks.append(w)
+    if weeks and weeks[0] > 1 and weeks[0] - 1 not in weeks:
+        weeks.append(weeks[0] - 1)  # semana anterior completa, para comparar totales
     lid = core["league"]["league_id"]
-    for w in weeks[:2]:
+    for w in weeks[:3]:
         m = try_get(f"matchups semana {w}", f"{SLEEPER}/league/{lid}/matchups/{w}")
         if isinstance(m, list):
             out["matchups"][str(w)] = m
