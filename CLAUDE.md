@@ -28,6 +28,13 @@
   Raymond lo dice. Verificado el 24-oct-2026: starters_points de los matchups de Sleeper NO refleja los
   locks (George estaba fijado en 62.5 y Sleeper mostraba 32.4), así que nunca inferir locks de ahí. Analizar cada slot abierto como parada óptima: fijar ahora vs EV de esperar los juegos
   restantes de la semana (hasta el domingo), incluyendo cambiar al jugador del slot.
+- Regla de Raymond (28-oct-2026): un fijable que no se va a fijar no vale nada. Si el plan es esperar otro
+  juego de un titular, no tiene sentido dejarlo en el slot los días que no juega para "conservar" su score:
+  esos días se mete a otro jugador elegible que sí juegue, y si hace muchos puntos se fija; si no, el titular
+  vuelve al slot (o a otro slot elegible) para su próximo juego. Mandar a la banca solo cuesta si ese score
+  se iba a fijar. Planear cada slot abierto como una secuencia de juegos de distintos jugadores, día por día.
+- Raymond dice qué jugadores fijó cada semana; esos quedan inmóviles en su slot hasta el domingo y no se
+  tocan en ninguna recomendación.
 - Raymond está en Panamá (UTC-5, sin horario de verano). El relay diario corre a las 4:00 PM de Panamá
   (21:00 UTC) y la tarea programada de lesiones le notifica a las 4:12 PM de Panamá por push y correo
   (trigger trig_01MFQi4UpVq8sQ4ANuJYMKbm).
