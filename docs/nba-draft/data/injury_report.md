@@ -1,33 +1,67 @@
 # Lesiones 2026-10-27 · Benchwarmers
-Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-27T17:01:41Z)
+Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-28T00:14:15Z)
 
 ## Nuevas o agravadas
+- **Anthony Edwards** MIN PG/SG (de Levy heat 🔥): sano → **Out** · Knee · regreso est. 2026-12-21 (55 días, se pierde ~28 juegos, 3 de 3 esta semana). Surgery
+    - LaMelo Ball PG depth PG1 · de Magic Wonder Year · techo top5 68.4 · p90 58.3 · proy 44.7 · últimos: 40.4 (29m), 28.5 (23m), 34.2 (17m), 16.0 (31m)
+    - Ayo Dosunmu PG/SG depth SG2 · de Brunson Burner · techo top5 52.5 · p90 41.6 · proy 27.9 · últimos: 26.5 (29m), 44.4 (27m), 13.1 (23m), 12.2 (26m)
+    - Rudy Gobert C depth C1 · de LatinBet24 · techo top5 50.4 · p90 46.2 · proy 30.6 · últimos: 21.5 (33m), 23.3 (30m), 25.6 (31m), 34.0 (36m)
+    - Jaden McDaniels PF/SF depth SF1 · de Shalommeyer · techo top5 46.3 · p90 39.5 · proy 29.4 · últimos: 33.1 (29m), 32.7 (30m), 28.7 (31m), 29.2 (37m)
+    - Jonathan Kuminga PF depth PF1 · de White · techo top5 41.3 · p90 38.6 · proy 27.6 · últimos: 28.7 (30m), 32.1 (27m), 26.3 (26m), 29.5 (36m)
+- **Alperen Şengün** HOU C/PF (de Winning Time): sano → **Out** · Back · regreso est. 2026-10-30 (3 días, se pierde 1 juego, 1 de 3 esta semana). Soreness
+    - Kevin Durant PF/SF depth SF1 · de Boozer Beater · techo top5 59.2 · p90 54.9 · proy 40.0 · últimos: 43.7 (37m), 36.4 (37m), 32.8 (37m), 44.3 (30m)
+    - Reed Sheppard PG/SG depth SG2 · LIBRE · techo top5 57.7 · p90 41.6 · proy 24.1 · últimos: 13.4 (16m), 42.7 (30m), 24.0 (24m)
+    - Amen Thompson PG/SF/SG depth SG1 · de Levy heat 🔥 · techo top5 56.2 · p90 51.2 · proy 38.6 · últimos: 38.0 (33m), 47.0 (36m), 41.2 (39m), 19.0 (28m)
+    - Fred VanVleet PG depth PG1 · de Magic Wonder Year · techo top5 53.6 · p90 48.4 · proy 28.4 · últimos: 34.9 (30m), 34.1 (32m), 15.3 (29m)
+    - Jabari Smith Jr. C/PF depth PF1 · de White · techo top5 49.5 · p90 43.0 · proy 30.1 · últimos: 44.5 (36m), 21.5 (34m), 28.5 (33m), 44.9 (39m)
 - **Kawhi Leonard** TOR SF/SG (de White): DTD → **Out** · Knee · regreso est. 2026-11-23 (27 días, se pierde 13 juegos, 3 de 3 esta semana). Inflammation
     - Scottie Barnes PF/SF depth PF1 · de Levy heat 🔥 · techo top5 67.6 · p90 59.5 · proy 40.3 · últimos: 37.7 (26m), 55.3 (37m), 15.1 (28m)
     - Immanuel Quickley PG/SG depth PG1 · de Boozer Beater · techo top5 53.7 · p90 46.3 · proy 33.4 · últimos: 46.3 (28m), 21.2 (29m), 28.6 (28m)
     - Jakob Poeltl C depth C1 · LIBRE · techo top5 44.9 · p90 40.7 · proy 25.1 · últimos: 14.2 (22m), 22.8 (27m), 0.2 (19m)
     - RJ Barrett PF/SF/SG depth SG1 · de Cooper Troopers · techo top5 44.7 · p90 42.6 · proy 30.6 · últimos: 28.3 (26m), 42.8 (34m), 30.4 (32m)
     - Collin Murray-Boyles C/PF depth C2 · de Boozer Beater · techo top5 40.6 · p90 33.1 · proy 24.8 · últimos: 24.1 (20m), 16.6 (18m), 14.4 (19m)
+- **Jaren Jackson Jr.** UTA C/PF (de Boozer Beater): sano → **Out** · Knee · regreso est. 2026-12-14 (48 días, se pierde ~24 juegos, 2 de 2 esta semana). Not Specified
+    - Lauri Markkanen PF/SF depth PF1 · de TIQUITI · techo top5 66.4 · p90 54.0 · proy 40.9 · últimos: 33.3 (36m), 32.7 (34m), 41.9 (38m), 2.0 (6m)
+    - Keyonte George PG/SG depth PG1 · de Cooper Troopers · techo top5 59.0 · p90 55.0 · proy 36.6 · últimos: 37.1 (29m), 36.2 (32m), 49.8 (33m), 36.6 (33m)
+    - Kyle Filipowski C/PF depth C3 · LIBRE · techo top5 51.2 · p90 46.3 · proy 26.5 · últimos: 5.0 (9m), 0.2 (8m), -0.8 (8m)
+    - Ace Bailey PF/SF depth SF1 · de Magic Wonder Year · techo top5 53.7 · p90 36.7 · proy 25.9 · últimos: 29.5 (24m), 17.4 (22m), 40.4 (29m), 43.5 (34m)
+    - Brice Sensabaugh PF/SF/SG depth SG2 · LIBRE · techo top5 51.3 · p90 36.8 · proy 18.9 · últimos: 3.9 (14m), 19.6 (16m), 16.7 (17m), 14.4 (9m)
+- **Rui Hachimura** LAC PF/SF (de Winning Time): sano → **Out** · Quadriceps · regreso est. 2026-10-30 (3 días, se pierde 1 juego, 1 de 3 esta semana). Soreness
+    - Darius Garland PG depth PG1 · de Shalommeyer · techo top5 54.4 · p90 45.1 · proy 39.1 · últimos: 39.2 (32m), 32.0 (37m), 35.3 (36m)
+    - Brook Lopez C depth C2 · de Winning Time · techo top5 43.2 · p90 36.0 · proy 17.5 · últimos: 36.7 (27m), 32.8 (20m), 24.2 (23m)
+    - Gradey Dick SF/SG depth PF2 · LIBRE · techo top5 30.8 · p90 18.3 · proy 16.0 · últimos: 17.8 (19m), 11.8 (12m), 12.6 (18m)
+    - Isaiah Jackson C depth C1 · LIBRE · techo top5 36.2 · p90 30.4 · proy 17.9 · últimos: 20.0 (15m), 23.7 (28m), 25.2 (24m)
+    - Derrick Jones Jr. PF/SF depth SF1 · LIBRE · techo top5 35.2 · p90 31.6 · proy 18.9 · últimos: 24.7 (26m), 29.3 (35m), 21.7 (30m)
+- **Alex Caruso** OKC PF/SF (de TIQUITI): sano → **Out** · Ankle · regreso est. 2026-10-31 (4 días, se pierde 1 juego, 1 de 2 esta semana). Caruso (ankle) won't play Wednesday in Dallas.
+    - Shai Gilgeous-Alexander PG depth PG1 · de Brunson Burner · techo top5 71.3 · p90 63.7 · proy 50.7 · últimos: 58.2 (36m), 28.9 (35m), 53.7 (36m), 35.1 (30m)
+    - Jaylin Williams C depth C2 · LIBRE · techo top5 51.9 · p90 38.2 · proy 17.5 · últimos: sin juegos
+    - Isaiah Hartenstein C depth C1 · de White · techo top5 50.9 · p90 41.4 · proy 29.3 · últimos: 14.1 (17m), 16.2 (23m), 29.9 (27m), 36.1 (26m)
+    - Ajay Mitchell PG/SG depth PG2 · de Cooper Troopers · techo top5 40.9 · p90 35.9 · proy 29.2 · últimos: 18.0 (23m), 21.0 (23m), 36.2 (28m), 41.9 (25m)
+    - Jared McCain PG/SG depth SG1 · de LatinBet24 · techo top5 34.6 · p90 29.8 · proy 25.3 · últimos: 31.4 (22m), 3.5 (18m), 6.2 (21m), 33.6 (30m)
+- **Isaiah Joe** DET SF/SG (LIBRE): DTD → **Out** · Hip · regreso est. 2026-10-28 (1 días, se pierde 1 juego, 1 de 3 esta semana). Bruise
+- **Justin Champagnie** WAS PF (LIBRE): sano → **Out** · Foot · regreso est. 2026-10-30 (3 días, se pierde 1 juego, 1 de 2 esta semana). Not Specified
 - **Lauri Markkanen** UTA PF/SF (de TIQUITI): sano → **Day-To-Day** · Wrist · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Not Specified
-- **Jaren Jackson Jr.** UTA C/PF (de Boozer Beater): sano → **Day-To-Day** · Knee · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Not Specified
+- **Tyrese Haliburton** IND PG/SG (de TIQUITI): sano → **Day-To-Day** · Hamstring · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 3 esta semana). Soreness
+- **Kyrie Irving** DAL PG/SG (de Magic Wonder Year): sano → **Day-To-Day** · Knee · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Irving (knee) is questionable for Wednesday's game against the Thunder.
+- **Ajay Mitchell** OKC PG/SG (de Cooper Troopers): sano → **Day-To-Day** · Ankle · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Mitchell (ankle) is questionable for Wednesday's game against Dallas.
 - **Scoot Henderson** POR PG (LIBRE): sano → **Day-To-Day** · Ankle · regreso est. 2026-10-27 (0 días, se pierde 0 juegos, 0 de 3 esta semana). Soreness
-- **Justin Champagnie** WAS PF (LIBRE): sano → **Day-To-Day** · Foot · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Not Specified
-- **Alex Caruso** OKC PF/SF (de TIQUITI): sano → **Day-To-Day** · Ankle · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Caruso won't return to Monday's game against the Suns due to a right ankle sprain, Marc J. Spears of ESPN.com reports. He'll finish with nine points (3-5 FG, 3-5 3Pt), three assists and two rebounds in nine minutes.
+- **Yaxel Lendeborg** GSW PF/SF (de Cooper Troopers): sano → **Day-To-Day** · Foot · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 3 esta semana). Lendeborg (foot) is questionable for Wednesday's game against Minnesota.
+- **Pelle Larsson** MIA SF/SG (LIBRE): sano → **Day-To-Day** · Ankle · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Sprain
+- **Aaron Wiggins** ATL PF/SF/SG (LIBRE): sano → **Day-To-Day** · Knee · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 3 esta semana). Bruise
+- **Obi Toppin** IND PF/SF (LIBRE): sano → **Day-To-Day** · Hand · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 3 esta semana). Sprain
+- **Jordan Poole** NOP PG/SG (LIBRE): sano → **Day-To-Day** · Illness · regreso est. 2026-10-28 (1 días, se pierde 0 juegos, 0 de 3 esta semana). Poole (illness) is listed as probable for Wednesday's game against Denver.
 
 ## Libres de la liga que ganan minutos hoy
+- **Reed Sheppard** PG/SG · por la baja de Alperen Şengün · techo top5 57.7 · p90 41.6 · proy 24.1 · últimos: 13.4 (16m), 42.7 (30m), 24.0 (24m)
+- **Jaylin Williams** C · por la baja de Alex Caruso · techo top5 51.9 · p90 38.2 · proy 17.5 · últimos: sin juegos
+- **Brice Sensabaugh** PF/SF/SG · por la baja de Jaren Jackson Jr. · techo top5 51.3 · p90 36.8 · proy 18.9 · últimos: 3.9 (14m), 19.6 (16m), 16.7 (17m), 14.4 (9m)
+- **Kyle Filipowski** C/PF · por la baja de Jaren Jackson Jr. · techo top5 51.2 · p90 46.3 · proy 26.5 · últimos: 5.0 (9m), 0.2 (8m), -0.8 (8m)
 - **Jakob Poeltl** C · por la baja de Kawhi Leonard · techo top5 44.9 · p90 40.7 · proy 25.1 · últimos: 14.2 (22m), 22.8 (27m), 0.2 (19m)
+- **Isaiah Jackson** C · por la baja de Rui Hachimura · techo top5 36.2 · p90 30.4 · proy 17.9 · últimos: 20.0 (15m), 23.7 (28m), 25.2 (24m)
+- **Derrick Jones Jr.** PF/SF · por la baja de Rui Hachimura · techo top5 35.2 · p90 31.6 · proy 18.9 · últimos: 24.7 (26m), 29.3 (35m), 21.7 (30m)
+- **Gradey Dick** SF/SG · por la baja de Rui Hachimura · techo top5 30.8 · p90 18.3 · proy 16.0 · últimos: 17.8 (19m), 11.8 (12m), 12.6 (18m)
 
 ## Mejoran o regresan
-- Chet Holmgren OKC (de Levy heat 🔥): Out → Day-To-Day
-    - pierde minutos: Shai Gilgeous-Alexander PG depth PG1 · de Brunson Burner · últimos: 58.2 (36m), 28.9 (35m), 53.7 (36m), 35.1 (30m)
-    - pierde minutos: Ajay Mitchell PG/SG depth PG2 · de Cooper Troopers · últimos: 18.0 (23m), 21.0 (23m), 36.2 (28m), 41.9 (25m)
-    - pierde minutos: Kenrich Williams C/PF depth PF2 · LIBRE · últimos: 6.4 (7m), 6.7 (6m), 5.2 (7m), 15.4 (24m)
-    - pierde minutos: Josh Dix PG/SG depth SF4 · LIBRE · últimos: 0.2 (22m)
-- Ivica Zubac IND (de LatinBet24): Out → Day-To-Day
-    - pierde minutos: Jay Huff C depth C2 · LIBRE · últimos: 2.4 (5m), 28.9 (21m), 12.7 (23m)
-    - pierde minutos: Tyrese Haliburton PG/SG depth PG1 · de TIQUITI · últimos: 46.4 (34m), 38.7 (32m), 51.8 (31m), 49.7 (35m)
-    - pierde minutos: Andrew Nembhard PG/SG depth SG1 · de Shalommeyer · últimos: 33.9 (34m), 27.9 (32m), 22.7 (30m)
-    - pierde minutos: Pascal Siakam C/PF depth PF1 · de Shalommeyer · últimos: 42.1 (35m), 29.1 (29m), 42.4 (26m), 43.6 (37m)
 - Naji Marshall DAL (LIBRE): Out → Day-To-Day
     - pierde minutos: Cooper Flagg PG/SF/SG depth SF1 · de Cooper Troopers · últimos: 46.0 (33m), 36.0 (17m), 67.7 (40m)
     - pierde minutos: Zaccharie Risacher SF depth SG2 · de Levy heat 🔥 · últimos: 21.2 (27m), 28.7 (32m), 24.8 (32m), 26.1 (30m)
@@ -44,13 +78,10 @@ Cambios desde 2026-10-26T22:29:50Z (generado 2026-10-27T17:01:41Z)
     - pierde minutos: Collin Gillespie PG/SG depth PG2 · LIBRE · últimos: 8.2 (21m), 33.3 (28m), 18.2 (23m)
     - pierde minutos: Miles Bridges PF/SF depth PF1 · de Levy heat 🔥 · últimos: 15.8 (29m), 30.9 (33m), 33.6 (32m)
 - Cooper Flagg DAL (de Cooper Troopers): GTD → sano
+- Joel Embiid PHI (de Magic Wonder Year): DTD → sano
+- VJ Edgecombe PHI (de Boozer Beater): DTD → sano
+- Ausar Thompson DET (de Magic Wonder Year): DTD → sano
 - Mikel Brown Jr. BKN (de TIQUITI): DTD → sano
 - Isaiah Stewart MEM (LIBRE): GTD → sano
-- Aaron Nesmith IND (LIBRE): GTD → sano
 - Gui Santos GSW (LIBRE): GTD → sano
-- Cameron Carr LAL (LIBRE): Out → sano
-    - pierde minutos: Ziaire Williams SF/SG depth SF1 · LIBRE · últimos: 19.6 (24m), 27.0 (31m), 19.9 (30m)
-    - pierde minutos: Jake LaRavia SF/SG depth SF2 · LIBRE · últimos: 18.4 (18m), 12.3 (15m)
-    - pierde minutos: Austin Reaves PG/SG depth SG1 · de LatinBet24 · últimos: 39.8 (32m), 44.9 (38m), 43.2 (36m)
-    - pierde minutos: Luka Dončić PG depth PG1 · de White · últimos: 53.1 (30m), 33.7 (37m), 86.6 (38m)
 - Brandon Williams GSW (LIBRE): GTD → sano
