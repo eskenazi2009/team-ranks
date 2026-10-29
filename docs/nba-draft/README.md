@@ -18,7 +18,7 @@ URL: `https://eskenazi2009.github.io/team-ranks/nba-draft/`
 ## Datos: relay en GitHub Actions
 
 El navegador no llama a Sleeper ni a ESPN. El workflow `.github/workflows/nba-draft-relay.yml`
-(`relay/relay.py`, solo librería estándar) corre a diario a las **21:00 UTC (4:00 PM de Panamá)** o
+(`relay/relay.py`, solo librería estándar) corre dos veces al día, a las **8:00 AM y 5:30 PM de Panamá (13:00 y 22:30 UTC)**, o
 manualmente, y commitea en `data/`:
 
 | Archivo | Contenido |
@@ -30,10 +30,10 @@ manualmente, y commitea en `data/`:
 | `daily.json` | box scores de ESPN por fecha (últimos 7 días) y calendario (35 días, para contar juegos que se pierde cada lesionado), matchups de la semana |
 | `injury_report.json` / `.md` | cambios de lesión vs. la línea base de 24 h, beneficiarios, perdedores al regresar, lesionados actuales |
 | `injury_log.json` | historial de cambios (30 días) |
-| `injury_baseline.json` | línea base del diff; solo la mueve la corrida programada (o si tiene 20+ h) |
+| `injury_baseline.json` | línea base del diff; solo la mueve la corrida de las 5:30 PM (o si tiene 20+ h) |
 | `injury_streaks.json` | desde cuándo cada jugador está en Out/Doubtful (se cierra al volver a sano o Probable); alimenta `recent_injuries` del reporte, las bajas de los últimos 3 días |
 
-Una tarea programada de Claude (4:12 PM de Panamá) lee `injury_report.md/json` de `main` y notifica a
+Una tarea programada de Claude (5:42 PM de Panamá) lee `injury_report.md/json` de `main` y notifica a
 Raymond por push y correo con la recomendación de adds.
 
 ## Puntuación
