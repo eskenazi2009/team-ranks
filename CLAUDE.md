@@ -41,6 +41,7 @@
   se iba a fijar. Planear cada slot abierto como una secuencia de juegos de distintos jugadores, día por día.
 - Raymond dice qué jugadores fijó cada semana; esos quedan inmóviles en su slot hasta el domingo y no se
   tocan en ninguna recomendación.
-- Raymond está en Panamá (UTC-5, sin horario de verano). El relay diario corre a las 4:00 PM de Panamá
-  (21:00 UTC) y la tarea programada de lesiones le notifica a las 4:12 PM de Panamá por push y correo
+- Raymond está en Panamá (UTC-5, sin horario de verano). El relay corre dos veces al día: 8:00 AM y 5:30 PM de
+  Panamá (13:00 y 22:30 UTC; solo la de la tarde mueve la línea base de 24 h). La tarea programada de
+  lesiones le notifica a las 5:42 PM de Panamá por push y correo
   (trigger trig_01MFQi4UpVq8sQ4ANuJYMKbm).
