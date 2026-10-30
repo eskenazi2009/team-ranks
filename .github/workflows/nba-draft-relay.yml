@@ -7,9 +7,15 @@ on:
         description: "omitir noticias/rosters/historial de ESPN (más rápido)"
         type: boolean
         default: false
+      baseline:
+        description: "cerrar el reporte de 24 h (corrida de la tarde)"
+        type: boolean
+        default: false
   schedule:
-    - cron: "0 13 * * *"    # 8:00 AM de Panamá (UTC-5): lesiones, noticias, proyecciones
-    - cron: "30 22 * * *"   # 5:30 PM de Panamá: igual, y mueve la línea base del reporte de 24 h
+    # Respaldo: GitHub retrasa los crons por horas. El disparo puntual lo hacen dos tareas programadas de
+    # Claude (7:57 AM y 5:27 PM de Panamá) con workflow_dispatch; la de la tarde manda baseline=true.
+    - cron: "0 13 * * *"    # 8:00 AM de Panamá (UTC-5)
+    - cron: "30 22 * * *"   # 5:30 PM de Panamá: también cierra el reporte de 24 h
 
 permissions:
   contents: write
@@ -33,8 +39,8 @@ jobs:
 
       - name: Snapshot de datos (Sleeper + ESPN) a docs/nba-draft/data
         env:
-          # solo la corrida de las 5:30 PM mueve la línea base del reporte de lesiones (diff de 24 h);
-          # la de las 8:00 AM muestra lo nuevo desde la tarde anterior sin moverla
-          RELAY_BASELINE: ${{ github.event.schedule == '30 22 * * *' && '1' || '' }}
+          # la corrida de la tarde (cron de las 22:30 o disparo con baseline=true) cierra el reporte de 24 h;
+          # el relay no la mueve si tiene menos de 6 h, así un cron atrasado no la mueve dos veces
+          RELAY_BASELINE: ${{ (github.event.schedule == '30 22 * * *' || inputs.baseline == true) && '1' || '' }}
         run: |
           python docs/nba-draft/relay/relay.py snapshot --push ${{ inputs.skip_espn == true && '--skip-espn' || '' }}

@@ -747,7 +747,8 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
     current.sort(key=lambda x: -x["proj"])
     report = {"generated_at": now_iso(), "today": today, "since": since, "league": league.get("name"), "changes": changes, "recent_injuries": recent_list,
               "recent_days": RECENT_DAYS, "recent_from": first_day, "current_out": current}
-    # la línea base se mueve solo en la corrida programada (RELAY_BASELINE=1) o si tiene 20+ horas,
+    # la línea base se mueve en la corrida de la tarde (RELAY_BASELINE=1) si tiene 6+ horas, o si tiene 20+ horas;
+    # el mínimo de 6 h evita moverla dos veces cuando el cron de GitHub llega tarde después del disparo manual,
     # así el reporte diario cubre 24 h aunque haya corridas manuales intermedias
     age_h = None
     if baseline and baseline.get("generated_at"):
@@ -755,7 +756,8 @@ def injury_report(out_dir, core, players, prev_players, bundle, prev_bundle, pro
             age_h = (dt.datetime.now(dt.timezone.utc) - dt.datetime.strptime(baseline["generated_at"], "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc)).total_seconds() / 3600
         except Exception:
             age_h = None
-    if not baseline or os.environ.get("RELAY_BASELINE") == "1" or (age_h is not None and age_h >= 20):
+    want = os.environ.get("RELAY_BASELINE") == "1" and (age_h is None or age_h >= 6)
+    if not baseline or want or (age_h is not None and age_h >= 20):
         write_json(f"{out_dir}/injury_baseline.json", {"date": today, "generated_at": now_iso(), "statuses": cur_statuses})
         log("línea base de lesiones actualizada")
     write_json(f"{out_dir}/injury_report.json", report)
