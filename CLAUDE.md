@@ -45,6 +45,8 @@
   Panamá. Los crons de GitHub (13:00 y 22:30 UTC) llegan con horas de retraso (verificado 27-30 oct: 3 a 5.5 h),
   así que el disparo puntual lo hacen dos tareas programadas de Claude a las 7:57 AM y 5:27 PM con
   workflow_dispatch (la de la tarde con baseline=true, que cierra el reporte de 24 h); los crons quedan de
-  respaldo y no mueven la línea base si tiene menos de 6 h. La tarea programada de
+  respaldo y no mueven la línea base si tiene menos de 6 h. Las tareas de disparo son trig_01UefEsNRB1wwC8SJNQgxKuh (mañana) y
+  trig_013qnsKNy3xK6E4PDZisuz3t (tarde) y despiertan la sesión session_01VfQVu3iqeDSSEphn8S8JBU, que solo
+  llama a workflow_dispatch. La tarea programada de
   lesiones le notifica a las 5:42 PM de Panamá por push y correo
   (trigger trig_01MFQi4UpVq8sQ4ANuJYMKbm).
