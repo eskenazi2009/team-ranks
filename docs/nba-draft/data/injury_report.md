@@ -1,10 +1,23 @@
-# Lesiones 2026-10-29 · Benchwarmers
-Cambios desde 2026-10-30T02:07:06Z (generado 2026-10-30T02:42:32Z)
+# Lesiones 2026-10-30 · Benchwarmers
+Cambios desde 2026-10-30T02:07:06Z (generado 2026-10-30T05:05:38Z)
 
+## Nuevas o agravadas
+- **Ja Morant** POR PG/SG (de Boozer Beater): sano → **Day-To-Day** · Hamstring · regreso est. 2026-10-31 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Not Specified
+- **Quinten Post** MEM C (LIBRE): sano → **Day-To-Day** · Ankle · regreso est. 2026-10-31 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Not Specified
 
 ## Mejoran o regresan
 - Dejounte Murray NOP (de TIQUITI): Out → Day-To-Day
+    - pierde minutos: Jordan Poole PG/SG depth PG2 · LIBRE · últimos: 26.4 (19m), 24.1 (23m), 5.2 (7m)
     - pierde minutos: Derik Queen C/PF depth PF2 · de Brunson Burner · últimos: 30.4 (29m), 29.6 (25m), 25.9 (25m), 14.9 (22m)
     - pierde minutos: Trey Murphy III SF/SG depth SF1 · de Brunson Burner · últimos: 21.7 (31m), 41.2 (37m), 15.7 (30m), 33.5 (32m)
-    - pierde minutos: Saddiq Bey PF/SF depth SF2 · LIBRE · últimos: 28.1 (22m), 26.3 (25m), 18.5 (26m), 18.3 (24m)
-    - pierde minutos: Zion Williamson PF/SF depth PF1 · de Shalommeyer · últimos: 36.0 (33m), 26.2 (33m), 40.0 (32m), 41.2 (31m)
+    - pierde minutos: Saddiq Bey PF/SF depth SF2 · LIBRE · últimos: 28.1 (22m), 26.3 (25m), 18.5 (26m), 19.3 (24m)
+- Robert Williams III POR (LIBRE): Out → Day-To-Day
+    - pierde minutos: Donovan Clingan C depth C1 · de White · últimos: 31.7 (21m), 33.1 (29m)
+    - pierde minutos: Deni Avdija PF/SF/SG depth PF1 · de Levy heat 🔥 · últimos: 43.4 (38m), 47.3 (32m)
+    - pierde minutos: Jrue Holiday PG/SG depth SG2 · de Boozer Beater · últimos: 32.2 (26m), 21.2 (24m)
+    - pierde minutos: Branden Carlson C depth C5 · LIBRE · últimos: 6.9 (12m)
+- Jordan Poole NOP (LIBRE): Out → Day-To-Day
+    - pierde minutos: Dejounte Murray PG/SG depth PG1 · de TIQUITI · últimos: 35.2 (30m), 43.2 (35m), 27.1 (30m)
+    - pierde minutos: Derik Queen C/PF depth PF2 · de Brunson Burner · últimos: 30.4 (29m), 29.6 (25m), 25.9 (25m), 14.9 (22m)
+    - pierde minutos: Trey Murphy III SF/SG depth SF1 · de Brunson Burner · últimos: 21.7 (31m), 41.2 (37m), 15.7 (30m), 33.5 (32m)
+    - pierde minutos: Saddiq Bey PF/SF depth SF2 · LIBRE · últimos: 28.1 (22m), 26.3 (25m), 18.5 (26m), 19.3 (24m)
