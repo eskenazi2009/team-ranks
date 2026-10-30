@@ -42,6 +42,9 @@
 - Raymond dice qué jugadores fijó cada semana; esos quedan inmóviles en su slot hasta el domingo y no se
   tocan en ninguna recomendación.
 - Raymond está en Panamá (UTC-5, sin horario de verano). El relay corre dos veces al día: 8:00 AM y 5:30 PM de
-  Panamá (13:00 y 22:30 UTC; solo la de la tarde mueve la línea base de 24 h). La tarea programada de
+  Panamá. Los crons de GitHub (13:00 y 22:30 UTC) llegan con horas de retraso (verificado 27-30 oct: 3 a 5.5 h),
+  así que el disparo puntual lo hacen dos tareas programadas de Claude a las 7:57 AM y 5:27 PM con
+  workflow_dispatch (la de la tarde con baseline=true, que cierra el reporte de 24 h); los crons quedan de
+  respaldo y no mueven la línea base si tiene menos de 6 h. La tarea programada de
   lesiones le notifica a las 5:42 PM de Panamá por push y correo
   (trigger trig_01MFQi4UpVq8sQ4ANuJYMKbm).
