@@ -1,15 +1,39 @@
 # Lesiones 2026-10-29 · Benchwarmers
-Cambios desde 2026-10-29T00:35:11Z (generado 2026-10-29T13:38:26Z)
+Cambios desde 2026-10-29T00:35:11Z (generado 2026-10-30T02:07:06Z)
 
 ## Nuevas o agravadas
-- **Jordan Poole** NOP PG/SG (LIBRE): sano → **Day-To-Day** · Ankle · regreso est. 2026-10-29 (0 días, se pierde 0 juegos, 0 de 2 esta semana). Poole (ankle) won't return to Wednesday's game against the Nuggets. He finished with two points (1-3 FG, 0-1 3Pt), one rebound and one steal over seven minutes.
+- **Dejounte Murray** NOP PG/SG (de TIQUITI): sano → **Out** · Personal · regreso est. 2026-10-31 (2 días, se pierde 1 juego, 1 de 2 esta semana). Murray (personal) is out for Thursday's game against the Kings, Jim Eichenhofer of the Pelicans' official site reports.
+    - Trey Murphy III SF/SG depth SF1 · de Brunson Burner · techo top5 65.3 · p90 53.5 · proy 34.9 · últimos: 21.7 (31m), 41.2 (37m), 15.7 (30m), 31.3 (26m)
+    - Derik Queen C/PF depth PF2 · de Brunson Burner · techo top5 59.1 · p90 42.7 · proy 32.6 · últimos: 30.4 (29m), 29.6 (25m), 25.9 (25m), 13.9 (22m)
+    - Jeremiah Fears PG/SG depth SG1 · LIBRE · techo top5 54.3 · p90 39.8 · proy 28.0 · últimos: 9.5 (24m), 19.2 (23m), 20.3 (24m), 50.1 (23m)
+    - Saddiq Bey PF/SF depth SF2 · LIBRE · techo top5 53.3 · p90 47.3 · proy 28.8 · últimos: 28.1 (22m), 26.3 (25m), 18.5 (26m), 18.3 (24m)
+    - Zion Williamson PF/SF depth PF1 · de Shalommeyer · techo top5 51.8 · p90 45.0 · proy 37.7 · últimos: 36.0 (33m), 26.2 (33m), 40.0 (32m), 32.0 (25m)
+- **Egor Dëmin** BKN PG/SG (de TIQUITI): Day-To-Day → **Out** · Leg · regreso est. 2026-11-07 (9 días, se pierde 4 juegos, 2 de 2 esta semana). Bruise
+    - Michael Porter Jr. PF/SF depth SF1 · de Brunson Burner · techo top5 62.0 · p90 56.3 · proy 38.6 · últimos: 51.3 (33m), 13.0 (21m)
+    - Julius Randle C/PF depth PF1 · de White · techo top5 55.9 · p90 52.2 · proy 37.8 · últimos: 35.7 (35m), 27.9 (24m)
+    - Noah Clowney C/PF depth PF2 · LIBRE · techo top5 42.7 · p90 37.4 · proy 20.3 · últimos: 10.8 (20m), 16.5 (20m)
+    - Day'Ron Sharpe C depth C1 · de Winning Time · techo top5 42.3 · p90 36.2 · proy 26.7 · últimos: 18.1 (23m), 16.3 (16m)
+    - Mikel Brown Jr. PG/SG depth PG2 · de TIQUITI · techo top5 None · p90 None · proy 26.3 · últimos: 21.9 (20m)
+- **Reed Sheppard** HOU PG/SG (LIBRE): sano → **Out** · Back · regreso est. 2026-10-31 (2 días, se pierde 1 juego, 1 de 2 esta semana). Sheppard (back) is out for Friday's game against the Mavericks.
+    - Alperen Şengün C/PF depth C1 · de Winning Time · techo top5 76.0 · p90 66.9 · proy 44.2 · últimos: 48.9 (36m), 41.5 (33m), 62.3 (37m)
+    - Amen Thompson PG/SF/SG depth SG1 · de Levy heat 🔥 · techo top5 56.2 · p90 51.2 · proy 38.6 · últimos: 47.0 (36m), 41.2 (39m), 19.0 (28m), 33.3 (33m)
+    - Kevin Durant PF/SF depth SF1 · de Boozer Beater · techo top5 59.2 · p90 54.9 · proy 40.0 · últimos: 34.9 (37m), 32.8 (37m), 44.3 (30m), 35.0 (31m)
+    - Fred VanVleet PG depth PG1 · de Magic Wonder Year · techo top5 53.6 · p90 48.4 · proy 28.4 · últimos: 34.1 (32m), 15.3 (29m), 43.7 (29m)
+    - Jabari Smith Jr. C/PF depth PF1 · de White · techo top5 49.5 · p90 43.0 · proy 30.1 · últimos: 21.5 (34m), 28.5 (33m), 44.9 (39m), 26.4 (30m)
+- **Robert Williams III** POR C (LIBRE): sano → **Out** · Knee · regreso est. 2026-10-31 (2 días, se pierde 1 juego, 1 de 2 esta semana). Williams (knee) has been ruled out for Thursday's game against Memphis, Casey Holdahl of the Trail Blazers' official site reports.
+- **Jordan Poole** NOP PG/SG (LIBRE): sano → **Out** · Ankle · regreso est. 2026-10-31 (2 días, se pierde 1 juego, 1 de 2 esta semana). Poole (ankle) has been ruled out for Thursday's game against the Kings.
+- **Jaylen Brown** PHI PF/SF/SG (de Cooper Troopers): sano → **Day-To-Day** · Knee · regreso est. 2026-10-30 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Brown (knee) is questionable for Friday's game against the Knicks.
+- **Andrew Nembhard** IND PG/SG (de Shalommeyer): sano → **Day-To-Day** · Neck · regreso est. 2026-10-30 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Soreness
+- **Aaron Nesmith** IND SF/SG (LIBRE): sano → **Day-To-Day** · Hamstring · regreso est. 2026-10-30 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Nesmith (hamstring) is probable for Friday's game against the Heat.
+- **Jalen Smith** CHI C/PF (LIBRE): sano → **Day-To-Day** · Finger · regreso est. 2026-10-30 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Smith is questionable for Friday's game against Boston with a left finger sprain.
+- **Dennis Schröder** CHA PG/SG (LIBRE): sano → **Day-To-Day** · Foot · regreso est. 2026-10-30 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Schroder (foot) is questionable for Friday's game against the Wizards.
+
+## Libres de la liga que ganan minutos hoy
+- **Jeremiah Fears** PG/SG · por la baja de Dejounte Murray · techo top5 54.3 · p90 39.8 · proy 28.0 · últimos: 9.5 (24m), 19.2 (23m), 20.3 (24m), 50.1 (23m)
+- **Saddiq Bey** PF/SF · por la baja de Dejounte Murray · techo top5 53.3 · p90 47.3 · proy 28.8 · últimos: 28.1 (22m), 26.3 (25m), 18.5 (26m), 18.3 (24m)
+- **Noah Clowney** C/PF · por la baja de Egor Dëmin · techo top5 42.7 · p90 37.4 · proy 20.3 · últimos: 10.8 (20m), 16.5 (20m)
 
 ## Mejoran o regresan
-- Luka Dončić LAL (de White): Out → Day-To-Day
-    - pierde minutos: Collin Sexton PG/SG depth PG2 · LIBRE · últimos: 15.2 (16m), 15.9 (20m), 13.2 (14m), 31.8 (21m)
-    - pierde minutos: Austin Reaves PG/SG depth SG1 · de LatinBet24 · últimos: 44.9 (38m), 43.2 (36m), 45.3 (39m), 19.7 (31m)
-    - pierde minutos: Quentin Grimes SF/SG depth SG2 · LIBRE · últimos: 31.6 (31m), 5.7 (20m), 5.8 (19m), 39.1 (38m)
-    - pierde minutos: Sandro Mamukelashvili C/PF depth PF2 · LIBRE · últimos: 17.0 (24m), 15.6 (21m), 28.8 (24m), 31.1 (30m)
 - Alperen Şengün HOU (de Winning Time): Out → Day-To-Day
     - pierde minutos: Tari Eason SF/SG depth PF2 · LIBRE · últimos: 24.2 (27m), 25.6 (31m), 31.6 (33m), 23.3 (31m)
     - pierde minutos: Amen Thompson PG/SF/SG depth SG1 · de Levy heat 🔥 · últimos: 47.0 (36m), 41.2 (39m), 19.0 (28m), 33.3 (33m)
@@ -25,11 +49,6 @@ Cambios desde 2026-10-29T00:35:11Z (generado 2026-10-29T13:38:26Z)
     - pierde minutos: Shai Gilgeous-Alexander PG depth PG1 · de Brunson Burner · últimos: 28.9 (35m), 53.7 (36m), 35.1 (30m), 33.2 (28m)
     - pierde minutos: Josh Dix PG/SG depth SF4 · LIBRE · últimos: 0.2 (22m), 5.4 (24m)
     - pierde minutos: Brooks Barnhizer PF/SF depth PF5 · LIBRE · últimos: 1.5 (2m), 0.0 (3m), 5.4 (14m)
-- Ivica Zubac IND (de LatinBet24): Out → Day-To-Day
-    - pierde minutos: Jay Huff C depth C2 · LIBRE · últimos: 2.4 (5m), 28.9 (21m), 12.7 (23m), 14.2 (16m)
-    - pierde minutos: Larry Nance Jr. C/PF depth C3 · LIBRE · últimos: 0.0 (1m), 16.7 (22m), 10.1 (19m), 12.0 (23m)
-    - pierde minutos: Andrew Nembhard PG/SG depth SG1 · de Shalommeyer · últimos: 27.9 (32m), 22.7 (30m), 41.6 (35m)
-    - pierde minutos: Pascal Siakam C/PF depth PF1 · de Shalommeyer · últimos: 29.1 (29m), 42.4 (26m), 43.6 (37m), 44.7 (34m)
 - Rui Hachimura LAC (de Winning Time): Out → Day-To-Day
     - pierde minutos: Kobe Sanders PF/SF/SG depth PF2 · LIBRE · últimos: 17.1 (19m), 20.8 (20m), 20.8 (27m)
     - pierde minutos: Keaton Wagler PG/SG depth PG2 · LIBRE · últimos: 21.1 (24m), 22.0 (26m), 32.8 (28m)
@@ -38,7 +57,7 @@ Cambios desde 2026-10-29T00:35:11Z (generado 2026-10-29T13:38:26Z)
 - Naji Marshall DAL (LIBRE): Out → Day-To-Day
     - pierde minutos: Cooper Flagg PG/SF/SG depth SF1 · de Cooper Troopers · últimos: 36.0 (17m), 67.7 (40m), 46.0 (33m)
     - pierde minutos: Zaccharie Risacher SF depth SG2 · de Levy heat 🔥 · últimos: 28.7 (32m), 24.8 (32m), 26.1 (30m), 26.7 (29m)
-    - pierde minutos: P.J. Washington C/PF/SF depth PF1 · de Cooper Troopers · últimos: 43.6 (33m), 19.8 (36m), 40.8 (41m), 31.8 (27m)
+    - pierde minutos: P.J. Washington C/PF/SF depth PF1 · LIBRE · últimos: 43.6 (33m), 19.8 (36m), 40.8 (41m), 31.8 (27m)
     - pierde minutos: Marcus Sasser PG depth PG2 · LIBRE · últimos: 15.9 (27m), 23.1 (27m), 1.2 (8m), 17.2 (22m)
 - Gui Santos GSW (LIBRE): Out → Day-To-Day
     - pierde minutos: Georges Niang PF depth PF2 · LIBRE · últimos: 8.6 (13m), 8.8 (23m), 13.4 (18m), 17.6 (23m)
@@ -51,13 +70,18 @@ Cambios desde 2026-10-29T00:35:11Z (generado 2026-10-29T13:38:26Z)
     - pierde minutos: Bilal Coulibaly PF/SF depth SF2 · LIBRE · últimos: 21.2 (26m), 13.8 (25m), 11.5 (29m), 28.4 (27m)
     - pierde minutos: Anthony Davis C/PF depth PF1 · de LatinBet24 · últimos: 21.8 (32m), 32.7 (31m), 48.0 (36m), 36.5 (34m)
 - Isaiah Joe DET (LIBRE): Out → Day-To-Day
-    - pierde minutos: Ausar Thompson SF/SG depth SF1 · de Magic Wonder Year · últimos: 16.1 (19m), 23.2 (25m), 28.8 (29m)
-    - pierde minutos: Paul Reed C/PF depth C2 · de Cooper Troopers · últimos: 40.7 (26m), 21.6 (23m), 42.3 (26m), 27.8 (38m)
-    - pierde minutos: Daniss Jenkins PG/SG depth PG2 · LIBRE · últimos: 28.5 (22m), 39.6 (38m), 17.6 (24m), 26.9 (24m)
-    - pierde minutos: Cade Cunningham PG depth PG1 · de Shalommeyer · últimos: 33.4 (30m), 54.6 (33m), 42.8 (36m), 53.5 (39m)
+    - pierde minutos: Ausar Thompson SF/SG depth SF1 · de Magic Wonder Year · últimos: 16.1 (19m), 28.8 (29m)
+    - pierde minutos: Paul Reed C/PF depth C2 · de Cooper Troopers · últimos: 40.7 (26m), 21.6 (23m), 27.8 (38m)
+    - pierde minutos: Daniss Jenkins PG/SG depth PG2 · LIBRE · últimos: 28.5 (22m), 39.6 (38m), 26.9 (24m)
+    - pierde minutos: Cade Cunningham PG depth PG1 · de Shalommeyer · últimos: 33.4 (30m), 54.6 (33m), 53.5 (39m)
 - Ziaire Williams LAL (LIBRE): Out → Day-To-Day
-    - pierde minutos: Jake LaRavia SF/SG depth SF2 · LIBRE · últimos: 12.3 (15m), 14.7 (19m), 22.0 (35m)
-    - pierde minutos: Luka Dončić PG depth PG1 · de White · últimos: 33.7 (37m), 86.6 (38m), 66.5 (37m)
-    - pierde minutos: Austin Reaves PG/SG depth SG1 · de LatinBet24 · últimos: 44.9 (38m), 43.2 (36m), 45.3 (39m), 19.7 (31m)
-    - pierde minutos: Quentin Grimes SF/SG depth SG2 · LIBRE · últimos: 31.6 (31m), 5.7 (20m), 5.8 (19m), 39.1 (38m)
+    - pierde minutos: Jake LaRavia SF/SG depth SF2 · LIBRE · últimos: 12.3 (15m), 22.0 (35m)
+    - pierde minutos: Quentin Grimes SF/SG depth SG2 · LIBRE · últimos: 31.6 (31m), 5.7 (20m), 39.1 (38m)
+    - pierde minutos: Luka Dončić PG depth PG1 · de White · últimos: 33.7 (37m), 86.6 (38m)
+    - pierde minutos: Austin Reaves PG/SG depth SG1 · de LatinBet24 · últimos: 44.9 (38m), 43.2 (36m), 19.7 (31m)
+- Luka Dončić LAL (de White): Out → sano
+    - pierde minutos: Collin Sexton PG/SG depth PG2 · LIBRE · últimos: 15.2 (16m), 15.9 (20m), 31.8 (21m)
+    - pierde minutos: Quentin Grimes SF/SG depth SG2 · LIBRE · últimos: 31.6 (31m), 5.7 (20m), 39.1 (38m)
+    - pierde minutos: Austin Reaves PG/SG depth SG1 · de LatinBet24 · últimos: 44.9 (38m), 43.2 (36m), 19.7 (31m)
+    - pierde minutos: Sandro Mamukelashvili C/PF depth PF2 · LIBRE · últimos: 17.0 (24m), 15.6 (21m), 31.1 (30m)
 - Karl-Anthony Towns NYK (de Winning Time): Day-To-Day → sano
