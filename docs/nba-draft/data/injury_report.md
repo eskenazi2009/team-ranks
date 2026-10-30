@@ -1,10 +1,18 @@
 # Lesiones 2026-10-30 · Benchwarmers
-Cambios desde 2026-10-30T02:07:06Z (generado 2026-10-30T18:32:35Z)
+Cambios desde 2026-10-30T02:07:06Z (generado 2026-10-30T19:56:51Z)
 
 ## Nuevas o agravadas
-- **Ja Morant** POR PG/SG (de Boozer Beater): sano → **Day-To-Day** · Hamstring · regreso est. 2026-10-31 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Not Specified
+- **Ja Morant** POR PG/SG (de Boozer Beater): sano → **Out** · Hamstring · regreso est. 2026-12-01 (32 días, se pierde 16 juegos, 1 de 1 esta semana). Not Specified
+    - Deni Avdija PF/SF/SG depth PF1 · de Levy heat 🔥 · techo top5 71.0 · p90 59.0 · proy 39.5 · últimos: 43.4 (38m), 44.3 (33m), 47.3 (32m)
+    - Damian Lillard PG/SG depth SG1 · de Magic Wonder Year · techo top5 69.4 · p90 61.3 · proy 40.1 · últimos: 32.0 (33m), 35.0 (31m), 14.4 (30m)
+    - Donovan Clingan C depth C1 · de White · techo top5 58.6 · p90 49.9 · proy 37.2 · últimos: 31.7 (21m), 25.5 (26m), 33.1 (29m)
+    - Jrue Holiday PG/SG depth SG2 · de Boozer Beater · techo top5 56.3 · p90 48.2 · proy 27.0 · últimos: 32.2 (26m), 34.3 (30m), 21.2 (24m)
+    - Scoot Henderson PG depth PG2 · LIBRE · techo top5 38.7 · p90 36.6 · proy 26.2 · últimos: 8.2 (21m), 3.9 (17m), 12.8 (19m)
 - **Noah Clowney** BKN C/PF (LIBRE): sano → **Day-To-Day** · Illness · regreso est. 2026-10-30 (0 días, se pierde 0 juegos, 0 de 2 esta semana). Clowney (illness) was downgraded to questionable for Friday's game versus Detroit, Erik Slater of ClutchPoints.com reports.
 - **Quinten Post** MEM C (LIBRE): sano → **Day-To-Day** · Ankle · regreso est. 2026-10-31 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Not Specified
+
+## Libres de la liga que ganan minutos hoy
+- **Scoot Henderson** PG · por la baja de Ja Morant · techo top5 38.7 · p90 36.6 · proy 26.2 · últimos: 8.2 (21m), 3.9 (17m), 12.8 (19m)
 
 ## Mejoran o regresan
 - Dejounte Murray NOP (de TIQUITI): Out → Day-To-Day
