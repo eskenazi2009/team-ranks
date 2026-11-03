@@ -1,5 +1,5 @@
 # Lesiones 2026-11-03 · Benchwarmers
-Cambios desde 2026-11-02T22:17:13Z (generado 2026-11-03T12:58:15Z)
+Cambios desde 2026-11-02T22:17:13Z (generado 2026-11-03T20:02:31Z)
 
 ## Nuevas o agravadas
 - **Dejounte Murray** NOP PG/SG (de TIQUITI): Day-To-Day → **Out** · Personal · regreso est. 2026-11-04 (1 días, se pierde 0 juegos, 0 de 3 esta semana). Murray (personal) is out for Monday's game against the Grizzlies.
