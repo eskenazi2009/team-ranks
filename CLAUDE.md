@@ -10,6 +10,8 @@
 - Usuario de Sleeper: raymondesk. Liga: Benchwarmers (puntos, 10 equipos, alineaciones diarias,
   FAAB de 100). Su roster es el roster_id 7, equipo "White". Llamarlo Raymond.
 - Raymond pregunta durante la temporada a quién startear y a quién agregar de los libres.
+- Las alineaciones se le muestran SIEMPRE en el orden de Sleeper: PG, SG, G, SF, PF, F, C, UTIL (y luego la
+  banca), incluyendo los slots ya fijados en su lugar (pedido de Raymond, 3-nov-2026).
 - **Preferencia permanente para adds y starts: prioriza el techo, no el piso.** Quiere jugadores con
   posibilidad de anotar muchos puntos de fantasía aunque jueguen mal otras noches, porque puede
   decidir no lockear un juego si no le gusta el score. Mide techo con el promedio de sus 5 mejores
