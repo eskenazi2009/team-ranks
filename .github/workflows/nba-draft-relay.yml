@@ -14,7 +14,9 @@ on:
   schedule:
     # Respaldo: GitHub retrasa los crons por horas. El disparo puntual lo hacen dos tareas programadas de
     # Claude (7:57 AM y 5:27 PM de Panamá) con workflow_dispatch; la de la tarde manda baseline=true.
+    - cron: "0 10 * * *"    # 5:00 AM de Panamá: respaldo temprano (GitHub suele atrasarlo 2-5 h)
     - cron: "0 13 * * *"    # 8:00 AM de Panamá (UTC-5)
+    - cron: "0 19 * * *"    # 2:00 PM de Panamá: respaldo para tener datos antes de la tarde
     - cron: "30 22 * * *"   # 5:30 PM de Panamá: también cierra el reporte de 24 h
 
 permissions:
