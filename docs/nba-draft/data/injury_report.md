@@ -1,5 +1,5 @@
 # Lesiones 2026-11-06 · Benchwarmers
-Cambios desde 2026-11-06T02:46:19Z (generado 2026-11-06T12:59:37Z)
+Cambios desde 2026-11-06T02:46:19Z (generado 2026-11-06T17:06:41Z)
 
 
 ## Mejoran o regresan
