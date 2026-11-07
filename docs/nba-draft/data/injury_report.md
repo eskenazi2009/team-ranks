@@ -1,16 +1,16 @@
 # Lesiones 2026-11-07 · Benchwarmers
-Cambios desde 2026-11-06T22:28:59Z (generado 2026-11-07T16:02:45Z)
+Cambios desde 2026-11-06T22:28:59Z (generado 2026-11-07T18:00:18Z)
 
 ## Nuevas o agravadas
 - **Scottie Barnes** TOR PF/SF (de Levy heat 🔥): Day-To-Day → **Out** · Groin · regreso est. 2026-11-09 (2 días, se pierde 0 juegos, 0 de 0 esta semana). Soreness
-    - Jakob Poeltl C depth C1 · LIBRE · techo top5 44.9 · p90 40.7 · proy 17.7 · últimos: 15.5 (19m), 41.7 (31m)
+    - Jakob Poeltl C depth C1 · LIBRE · techo top5 44.9 · p90 40.7 · proy 17.7 · últimos: 15.5 (19m), 43.2 (31m)
     - RJ Barrett PF/SF/SG depth SF1 · de Cooper Troopers · techo top5 44.7 · p90 42.6 · proy 35.2 · últimos: 44.5 (32m), 41.7 (37m), 35.5 (33m), 37.4 (37m)
     - Collin Murray-Boyles C/PF depth C2 · LIBRE · techo top5 40.6 · p90 33.1 · proy 24.8 · últimos: 14.1 (20m), 29.4 (28m), 19.6 (23m), 37.4 (34m)
     - Jamal Shead PG/SG depth PG2 · LIBRE · techo top5 37.9 · p90 30.2 · proy 20.7 · últimos: 26.4 (25m), 17.2 (20m), 15.6 (20m), 43.6 (34m)
     - Ja'Kobe Walter SF/SG depth SG1 · LIBRE · techo top5 33.0 · p90 28.2 · proy 23.4 · últimos: 24.8 (33m), 25.7 (35m), 11.2 (27m), 21.2 (29m)
 - **Immanuel Quickley** TOR PG/SG (de Boozer Beater): Day-To-Day → **Out** · Hamstring · regreso est. 2026-11-09 (2 días, se pierde 0 juegos, 0 de 0 esta semana). Quickley (hamstring) won't play Friday in Milwaukee, Michael Grange of Sportsnet.ca reports.
     - Jamal Shead PG/SG depth PG2 · LIBRE · techo top5 37.9 · p90 30.2 · proy 20.7 · últimos: 26.4 (25m), 17.2 (20m), 15.6 (20m), 43.6 (34m)
-    - Jakob Poeltl C depth C1 · LIBRE · techo top5 44.9 · p90 40.7 · proy 17.7 · últimos: 15.5 (19m), 41.7 (31m)
+    - Jakob Poeltl C depth C1 · LIBRE · techo top5 44.9 · p90 40.7 · proy 17.7 · últimos: 15.5 (19m), 43.2 (31m)
     - RJ Barrett PF/SF/SG depth SF1 · de Cooper Troopers · techo top5 44.7 · p90 42.6 · proy 35.2 · últimos: 44.5 (32m), 41.7 (37m), 35.5 (33m), 37.4 (37m)
     - Collin Murray-Boyles C/PF depth C2 · LIBRE · techo top5 40.6 · p90 33.1 · proy 24.8 · últimos: 14.1 (20m), 29.4 (28m), 19.6 (23m), 37.4 (34m)
     - Ja'Kobe Walter SF/SG depth SG1 · LIBRE · techo top5 33.0 · p90 28.2 · proy 23.4 · últimos: 24.8 (33m), 25.7 (35m), 11.2 (27m), 21.2 (29m)
@@ -21,7 +21,7 @@ Cambios desde 2026-11-06T22:28:59Z (generado 2026-11-07T16:02:45Z)
 - **Joan Beringer** MIN C (LIBRE): sano → **Day-To-Day** · Fracture · regreso est. 2026-11-08 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Beringer was ruled out for the second half of Friday's game against the Pelicans due to a nasal fracture, Dane Moore of 'The Dane Moore NBA Podcast' reports.
 
 ## Libres de la liga que ganan minutos hoy
-- **Jakob Poeltl** C · por la baja de Scottie Barnes · techo top5 44.9 · p90 40.7 · proy 17.7 · últimos: 15.5 (19m), 41.7 (31m)
+- **Jakob Poeltl** C · por la baja de Scottie Barnes · techo top5 44.9 · p90 40.7 · proy 17.7 · últimos: 15.5 (19m), 43.2 (31m)
 - **Collin Murray-Boyles** C/PF · por la baja de Scottie Barnes · techo top5 40.6 · p90 33.1 · proy 24.8 · últimos: 14.1 (20m), 29.4 (28m), 19.6 (23m), 37.4 (34m)
 - **Jamal Shead** PG/SG · por la baja de Scottie Barnes · techo top5 37.9 · p90 30.2 · proy 20.7 · últimos: 26.4 (25m), 17.2 (20m), 15.6 (20m), 43.6 (34m)
 - **Ja'Kobe Walter** SF/SG · por la baja de Scottie Barnes · techo top5 33.0 · p90 28.2 · proy 23.4 · últimos: 24.8 (33m), 25.7 (35m), 11.2 (27m), 21.2 (29m)
