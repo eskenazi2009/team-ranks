@@ -1,13 +1,7 @@
 # Lesiones 2026-11-08 · Benchwarmers
-Cambios desde 2026-11-07T22:28:06Z (generado 2026-11-08T12:58:40Z)
+Cambios desde 2026-11-07T22:28:06Z (generado 2026-11-08T16:29:06Z)
 
 ## Nuevas o agravadas
-- **Anthony Davis** WAS C/PF (de LatinBet24): Day-To-Day → **Out** · Ankle · regreso est. 2026-11-09 (1 días, se pierde 0 juegos, 0 de 0 esta semana). Sprain
-    - Alex Sarr C/PF depth C1 · de Levy heat 🔥 · techo top5 55.3 · p90 48.3 · proy 28.1 · últimos: 28.3 (23m), 34.1 (30m), 36.3 (28m)
-    - Kyshawn George SF/SG depth SG1 · de Brunson Burner · techo top5 55.0 · p90 49.9 · proy 30.6 · últimos: 41.3 (37m), 39.3 (35m), 58.8 (39m), 38.4 (30m)
-    - Will Riley PF/SF/SG depth PF4 · LIBRE · techo top5 46.0 · p90 39.2 · proy 14.3 · últimos: 1.5 (4m), 2.0 (13m), 8.0 (9m), 8.9 (20m)
-    - Trae Young PG depth PG1 · de TIQUITI · techo top5 48.8 · p90 52.1 · proy 43.5 · últimos: 33.1 (34m), 33.4 (34m), 38.4 (37m), 15.5 (28m)
-    - Khris Middleton PF/SF depth PF3 · LIBRE · techo top5 43.3 · p90 31.2 · proy 10.3 · últimos: sin juegos
 - **Mikel Brown Jr.** BKN PG/SG (LIBRE): sano → **Out** · Rest · regreso est. 2026-11-11 (3 días, se pierde 1 juego, 1 de 1 esta semana). Brown, who finished with 18 points (5-13 FG, 3-8 3Pt, 5-7 FT), one rebound, three assists and one steal over 25 minutes in Saturday's 124-121 loss to Atlanta, won't play in Sunday's game against Dallas, Erik Slater of ClutchPoints.com repor
     - Michael Porter Jr. PF/SF depth SF1 · de Brunson Burner · techo top5 62.0 · p90 56.3 · proy 38.6 · últimos: 39.3 (36m), 35.0 (37m), 42.0 (38m), 39.3 (36m)
     - Julius Randle C/PF depth PF1 · de White · techo top5 55.9 · p90 52.2 · proy 37.8 · últimos: 39.0 (37m), 37.2 (36m), 33.6 (31m), 38.4 (34m)
@@ -27,24 +21,44 @@ Cambios desde 2026-11-07T22:28:06Z (generado 2026-11-08T12:58:40Z)
     - Derrick Jones Jr. PF/SF depth SF1 · LIBRE · techo top5 35.2 · p90 31.6 · proy 22.2 · últimos: 17.9 (28m), 32.1 (37m)
     - Max Strus PF/SF depth SF2 · LIBRE · techo top5 33.8 · p90 40.1 · proy 24.4 · últimos: 28.8 (23m), 26.5 (23m)
 - **Adem Bona** PHI C (LIBRE): Day-To-Day → **Out** · Back · regreso est. 2026-11-10 (2 días, se pierde 1 juego, 1 de 1 esta semana). Sprain
-- **Deandre Ayton** WAS C (LIBRE): sano → **Out** · Leg · regreso est. 2026-11-09 (1 días, se pierde 0 juegos, 0 de 0 esta semana). Ayton won't return to Saturday's game against the Thunder due to a lower leg injury.
 - **Joel Embiid** PHI C (de Magic Wonder Year): sano → **Day-To-Day** · Foot · regreso est. 2026-11-08 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Plantar Fasciitis
 - **Lauri Markkanen** UTA PF/SF (de TIQUITI): sano → **Day-To-Day** · Wrist · regreso est. 2026-11-08 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Sprain
+- **Keyonte George** UTA PG/SG (de Cooper Troopers): sano → **Day-To-Day** · Illness · regreso est. 2026-11-08 (0 días, se pierde 0 juegos, 0 de 1 esta semana). George tallied 16 points (6-13 FG, 1-4 3Pt, 3-4 FT), six rebounds, nine assists and a block across 32 minutes in Friday's 112-100 loss to the Mavericks.
+- **Norman Powell** CHI SF/SG (de Cooper Troopers): sano → **Day-To-Day** · Shoulder · regreso est. 2026-11-08 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Inflammation
+- **Deandre Ayton** WAS C (LIBRE): sano → **Day-To-Day** · Leg · regreso est. 2026-11-09 (1 días, se pierde 0 juegos, 0 de 0 esta semana). Ayton won't return to Saturday's game against the Thunder due to a lower leg injury.
 
 ## Libres de la liga que ganan minutos hoy
 - **Collin Gillespie** PG/SG · por la baja de Jordan Goodwin · techo top5 50.9 · p90 42.1 · proy 27.1 · últimos: 12.2 (24m), 10.6 (23m), 18.4 (24m), 17.6 (20m)
-- **Will Riley** PF/SF/SG · por la baja de Anthony Davis · techo top5 46.0 · p90 39.2 · proy 14.3 · últimos: 1.5 (4m), 2.0 (13m), 8.0 (9m), 8.9 (20m)
-- **Khris Middleton** PF/SF · por la baja de Anthony Davis · techo top5 43.3 · p90 31.2 · proy 10.3 · últimos: sin juegos
 - **Noah Clowney** C/PF · por la baja de Mikel Brown Jr. · techo top5 42.7 · p90 37.4 · proy 16.4 · últimos: 11.6 (24m), 12.2 (20m), 9.7 (17m), 15.0 (21m)
 - **Derrick Jones Jr.** PF/SF · por la baja de Isaiah Jackson · techo top5 35.2 · p90 31.6 · proy 22.2 · últimos: 17.9 (28m), 32.1 (37m)
 - **Max Strus** PF/SF · por la baja de Isaiah Jackson · techo top5 33.8 · p90 40.1 · proy 24.4 · últimos: 28.8 (23m), 26.5 (23m)
 
 ## Mejoran o regresan
+- Desmond Bane ORL (de Boozer Beater): Out → Day-To-Day
+    - pierde minutos: Jamal Cain SF/SG depth SF2 · LIBRE · últimos: 8.7 (18m), 13.1 (25m), 10.0 (25m), 39.9 (36m)
+    - pierde minutos: Tristan da Silva PF/SF depth PF2 · LIBRE · últimos: 43.0 (35m), 17.3 (32m), 22.9 (30m), 36.4 (39m)
+    - pierde minutos: Franz Wagner PF/SF depth PF1 · de Winning Time · últimos: 39.2 (40m), 36.6 (38m), 51.1 (38m), 56.7 (40m)
+    - pierde minutos: Wendell Carter Jr. C depth C1 · de Brunson Burner · últimos: 21.0 (35m), 17.8 (34m), 50.6 (34m), 39.2 (40m)
+- Jarrett Allen CLE (de Shalommeyer): Out → Day-To-Day
+    - pierde minutos: Donovan Mitchell PG/SG depth SG1 · de Boozer Beater · últimos: 42.5 (36m), 44.6 (33m), 46.4 (33m), 53.8 (37m)
+    - pierde minutos: James Harden PG depth PG1 · de White · últimos: 31.8 (33m), 44.8 (35m), 28.7 (30m), 19.9 (34m)
+    - pierde minutos: Evan Mobley C/PF depth PF1 · de Brunson Burner · últimos: 35.4 (33m), 37.5 (33m), 42.2 (32m), 28.3 (33m)
+    - pierde minutos: Thomas Bryant C depth C2 · LIBRE · últimos: 4.0 (5m), 9.0 (13m), 20.2 (16m), 11.1 (15m)
+- Josh Hart NYK (de Levy heat 🔥): Out → Day-To-Day
+    - pierde minutos: Landry Shamet SF/SG depth PF2 · LIBRE · últimos: 28.7 (30m), 12.4 (25m), 15.7 (29m)
+    - pierde minutos: Miles McBride PG/SG depth SG2 · LIBRE · últimos: 15.2 (17m), 14.7 (11m), 6.0 (16m)
+    - pierde minutos: OG Anunoby PF/SF depth PF1 · de Winning Time · últimos: 31.8 (38m), 32.0 (24m), 30.2 (34m)
+    - pierde minutos: Jalen Brunson PG depth PG1 · de Brunson Burner · últimos: 33.4 (34m), 46.4 (28m), 53.7 (34m)
+- Sam Merrill CLE (LIBRE): Out → Day-To-Day
+    - pierde minutos: Donovan Mitchell PG/SG depth SG1 · de Boozer Beater · últimos: 42.5 (36m), 44.6 (33m), 46.4 (33m), 53.8 (37m)
+    - pierde minutos: James Harden PG depth PG1 · de White · últimos: 31.8 (33m), 44.8 (35m), 28.7 (30m), 19.9 (34m)
+    - pierde minutos: Evan Mobley C/PF depth PF1 · de Brunson Burner · últimos: 35.4 (33m), 37.5 (33m), 42.2 (32m), 28.3 (33m)
+    - pierde minutos: Mario Hezonja PF/SF depth PF2 · LIBRE · últimos: 33.1 (27m), 23.1 (23m), 31.5 (27m), 7.5 (19m)
 - Jalen Johnson ATL (de Boozer Beater): Out → sano
     - pierde minutos: Luguentz Dort SF/SG depth SF2 · LIBRE · últimos: 22.4 (31m), 18.1 (31m), 47.4 (32m), 8.9 (20m)
     - pierde minutos: Aaron Wiggins PF/SF/SG depth SG2 · LIBRE · últimos: 14.6 (24m), 29.8 (29m), 29.3 (29m), 40.8 (26m)
+    - pierde minutos: Asa Newell C/PF depth PF3 · LIBRE · últimos: 8.3 (17m), 9.1 (10m)
     - pierde minutos: CJ McCollum PG/SG depth PG2 · de LatinBet24 · últimos: 46.8 (32m), 33.5 (25m), 12.6 (23m), 24.3 (21m)
-    - pierde minutos: Dyson Daniels SF/SG depth SF1 · de Winning Time · últimos: 28.8 (31m), 37.2 (34m), 45.8 (35m), 43.5 (31m)
 - Day'Ron Sharpe BKN (de Boozer Beater): Day-To-Day → sano
 - Draymond Green GSW (LIBRE): Day-To-Day → sano
 - De'Andre Hunter SAC (de TIQUITI): Day-To-Day → sano
