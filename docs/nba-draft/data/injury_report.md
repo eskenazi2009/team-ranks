@@ -1,5 +1,5 @@
 # Lesiones 2026-11-08 · Benchwarmers
-Cambios desde 2026-11-07T22:28:06Z (generado 2026-11-08T16:29:06Z)
+Cambios desde 2026-11-07T22:28:06Z (generado 2026-11-08T18:19:47Z)
 
 ## Nuevas o agravadas
 - **Mikel Brown Jr.** BKN PG/SG (LIBRE): sano → **Out** · Rest · regreso est. 2026-11-11 (3 días, se pierde 1 juego, 1 de 1 esta semana). Brown, who finished with 18 points (5-13 FG, 3-8 3Pt, 5-7 FT), one rebound, three assists and one steal over 25 minutes in Saturday's 124-121 loss to Atlanta, won't play in Sunday's game against Dallas, Erik Slater of ClutchPoints.com repor
@@ -23,7 +23,7 @@ Cambios desde 2026-11-07T22:28:06Z (generado 2026-11-08T16:29:06Z)
 - **Adem Bona** PHI C (LIBRE): Day-To-Day → **Out** · Back · regreso est. 2026-11-10 (2 días, se pierde 1 juego, 1 de 1 esta semana). Sprain
 - **Joel Embiid** PHI C (de Magic Wonder Year): sano → **Day-To-Day** · Foot · regreso est. 2026-11-08 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Plantar Fasciitis
 - **Lauri Markkanen** UTA PF/SF (de TIQUITI): sano → **Day-To-Day** · Wrist · regreso est. 2026-11-08 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Sprain
-- **Keyonte George** UTA PG/SG (de Cooper Troopers): sano → **Day-To-Day** · Illness · regreso est. 2026-11-08 (0 días, se pierde 0 juegos, 0 de 1 esta semana). George tallied 16 points (6-13 FG, 1-4 3Pt, 3-4 FT), six rebounds, nine assists and a block across 32 minutes in Friday's 112-100 loss to the Mavericks.
+- **Keyonte George** UTA PG/SG (de Cooper Troopers): sano → **Day-To-Day** · Illness · regreso est. 2026-11-08 (0 días, se pierde 0 juegos, 0 de 1 esta semana). George (illness) has been downgraded to questionable for Sunday's game against Minnesota.
 - **Norman Powell** CHI SF/SG (de Cooper Troopers): sano → **Day-To-Day** · Shoulder · regreso est. 2026-11-08 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Inflammation
 - **Deandre Ayton** WAS C (LIBRE): sano → **Day-To-Day** · Leg · regreso est. 2026-11-09 (1 días, se pierde 0 juegos, 0 de 0 esta semana). Ayton won't return to Saturday's game against the Thunder due to a lower leg injury.
 
@@ -49,6 +49,11 @@ Cambios desde 2026-11-07T22:28:06Z (generado 2026-11-08T16:29:06Z)
     - pierde minutos: Miles McBride PG/SG depth SG2 · LIBRE · últimos: 15.2 (17m), 14.7 (11m), 6.0 (16m)
     - pierde minutos: OG Anunoby PF/SF depth PF1 · de Winning Time · últimos: 31.8 (38m), 32.0 (24m), 30.2 (34m)
     - pierde minutos: Jalen Brunson PG depth PG1 · de Brunson Burner · últimos: 33.4 (34m), 46.4 (28m), 53.7 (34m)
+- Robert Williams III POR (LIBRE): Out → Day-To-Day
+    - pierde minutos: Donovan Clingan C depth C1 · de White · últimos: 52.1 (32m), 45.7 (29m), 39.7 (28m), 12.0 (22m)
+    - pierde minutos: Jrue Holiday PG/SG depth PG2 · de Boozer Beater · últimos: 48.6 (31m), 23.8 (28m), 26.7 (31m), 11.0 (20m)
+    - pierde minutos: Deni Avdija PF/SF/SG depth PF1 · de Levy heat 🔥 · últimos: 39.1 (35m), 47.4 (35m), 48.3 (39m), 22.3 (24m)
+    - pierde minutos: Yang Hansen C depth C3 · LIBRE · últimos: -1.0 (2m), 1.0 (3m), 28.5 (26m)
 - Sam Merrill CLE (LIBRE): Out → Day-To-Day
     - pierde minutos: Donovan Mitchell PG/SG depth SG1 · de Boozer Beater · últimos: 42.5 (36m), 44.6 (33m), 46.4 (33m), 53.8 (37m)
     - pierde minutos: James Harden PG depth PG1 · de White · últimos: 31.8 (33m), 44.8 (35m), 28.7 (30m), 19.9 (34m)
@@ -69,3 +74,4 @@ Cambios desde 2026-11-07T22:28:06Z (generado 2026-11-08T16:29:06Z)
     - pierde minutos: LaMelo Ball PG depth PG1 · de Magic Wonder Year · últimos: 50.7 (33m), 36.4 (31m), 36.4 (35m)
 - Gui Santos GSW (LIBRE): Day-To-Day → sano
 - Noah Clowney BKN (LIBRE): Day-To-Day → sano
+- Joan Beringer MIN (LIBRE): Day-To-Day → sano
