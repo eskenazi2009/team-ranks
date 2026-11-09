@@ -1,5 +1,5 @@
 # Lesiones 2026-11-09 · Benchwarmers
-Cambios desde 2026-11-09T20:22:32Z (generado 2026-11-09T22:28:56Z)
+Cambios desde 2026-11-09T20:22:32Z (generado 2026-11-09T22:29:56Z)
 
 ## Nuevas o agravadas
 - **Zion Williamson** NOP PF/SF (de Shalommeyer): sano → **Out** · Rest · regreso est. 2026-11-11 (2 días, se pierde 1 juego, 1 de 4 esta semana). Williamson (rest) is out for Monday's game against the Warriors.
