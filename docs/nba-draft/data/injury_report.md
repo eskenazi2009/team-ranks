@@ -1,7 +1,8 @@
 # Lesiones 2026-11-10 · Benchwarmers
-Cambios desde 2026-11-10T04:16:24Z (generado 2026-11-10T13:00:27Z)
+Cambios desde 2026-11-10T04:16:24Z (generado 2026-11-10T17:26:27Z)
 
 ## Nuevas o agravadas
+- **Tristan da Silva** ORL PF/SF (de Boozer Beater): sano → **Day-To-Day** · Calf · regreso est. 2026-11-10 (0 días, se pierde 0 juegos, 0 de 3 esta semana). Strain
 - **Brandon Williams** GSW PG (LIBRE): sano → **Day-To-Day** · Hamstring · regreso est. 2026-11-11 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Not Specified
 
 ## Mejoran o regresan
