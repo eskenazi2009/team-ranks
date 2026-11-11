@@ -1,5 +1,5 @@
 # Lesiones 2026-11-11 · Benchwarmers
-Cambios desde 2026-11-10T22:29:22Z (generado 2026-11-11T06:52:59Z)
+Cambios desde 2026-11-10T22:29:22Z (generado 2026-11-11T12:58:51Z)
 
 ## Nuevas o agravadas
 - **Tyler Herro** MIL PG/SG (de Cooper Troopers): Day-To-Day → **Out** · Knee · regreso est. 2026-11-11 (0 días, se pierde 0 juegos, 0 de 3 esta semana). Bruise
