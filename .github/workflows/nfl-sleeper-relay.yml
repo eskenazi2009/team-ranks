@@ -1,0 +1,39 @@
+name: NFL Sleeper relay
+
+# Baja las ligas NFL de raymondesk en Sleeper (ligas, rosters, drafts, picks, jugadores, proyecciones)
+# a docs/nfl-draft/data. Corre al hacer push de este archivo o del relay, o a mano.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["claude/**"]
+    paths:
+      - ".github/workflows/nfl-sleeper-relay.yml"
+      - "docs/nfl-draft/relay/**"
+      - "docs/nfl-draft/.refresh"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nfl-sleeper-relay
+  cancel-in-progress: false
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Bajar datos de Sleeper NFL
+        run: python docs/nfl-draft/relay/fetch.py
+      - name: Commit de datos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898699+github-actions[bot]@users.noreply.github.com"
+          git add docs/nfl-draft/data
+          git diff --cached --quiet && exit 0
+          git commit -m "chore(nfl-draft): datos de Sleeper NFL [skip ci]"
+          for i in 1 2 3; do git pull --rebase origin "$GITHUB_REF_NAME" && git push origin HEAD:"$GITHUB_REF_NAME" && break; sleep 5; done
