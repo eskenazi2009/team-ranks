@@ -1,21 +1,30 @@
 # Lesiones 2026-11-12 · Benchwarmers
-Cambios desde 2026-11-12T03:18:06Z (generado 2026-11-12T17:51:48Z)
+Cambios desde 2026-11-12T03:18:06Z (generado 2026-11-12T20:44:51Z)
 
 ## Nuevas o agravadas
-- **Stephen Curry** GSW PG (de Magic Wonder Year): Day-To-Day → **Out** · Abdomen · regreso est. 2026-12-01 (19 días, se pierde 8 juegos, 1 de 1 esta semana). Curry has been diagnosed with an oblique abdominal tear and will be re-evaluated in two weeks, Shams Charania of ESPN reports.
+- **Stephen Curry** GSW PG (de Magic Wonder Year): Day-To-Day → **Out** · Abdomen · regreso est. 2026-12-12 (30 días, se pierde 9 juegos, 1 de 1 esta semana). Curry has been diagnosed with an oblique abdominal tear and will be re-evaluated in two weeks, Shams Charania of ESPN reports.
     - Brandin Podziemski PG/SG depth SG1 · de White · techo top5 48.8 · p90 42.0 · proy 30.2 · últimos: 25.7 (32m), 34.9 (39m), 42.4 (26m), 42.2 (37m)
     - Gui Santos PF/SF depth PF1 · LIBRE · techo top5 42.0 · p90 36.6 · proy 18.5 · últimos: 4.2 (12m), 19.4 (21m), 3.1 (12m)
     - De'Anthony Melton PG/SG depth SG2 · LIBRE · techo top5 40.5 · p90 38.3 · proy 25.8 · últimos: 18.2 (17m), 9.7 (17m), 30.3 (26m), 24.8 (25m)
     - Al Horford C/PF depth C2 · LIBRE · techo top5 40.5 · p90 35.0 · proy 15.5 · últimos: 17.5 (18m), 18.0 (13m), 27.4 (15m), 9.2 (21m)
     - Draymond Green C/PF depth C1 · LIBRE · techo top5 40.4 · p90 36.1 · proy 24.3 · últimos: 25.5 (27m), 32.7 (34m), 14.6 (21m), 25.5 (27m)
+- **LeBron James** PHI PF/PG/SF (de Magic Wonder Year): Day-To-Day → **Out** · Back · regreso est. 2026-11-15 (3 días, se pierde 1 juego, 1 de 2 esta semana). James (back) is out for Thursday's game against Toronto.
+    - Tyrese Maxey PG depth PG1 · de Shalommeyer · techo top5 71.2 · p90 63.4 · proy 44.5 · últimos: 30.6 (32m), 44.3 (36m), 32.2 (34m)
+    - Jaylen Brown PF/SF/SG depth SF1 · de Cooper Troopers · techo top5 66.3 · p90 59.5 · proy 40.1 · últimos: 35.5 (34m), 46.4 (35m), 25.0 (26m)
+    - Joel Embiid C depth C1 · de Magic Wonder Year · techo top5 64.0 · p90 61.7 · proy 41.4 · últimos: 17.9 (25m), 41.5 (29m), 23.7 (31m)
+    - VJ Edgecombe PG/SG depth SG1 · de Boozer Beater · techo top5 56.3 · p90 45.3 · proy 30.6 · últimos: 36.6 (32m), 33.7 (35m), 23.3 (32m)
+    - Dean Wade PF/SF depth PF2 · LIBRE · techo top5 33.4 · p90 27.1 · proy 18.3 · últimos: 6.5 (21m), 2.7 (18m), 20.8 (23m)
 - **Luka Dončić** LAL PG (de White): sano → **Day-To-Day** · Ankle · regreso est. 2026-11-15 (3 días, se pierde 0 juegos, 0 de 1 esta semana). Doncic finished Wednesday's 123-112 win over the Bucks with 32 points (10-25 FG, 5-12 3Pt, 7-10 FT), five rebounds, five assists and three steals across 32 minutes. He exited to the locker room late in the fourth quarter due to an apparent 
 - **Ryan Rollins** MIL PG (LIBRE): sano → **Day-To-Day** · Head · regreso est. 2026-11-13 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Rollins (head) exited to the locker room in the fourth quarter of Wednesday's 123-112 loss to the Lakers and did not return, finishing with eight points (3-10 FG, 2-6 3Pt), seven rebounds, four assists and one steal across 24 minutes.
+- **Pelle Larsson** MIA SF/SG (LIBRE): sano → **Day-To-Day** · Illness · regreso est. 2026-11-13 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Larsson sat out Thursday's practice due to an illness, per Ira Winderman of the South Florida Sun Sentinel.
+- **Klay Thompson** MIA PF/SF/SG (de TIQUITI): sano → **Day-To-Day** · Ankle · regreso est. 2026-11-13 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Thompson (ankle) didn't practice Thursday, per Ira Winderman of the South Florida Sun Sentinel.
 
 ## Libres de la liga que ganan minutos hoy
 - **Gui Santos** PF/SF · por la baja de Stephen Curry · techo top5 42.0 · p90 36.6 · proy 18.5 · últimos: 4.2 (12m), 19.4 (21m), 3.1 (12m)
 - **De'Anthony Melton** PG/SG · por la baja de Stephen Curry · techo top5 40.5 · p90 38.3 · proy 25.8 · últimos: 18.2 (17m), 9.7 (17m), 30.3 (26m), 24.8 (25m)
 - **Al Horford** C/PF · por la baja de Stephen Curry · techo top5 40.5 · p90 35.0 · proy 15.5 · últimos: 17.5 (18m), 18.0 (13m), 27.4 (15m), 9.2 (21m)
 - **Draymond Green** C/PF · por la baja de Stephen Curry · techo top5 40.4 · p90 36.1 · proy 24.3 · últimos: 25.5 (27m), 32.7 (34m), 14.6 (21m), 25.5 (27m)
+- **Dean Wade** PF/SF · por la baja de LeBron James · techo top5 33.4 · p90 27.1 · proy 18.3 · últimos: 6.5 (21m), 2.7 (18m), 20.8 (23m)
 
 ## Mejoran o regresan
 - Trey Murphy III NOP (de Brunson Burner): Out → Day-To-Day
@@ -83,3 +92,4 @@ Cambios desde 2026-11-12T03:18:06Z (generado 2026-11-12T17:51:48Z)
     - pierde minutos: Franz Wagner PF/SF depth PF1 · de Winning Time · últimos: 51.1 (38m), 56.7 (40m), 53.9 (38m), 50.1 (39m)
     - pierde minutos: Anthony Black PG/SF/SG depth PG1 · de Magic Wonder Year · últimos: 25.4 (31m), 50.6 (38m), 47.9 (33m), 44.4 (39m)
     - pierde minutos: Desmond Bane PG/SF/SG depth SG1 · de Boozer Beater · últimos: 23.2 (32m), 30.2 (36m), 39.6 (34m)
+- Moussa Diabaté CHA (LIBRE): Day-To-Day → sano
