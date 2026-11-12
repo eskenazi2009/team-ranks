@@ -115,9 +115,47 @@ def main():
         j = try_get(f"stats temporada {season}", f"{SLEEPER2}/stats/nfl/{season}?season_type=regular&{POS_Q}", timeout=120)
         if isinstance(j, list):
             proj[f"stats_{season}"] = {r["player_id"]: r.get("stats") for r in j if r.get("player_id")}
+    for w in range(int(wk or 1), 19):
+        j = try_get(f"proyecciones semana {w}", f"{SLEEPER2}/projections/nfl/{season}/{w}?season_type=regular&{POS_Q}", timeout=120)
+        if isinstance(j, list):
+            proj[f"{season}_w{w}"] = {r["player_id"]: dict(r.get("stats") or {}, _opp=r.get("opponent"), _team=r.get("team")) for r in j if r.get("player_id")}
     save("proj.json", proj)
     save("log.json", {"at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "log": LOG})
 
 
+def live(hours=5.0, every=15):
+    """Durante el draft: copia el draft y sus picks a live_draft.json y hace push en cada cambio."""
+    import subprocess
+    L = json.load(open(os.path.join(OUT, "leagues.json")))
+    dids = [d["draft"]["draft_id"] for e in L["leagues"] for d in e["drafts"]
+            if d["draft"].get("status") in ("pre_draft", "drafting", "paused")]
+    if not dids:
+        print("no hay drafts pendientes")
+        return
+    did, last, t0 = dids[-1], None, time.time()
+    while time.time() - t0 < hours * 3600:
+        try:
+            d = get(f"{SLEEPER}/draft/{did}")
+            picks = get(f"{SLEEPER}/draft/{did}/picks")
+        except Exception as e:
+            print("error", e, flush=True)
+            time.sleep(every)
+            continue
+        key = (d.get("status"), len(picks))
+        if key != last:
+            last = key
+            save("live_draft.json", {"at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "draft": d, "picks": picks})
+            subprocess.run("git add docs/nfl-draft/data/live_draft.json && git commit -qm 'chore(nfl-draft): picks en vivo [skip ci]' "
+                           "&& (git push -q origin HEAD:$GITHUB_REF_NAME || (git pull -q --rebase origin $GITHUB_REF_NAME && git push -q origin HEAD:$GITHUB_REF_NAME))",
+                           shell=True)
+            print(f"status={key[0]} picks={key[1]}", flush=True)
+        if d.get("status") == "complete":
+            break
+        time.sleep(every)
+
+
 if __name__ == "__main__":
-    main()
+    if "--live" in sys.argv:
+        live()
+    else:
+        main()
