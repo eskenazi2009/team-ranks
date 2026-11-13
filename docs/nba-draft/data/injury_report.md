@@ -1,5 +1,5 @@
 # Lesiones 2026-11-13 · Benchwarmers
-Cambios desde 2026-11-13T20:26:22Z (generado 2026-11-13T22:00:48Z)
+Cambios desde 2026-11-13T20:26:22Z (generado 2026-11-13T22:28:17Z)
 
 ## Nuevas o agravadas
 - **Dejounte Murray** NOP PG/SG (de TIQUITI): Day-To-Day → **Out** · Ankle · regreso est. 2026-11-20 (7 días, se pierde 4 juegos, 2 de 2 esta semana). Murray (ankle) is out for Friday's game against Memphis.
@@ -14,6 +14,8 @@ Cambios desde 2026-11-13T20:26:22Z (generado 2026-11-13T22:00:48Z)
     - Zach LaVine SF/SG depth SG1 · de TIQUITI · techo top5 49.0 · p90 46.8 · proy 34.3 · últimos: 26.3 (35m), 21.8 (25m), 42.6 (33m)
     - Malik Monk PG/SG depth PG2 · LIBRE · techo top5 46.4 · p90 34.2 · proy 21.2 · últimos: 22.5 (18m), 15.9 (21m), 0.0 (3m)
     - De'Andre Hunter PF/SF depth SF1 · de TIQUITI · techo top5 38.4 · p90 36.8 · proy 20.9 · últimos: 20.1 (31m), 23.8 (34m)
+- **Max Christie** DAL SF/SG (LIBRE): sano → **Day-To-Day** · Ankle · regreso est. 2026-11-14 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Christie is questionable for Saturday's game against the Cavaliers due to a sprained left ankle.
+- **Morez Johnson Jr.** DAL C/PF (LIBRE): sano → **Day-To-Day** · Lower Leg · regreso est. 2026-11-14 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Johnson (left shin contusion) is listed as probable for Saturday against Cleveland.
 
 ## Libres de la liga que ganan minutos hoy
 - **Bennedict Mathurin** SF/SG · por la baja de Dejounte Murray · techo top5 49.3 · p90 42.6 · proy 18.4 · últimos: 2.0 (7m), 9.5 (9m), 8.4 (24m)
