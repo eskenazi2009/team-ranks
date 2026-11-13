@@ -1,5 +1,5 @@
 # Lesiones 2026-11-13 · Benchwarmers
-Cambios desde 2026-11-13T20:26:22Z (generado 2026-11-13T22:42:06Z)
+Cambios desde 2026-11-13T20:26:22Z (generado 2026-11-13T22:45:15Z)
 
 ## Nuevas o agravadas
 - **Dejounte Murray** NOP PG/SG (de TIQUITI): Day-To-Day → **Out** · Ankle · regreso est. 2026-11-20 (7 días, se pierde 4 juegos, 2 de 2 esta semana). Murray (ankle) is out for Friday's game against Memphis.
@@ -23,4 +23,10 @@ Cambios desde 2026-11-13T20:26:22Z (generado 2026-11-13T22:42:06Z)
 - **Keegan Murray** PF/SF · por la baja de Precious Achiuwa · techo top5 44.9 · p90 43.1 · proy 28.7 · últimos: 20.2 (23m), 22.9 (24m)
 
 ## Mejoran o regresan
+- Jalen Suggs ORL (de TIQUITI): Out → sano
+    - pierde minutos: Tristan da Silva PF/SF depth PF2 · LIBRE · últimos: 36.4 (39m)
+    - pierde minutos: Franz Wagner PF/SF depth PF1 · de Winning Time · últimos: 56.7 (40m), 53.9 (38m), 50.1 (39m)
+    - pierde minutos: Anthony Black PG/SF/SG depth SG1 · de Magic Wonder Year · últimos: 50.6 (38m), 47.9 (33m), 44.4 (39m)
+    - pierde minutos: Jamal Cain SF/SG depth SF2 · LIBRE · últimos: 39.9 (36m), 12.1 (20m)
 - Tristan da Silva ORL (LIBRE): Day-To-Day → sano
+- Jamal Cain ORL (LIBRE): Day-To-Day → sano
