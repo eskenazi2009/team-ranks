@@ -80,7 +80,16 @@ def main():
             "rosters": try_get(f"rosters {lid}", f"{SLEEPER}/league/{lid}/rosters") or [],
             "traded_picks": try_get(f"picks cambiados {lid}", f"{SLEEPER}/league/{lid}/traded_picks") or [],
             "drafts": [],
+            "transactions": {},
+            "matchups": {},
         }
+        for w in range(1, 19):
+            tx = try_get(f"transacciones {lid} sem {w}", f"{SLEEPER}/league/{lid}/transactions/{w}")
+            if tx:
+                entry["transactions"][str(w)] = tx
+            mu = try_get(f"matchups {lid} sem {w}", f"{SLEEPER}/league/{lid}/matchups/{w}")
+            if mu and any(m.get("points") for m in mu):
+                entry["matchups"][str(w)] = mu
         for d in try_get(f"drafts {lid}", f"{SLEEPER}/league/{lid}/drafts") or []:
             did = d["draft_id"]
             entry["drafts"].append({
