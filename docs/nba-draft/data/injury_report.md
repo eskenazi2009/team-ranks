@@ -1,5 +1,5 @@
 # Lesiones 2026-11-13 · Benchwarmers
-Cambios desde 2026-11-13T20:26:22Z (generado 2026-11-13T22:28:17Z)
+Cambios desde 2026-11-13T20:26:22Z (generado 2026-11-13T22:42:06Z)
 
 ## Nuevas o agravadas
 - **Dejounte Murray** NOP PG/SG (de TIQUITI): Day-To-Day → **Out** · Ankle · regreso est. 2026-11-20 (7 días, se pierde 4 juegos, 2 de 2 esta semana). Murray (ankle) is out for Friday's game against Memphis.
@@ -21,3 +21,6 @@ Cambios desde 2026-11-13T20:26:22Z (generado 2026-11-13T22:28:17Z)
 - **Bennedict Mathurin** SF/SG · por la baja de Dejounte Murray · techo top5 49.3 · p90 42.6 · proy 18.4 · últimos: 2.0 (7m), 9.5 (9m), 8.4 (24m)
 - **Malik Monk** PG/SG · por la baja de Precious Achiuwa · techo top5 46.4 · p90 34.2 · proy 21.2 · últimos: 22.5 (18m), 15.9 (21m), 0.0 (3m)
 - **Keegan Murray** PF/SF · por la baja de Precious Achiuwa · techo top5 44.9 · p90 43.1 · proy 28.7 · últimos: 20.2 (23m), 22.9 (24m)
+
+## Mejoran o regresan
+- Tristan da Silva ORL (LIBRE): Day-To-Day → sano
