@@ -1,5 +1,5 @@
 # Lesiones 2026-11-12 · Benchwarmers
-Cambios desde 2026-11-12T22:29:01Z (generado 2026-11-13T00:03:09Z)
+Cambios desde 2026-11-12T22:29:01Z (generado 2026-11-13T02:51:50Z)
 
 ## Nuevas o agravadas
 - **Zach Edey** MEM C (LIBRE): sano → **Out** · Ankle · regreso est. 2026-11-14 (2 días, se pierde 1 juego, 1 de 2 esta semana). Edey won't play in Friday's game against the Pelicans due to left ankle injury management.
