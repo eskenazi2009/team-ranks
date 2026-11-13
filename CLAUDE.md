@@ -41,6 +41,9 @@
   esos días se mete a otro jugador elegible que sí juegue, y si hace muchos puntos se fija; si no, el titular
   vuelve al slot (o a otro slot elegible) para su próximo juego. Mandar a la banca solo cuesta si ese score
   se iba a fijar. Planear cada slot abierto como una secuencia de juegos de distintos jugadores, día por día.
+- Free agents (pedido de Raymond, 13-nov-2026): SIEMPRE que pregunte si hay alguien bueno disponible, disparar
+  el relay (workflow_dispatch) y esperar el snapshot nuevo ANTES de armar la lista; nunca usar un snapshot viejo.
+  Los rosters cambian en minutos (Jalen Smith se lo llevaron entre dos corridas). Decir la hora del snapshot usado.
 - Raymond dice qué jugadores fijó cada semana; esos quedan inmóviles en su slot hasta el domingo y no se
   tocan en ninguna recomendación.
 - Raymond está en Panamá (UTC-5, sin horario de verano). El relay corre dos veces al día: 8:00 AM y 5:30 PM de
