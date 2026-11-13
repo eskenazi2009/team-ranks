@@ -55,3 +55,19 @@
   de respaldo extra a las 10:00 y 19:00 UTC. La tarea programada de
   lesiones le notifica a las 5:42 PM de Panamá por push y correo
   (trigger trig_01MFQi4UpVq8sQ4ANuJYMKbm).
+
+## Guillotina NFL de Raymond (docs/nfl-draft, desde el 12-nov-2026)
+
+- Liga Sleeper "Fantasy" (1425197333263478784): guillotina (type 3), 9 equipos, PPR, QB/RB/RB/WR/WR/TE/FLEX/FLEX + 6 BN,
+  sin K/DEF, FAAB 1000. Raymond es co-dueño del roster 3 (dueño RACHINAZI). Arranca en la semana 10 (eliminaciones 10-17).
+- Relay: .github/workflows/nfl-sleeper-relay.yml corre al hacer push de docs/nfl-draft/relay/** o docs/nfl-draft/.refresh
+  en ramas claude/** (y a mano). Deja leagues.json (ligas, rosters, drafts, transacciones, matchups), players.json y
+  proj.json (stats 2026 + proyecciones semanales 10-18) en docs/nfl-draft/data.
+- Preferencias de Raymond en esta liga: stats del año + proyecciones (+ noticias); bye restante resta poco, bye en la
+  semana actual resta mucho; Questionable sí, IR/Out largo no; evitar a quien no practicó.
+- Liga anterior "Family Chop" (1396949735343915008, mismos dueños, semanas 1-8): Raymond (RACHINAZI) salió en la semana 3.
+  FAAB observado: el mejor liberado tras cada chop se fue en 300-450 (pico: Bijan 726 en sem 3); el ganador suele pasar
+  al segundo por poco (411 vs 401, 301 vs 288, 231 vs 202) -> pujar números impares por encima de redondos. Los precios
+  caen con las semanas (JSN 218 en sem 5, Gibbs 189 en sem 6, todo a 3 en sem 7). efrainesk gasta todo pronto (999),
+  Chakanowsky y vicesk1 dan pujas grandes temprano, Tonyesk puja $0-1, Peruqui3000 (campeón) fue paciente. Varias
+  pujas fallaron por roster lleno: siempre indicar a quién soltar.
