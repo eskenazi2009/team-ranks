@@ -1,81 +1,22 @@
 # Lesiones 2026-11-14 · Benchwarmers
-Cambios desde 2026-11-14T02:38:40Z (generado 2026-11-14T22:29:19Z)
+Cambios desde 2026-11-14T22:29:19Z (generado 2026-11-14T22:55:20Z)
 
 ## Nuevas o agravadas
-- **Joel Embiid** PHI C (de Magic Wonder Year): sano → **Out** · Foot · regreso est. 2026-11-16 (2 días, se pierde 1 juego, 1 de 1 esta semana). Embiid (right foot injury management) has been ruled out for Sunday's game against the Pacers.
-    - Tyrese Maxey PG depth PG1 · de Shalommeyer · techo top5 71.2 · p90 63.4 · proy 44.5 · últimos: 44.3 (36m), 32.2 (34m), 46.4 (35m)
-    - Jaylen Brown PF/SF/SG depth SF1 · de Cooper Troopers · techo top5 66.3 · p90 59.5 · proy 40.1 · últimos: 46.4 (35m), 25.0 (26m), 29.2 (36m)
-    - LeBron James PF/PG/SF depth PF1 · de Magic Wonder Year · techo top5 62.6 · p90 58.8 · proy 38.1 · últimos: 36.5 (33m), 28.1 (29m)
-    - VJ Edgecombe PG/SG depth SG1 · de Boozer Beater · techo top5 56.3 · p90 45.3 · proy 30.6 · últimos: 33.7 (35m), 23.3 (32m), 45.6 (36m)
-    - Anfernee Simons PG/SG depth PG2 · LIBRE · techo top5 43.0 · p90 37.0 · proy 23.3 · últimos: 10.8 (16m), 23.6 (18m), 28.6 (23m)
-- **Ty Jerome** MEM PG/SG (de Magic Wonder Year): sano → **Out** · Hip · regreso est. 2026-11-16 (2 días, se pierde 1 juego, 1 de 1 esta semana). Soreness
-    - Jerami Grant PF/SF depth SF2 · LIBRE · techo top5 49.0 · p90 42.5 · proy 21.0 · últimos: 30.6 (22m), 20.4 (20m), 26.7 (26m)
-    - Cedric Coward SF/SG depth SG1 · de LatinBet24 · techo top5 49.0 · p90 40.8 · proy 33.9 · últimos: 23.2 (28m), 36.2 (27m), 33.4 (30m)
-    - Cam Spencer PG/SF/SG depth SG2 · LIBRE · techo top5 46.1 · p90 36.9 · proy 23.2 · últimos: 17.4 (17m), 26.1 (20m), 24.9 (24m)
-    - Zach Edey C depth C1 · LIBRE · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 19.3 (23m), 9.0 (20m)
-    - Isaiah Stewart C/PF depth C2 · LIBRE · techo top5 43.1 · p90 30.1 · proy 25.5 · últimos: 7.2 (18m), 25.0 (20m)
-- **Fred VanVleet** HOU PG (de Magic Wonder Year): sano → **Out** · Knee · regreso est. 2026-11-16 (2 días, se pierde 1 juego, 1 de 1 esta semana). VanVleet (right knee injury management) has been ruled out for Sunday's game against the Wizards.
-    - Alperen Şengün C/PF depth C1 · de Winning Time · techo top5 76.0 · p90 66.9 · proy 44.2 · últimos: 30.7 (32m), 50.2 (35m), 53.1 (37m), 70.9 (37m)
-    - Kevin Durant PF/SF depth SF1 · de Boozer Beater · techo top5 59.2 · p90 54.9 · proy 40.0 · últimos: 40.5 (38m), 48.4 (36m), 31.3 (34m), 34.6 (33m)
-    - Reed Sheppard PG/SG depth SG2 · LIBRE · techo top5 57.7 · p90 41.6 · proy 24.1 · últimos: 9.0 (13m), 10.0 (17m), 19.7 (20m), 10.5 (19m)
-    - Amen Thompson PG/SF/SG depth SG1 · de Levy heat 🔥 · techo top5 56.2 · p90 51.2 · proy 38.6 · últimos: 35.6 (39m), 24.3 (35m), 37.4 (29m), 30.5 (41m)
-    - Jabari Smith Jr. C/PF depth PF1 · de White · techo top5 49.5 · p90 43.0 · proy 30.1 · últimos: 36.8 (39m), 28.9 (38m), 31.6 (35m), 12.6 (24m)
-- **Giannis Antetokounmpo** MIA PF (de Magic Wonder Year): sano → **Day-To-Day** · Wrist · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Sprain
-- **Donovan Mitchell** CLE PG/SG (de Boozer Beater): sano → **Day-To-Day** · Knee · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Bruise
-- **James Harden** CLE PG (de White): sano → **Day-To-Day** · Calf · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Harden (left lower leg/calf tightness) is listed as questionable for Saturday's game against the Mavericks.
-- **Norman Powell** CHI SF/SG (de Cooper Troopers): sano → **Day-To-Day** · Back · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Powell (back) is listed as questionable for Saturday's game against Minnesota.
-- **Jarrett Allen** CLE C (de Shalommeyer): sano → **Day-To-Day** · Knee · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Allen (knee) is listed as questionable for Saturday's game against Dallas.
-- **Nic Claxton** CHI C/PF (de Magic Wonder Year): sano → **Day-To-Day** · Hamstring · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Claxton (hamstring) is listed as questionable for Saturday's game against the Timberwolves.
-- **Keegan Murray** SAC PF/SF (LIBRE): sano → **Day-To-Day** · Illness · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Murray (illness) didn't participate in Saturday's practice, Brenden Nunes of KHTK Sactown Sports 1140 reports.
-- **Alex Sarr** WAS C/PF (de Levy heat 🔥): sano → **Day-To-Day** · Illness · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Sarr (illness) is listed as questionable for Sunday's game against Houston.
-- **Peyton Watson** CLE PF/SF (LIBRE): sano → **Day-To-Day** · Hamstring · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Watson (hamstring) is listed as questionable for Saturday's game against the Mavericks.
-- **Aaron Nesmith** IND SF/SG (LIBRE): sano → **Day-To-Day** · Hand · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Sprain
-- **Jalen Smith** CHI C/PF (de Brunson Burner): sano → **Day-To-Day** · Finger · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Sprain
-- **Jerami Grant** MEM PF/SF (LIBRE): sano → **Day-To-Day** · Head · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Grant (head) is questionable for Saturday's game against the Nets.
-- **Jaxson Hayes** UTA C/PF (LIBRE): sano → **Day-To-Day** · Knee · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Hayes won't return to Friday's game against the Rockets due to a left knee issue.
-- **Kingston Flemings** ATL PG/SG (LIBRE): sano → **Day-To-Day** · Back · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Flemings (back tightness) will not return to Friday's game against the Bulls.
-- **T.J. McConnell** IND PG (LIBRE): sano → **Day-To-Day** · Hamstring · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). McConnell (hamstring) is listed as probable for Sunday's game against the 76ers.
-- **Tre Johnson** WAS PG/SG (LIBRE): sano → **Day-To-Day** · Back · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Johnson is listed as questionable for Sunday's game against the Rockets due to lower-back soreness.
+- **Jarrett Allen** CLE C (de Shalommeyer): Day-To-Day → **Out** · Knee · regreso est. 2026-11-16 (2 días, se pierde 1 juego, 1 de 1 esta semana). Allen (knee) is listed as questionable for Saturday's game against Dallas.
+    - James Harden PG depth PG1 · de White · techo top5 74.7 · p90 57.0 · proy 38.9 · últimos: 19.9 (34m), 22.1 (25m), 47.4 (33m), 47.2 (35m)
+    - Donovan Mitchell PG/SG depth SG1 · de Boozer Beater · techo top5 65.8 · p90 60.6 · proy 44.7 · últimos: 53.8 (37m), 22.4 (23m), 44.4 (36m), 42.3 (33m)
+    - Peyton Watson PF/SF depth SF1 · LIBRE · techo top5 54.7 · p90 45.5 · proy 25.6 · últimos: 30.7 (29m), 16.9 (21m), 29.0 (30m), 9.8 (30m)
+    - Jaylon Tyson PF/SF/SG depth SF2 · LIBRE · techo top5 46.8 · p90 39.6 · proy 20.2 · últimos: 6.5 (23m), 27.1 (30m)
+    - Craig Porter Jr. PG/SG depth PG3 · LIBRE · techo top5 41.9 · p90 29.5 · proy 10.7 · últimos: 2.7 (15m), 18.4 (17m), 7.4 (9m)
 
 ## Libres de la liga que ganan minutos hoy
-- **Reed Sheppard** PG/SG · por la baja de Fred VanVleet · techo top5 57.7 · p90 41.6 · proy 24.1 · últimos: 9.0 (13m), 10.0 (17m), 19.7 (20m), 10.5 (19m)
-- **Jerami Grant** PF/SF · por la baja de Ty Jerome · techo top5 49.0 · p90 42.5 · proy 21.0 · últimos: 30.6 (22m), 20.4 (20m), 26.7 (26m)
-- **Cam Spencer** PG/SF/SG · por la baja de Ty Jerome · techo top5 46.1 · p90 36.9 · proy 23.2 · últimos: 17.4 (17m), 26.1 (20m), 24.9 (24m)
-- **Zach Edey** C · por la baja de Ty Jerome · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 19.3 (23m), 9.0 (20m)
-- **Isaiah Stewart** C/PF · por la baja de Ty Jerome · techo top5 43.1 · p90 30.1 · proy 25.5 · últimos: 7.2 (18m), 25.0 (20m)
-- **Anfernee Simons** PG/SG · por la baja de Joel Embiid · techo top5 43.0 · p90 37.0 · proy 23.3 · últimos: 10.8 (16m), 23.6 (18m), 28.6 (23m)
+- **Peyton Watson** PF/SF · por la baja de Jarrett Allen · techo top5 54.7 · p90 45.5 · proy 25.6 · últimos: 30.7 (29m), 16.9 (21m), 29.0 (30m), 9.8 (30m)
+- **Jaylon Tyson** PF/SF/SG · por la baja de Jarrett Allen · techo top5 46.8 · p90 39.6 · proy 20.2 · últimos: 6.5 (23m), 27.1 (30m)
+- **Craig Porter Jr.** PG/SG · por la baja de Jarrett Allen · techo top5 41.9 · p90 29.5 · proy 10.7 · últimos: 2.7 (15m), 18.4 (17m), 7.4 (9m)
 
 ## Mejoran o regresan
-- Ajay Mitchell OKC (de Cooper Troopers): Out → Day-To-Day
-    - pierde minutos: Alex Caruso PF/SF depth SF2 · LIBRE · últimos: 10.1 (13m), 8.9 (19m), 32.4 (29m), 16.2 (27m)
-    - pierde minutos: Josh Dix PG/SG depth SF5 · LIBRE · últimos: 4.7 (21m), 9.3 (17m)
-    - pierde minutos: Micah Peavy PF/SF depth SF7 · LIBRE · últimos: 17.6 (23m), 4.4 (21m), 3.6 (12m)
-    - pierde minutos: Nique Clifford SF/SG depth SF4 · LIBRE · últimos: 9.3 (20m), 11.1 (16m), 0.0 (12m)
-- Zach Edey MEM (LIBRE): Out → Day-To-Day
-    - pierde minutos: Isaiah Stewart C/PF depth C2 · LIBRE · últimos: 7.2 (18m), 25.0 (20m)
-    - pierde minutos: Taylor Hendricks C/PF depth C4 · LIBRE · últimos: 15.6 (16m), 11.9 (11m), 32.4 (19m)
-    - pierde minutos: Jerami Grant PF/SF depth SF2 · LIBRE · últimos: 30.6 (22m), 20.4 (20m), 26.7 (26m)
-    - pierde minutos: Cameron Boozer C/PF depth PF1 · de Boozer Beater · últimos: 38.4 (33m), 37.7 (33m), 35.5 (25m)
-- Pelle Larsson MIA (LIBRE): Out → Day-To-Day
-    - pierde minutos: Andrew Wiggins PF/SF/SG depth SF2 · LIBRE · últimos: 14.1 (32m), 15.0 (19m), 18.6 (32m)
-    - pierde minutos: Davion Mitchell PG depth PG1 · de Levy heat 🔥 · últimos: 41.1 (40m), 42.0 (38m), 59.5 (39m)
-    - pierde minutos: Bam Adebayo C/PF depth C1 · de Winning Time · últimos: 39.6 (34m), 36.6 (37m), 62.3 (38m)
-    - pierde minutos: Myron Gardner PF/SF depth SF5 · LIBRE · últimos: 9.1 (10m), 7.8 (19m)
-- Precious Achiuwa SAC (de Shalommeyer): Out → Day-To-Day
-    - pierde minutos: Keegan Murray PF/SF depth PF2 · LIBRE · últimos: 20.2 (23m), 22.9 (24m), 36.4 (40m)
-    - pierde minutos: Darius Acuff Jr. PG/SG depth PG1 · de TIQUITI · últimos: 55.0 (39m), 46.8 (40m), 33.8 (35m)
-    - pierde minutos: De'Andre Hunter PF/SF depth SF1 · de TIQUITI · últimos: 20.1 (31m), 23.8 (34m), 38.0 (42m)
-    - pierde minutos: Zach LaVine SF/SG depth SG1 · de TIQUITI · últimos: 21.8 (25m), 42.6 (33m), 30.6 (36m)
-- Klay Thompson MIA (de TIQUITI): Out → Day-To-Day
-    - pierde minutos: Ryan Conwell PG/SG depth SG3 · LIBRE · últimos: 13.4 (19m), 13.8 (21m), 31.0 (33m)
-    - pierde minutos: Davion Mitchell PG depth PG1 · de Levy heat 🔥 · últimos: 41.1 (40m), 42.0 (38m), 59.5 (39m)
-    - pierde minutos: Bam Adebayo C/PF depth C1 · de Winning Time · últimos: 39.6 (34m), 36.6 (37m), 62.3 (38m)
-    - pierde minutos: Andrew Wiggins PF/SF/SG depth SF2 · LIBRE · últimos: 14.1 (32m), 15.0 (19m), 18.6 (32m)
-- Luka Dončić LAL (de White): Day-To-Day → sano
-- Paul George BOS (de White): Day-To-Day → sano
-- LeBron James PHI (de Magic Wonder Year): Day-To-Day → sano
-- Dailyn Swain CHI (LIBRE): Out → sano
-    - pierde minutos: Matas Buzelis PF/SF depth PF1 · de LatinBet24 · últimos: 33.0 (31m), 16.6 (31m), 30.2 (29m)
-    - pierde minutos: Patrick Williams PF depth SF2 · LIBRE · últimos: 17.1 (25m), 25.4 (28m), 26.8 (24m)
-    - pierde minutos: Buddy Hield SG depth SG2 · LIBRE · últimos: 25.1 (25m)
-    - pierde minutos: Josh Giddey PG/SG depth PG1 · de Shalommeyer · últimos: 49.9 (34m), 15.9 (25m), 60.0 (39m)
+- Yves Missi NOP (de Winning Time): Out → sano
+    - pierde minutos: Karlo Matković C/PF depth C2 · LIBRE · últimos: 11.6 (19m), 13.2 (17m), 8.3 (22m), 6.6 (19m)
+    - pierde minutos: Saddiq Bey PF/SF depth SF2 · de Levy heat 🔥 · últimos: 24.3 (26m), 16.0 (24m), 22.2 (29m), 52.0 (35m)
+    - pierde minutos: DeAndre Jordan C depth C3 · LIBRE · últimos: 7.6 (11m), 17.1 (17m)
+    - pierde minutos: Jordan Poole PG/SG depth PG3 · LIBRE · últimos: 14.6 (34m), 17.5 (21m), 23.9 (21m)
