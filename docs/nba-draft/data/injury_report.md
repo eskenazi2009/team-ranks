@@ -1,5 +1,5 @@
 # Lesiones 2026-11-14 · Benchwarmers
-Cambios desde 2026-11-14T02:38:40Z (generado 2026-11-14T12:58:54Z)
+Cambios desde 2026-11-14T02:38:40Z (generado 2026-11-14T13:21:19Z)
 
 ## Nuevas o agravadas
 - **Aaron Nesmith** IND SF/SG (LIBRE): sano → **Day-To-Day** · Hand · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Nesmith exited to the locker room in the final seconds of Friday's 106-104 win over the Knicks due to an apparent hand/wrist injury, Tony East of Forbes.com reports. He posted 18 points (7-10 FG, 2-3 3Pt, 2-2 FT), seven rebounds and one ass
