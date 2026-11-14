@@ -41,6 +41,13 @@
   esos días se mete a otro jugador elegible que sí juegue, y si hace muchos puntos se fija; si no, el titular
   vuelve al slot (o a otro slot elegible) para su próximo juego. Mandar a la banca solo cuesta si ese score
   se iba a fijar. Planear cada slot abierto como una secuencia de juegos de distintos jugadores, día por día.
+- Mover antes de fijar (confirmado por Raymond, 10 y 14-nov-2026): el score fijable viaja con el jugador; antes de
+  fijarlo se le puede mover a cualquier slot elegible y fijarlo ahí. Fijar siempre en el slot MENOS flexible
+  posible (UTIL se deja abierto al final). Táctica de cobertura que Raymond quiere que le RECOMIENDE siempre
+  que aplique: si un titular ya no juega más en la semana, se deja SIN fijar en un slot (ej. Clingan 40.2 en
+  UTIL); otro jugador prueba suerte en otro slot (ej. Jenkins en el G de Dončić); si supera al guardado, se le
+  mueve al slot del guardado y se fija ahí, y si no, se fija al guardado. El slot de prueba vuelve a su dueño
+  (Dončić el domingo). Así se gana una oportunidad extra sin arriesgar nada.
 - Free agents (pedido de Raymond, 13-nov-2026): SIEMPRE que pregunte si hay alguien bueno disponible, disparar
   el relay (workflow_dispatch) y esperar el snapshot nuevo ANTES de armar la lista; nunca usar un snapshot viejo.
   Los rosters cambian en minutos (Jalen Smith se lo llevaron entre dos corridas). Decir la hora del snapshot usado.
