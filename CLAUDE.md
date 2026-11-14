@@ -44,8 +44,10 @@
 - Mover antes de fijar (confirmado por Raymond, 10 y 14-nov-2026): el score fijable viaja con el jugador; antes de
   fijarlo se le puede mover a cualquier slot elegible y fijarlo ahí. Fijar siempre en el slot MENOS flexible
   posible (UTIL se deja abierto al final). Táctica de cobertura que Raymond quiere que le RECOMIENDE siempre
-  que aplique: si un titular ya no juega más en la semana, se deja SIN fijar en un slot (ej. Clingan 40.2 en
-  UTIL); otro jugador prueba suerte en otro slot (ej. Jenkins en el G de Dončić); si supera al guardado, se le
+  que aplique: si un titular tiene un score decente (no una locura) y NO juega el día de la prueba (puede que ya
+  no juegue más en la semana, o simplemente no juegue mañana/pasado), se deja SIN fijar en su slot (ej. Clingan
+  40.2 en UTIL); su fijable no cambia mientras él no juegue. Si vuelve a jugar más adelante, hay que decidir
+  (fijar o sacarlo) antes de que empiece ese juego; otro jugador prueba suerte en otro slot (ej. Jenkins en el G de Dončić); si supera al guardado, se le
   mueve al slot del guardado y se fija ahí, y si no, se fija al guardado. El slot de prueba vuelve a su dueño
   (Dončić el domingo). Así se gana una oportunidad extra sin arriesgar nada.
 - Free agents (pedido de Raymond, 13-nov-2026): SIEMPRE que pregunte si hay alguien bueno disponible, disparar
