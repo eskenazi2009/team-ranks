@@ -1,18 +1,20 @@
 # Lesiones 2026-11-14 · Benchwarmers
-Cambios desde 2026-11-14T02:38:40Z (generado 2026-11-14T16:19:54Z)
+Cambios desde 2026-11-14T02:38:40Z (generado 2026-11-14T18:42:26Z)
 
 ## Nuevas o agravadas
+- **Giannis Antetokounmpo** MIA PF (de Magic Wonder Year): sano → **Day-To-Day** · Wrist · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Sprain
+- **Donovan Mitchell** CLE PG/SG (de Boozer Beater): sano → **Day-To-Day** · Knee · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Bruise
+- **James Harden** CLE PG (de White): sano → **Day-To-Day** · Calf · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Harden (left lower leg/calf tightness) is listed as questionable for Saturday's game against the Mavericks.
+- **Norman Powell** CHI SF/SG (de Cooper Troopers): sano → **Day-To-Day** · Back · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Powell (back) is listed as questionable for Saturday's game against Minnesota.
+- **Jarrett Allen** CLE C (de Shalommeyer): sano → **Day-To-Day** · Knee · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Allen (knee) is listed as questionable for Saturday's game against Dallas.
+- **Nic Claxton** CHI C/PF (de Magic Wonder Year): sano → **Day-To-Day** · Hamstring · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Claxton (hamstring) is listed as questionable for Saturday's game against the Timberwolves.
+- **Peyton Watson** CLE PF/SF (LIBRE): sano → **Day-To-Day** · Hamstring · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Watson supplied seven points (2-12 FG, 2-5 3Pt, 1-2 FT), five rebounds, four assists and four blocks over 30 minutes in Wednesday's 115-107 win over the Knicks.
 - **Aaron Nesmith** IND SF/SG (LIBRE): sano → **Day-To-Day** · Hand · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Nesmith exited to the locker room in the final seconds of Friday's 106-104 win over the Knicks due to an apparent hand/wrist injury, Tony East of Forbes.com reports. He posted 18 points (7-10 FG, 2-3 3Pt, 2-2 FT), seven rebounds and one ass
-- **Jalen Smith** CHI C/PF (de Brunson Burner): sano → **Day-To-Day** · Hand · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Smith (hand) exited Friday's 125-117 win over the Hawks in overtime and did not return, finishing with 15 points (6-15 FG, 1-6 3Pt, 2-2 FT), 12 rebounds, three assists and three steals across 32 minutes.
+- **Jalen Smith** CHI C/PF (de Brunson Burner): sano → **Day-To-Day** · Finger · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Sprain
 - **Jaxson Hayes** UTA C/PF (LIBRE): sano → **Day-To-Day** · Knee · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Hayes won't return to Friday's game against the Rockets due to a left knee issue.
 - **Kingston Flemings** ATL PG/SG (LIBRE): sano → **Day-To-Day** · Back · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Flemings (back tightness) will not return to Friday's game against the Bulls.
 
 ## Mejoran o regresan
-- Evan Mobley CLE (de Brunson Burner): Out → Day-To-Day
-    - pierde minutos: Jaylon Tyson PF/SF/SG depth SF2 · LIBRE · últimos: 6.5 (23m), 27.1 (30m)
-    - pierde minutos: Mario Hezonja PF/SF depth PF2 · LIBRE · últimos: 7.5 (19m), 15.6 (17m), 4.0 (7m), 7.8 (9m)
-    - pierde minutos: Donovan Mitchell PG/SG depth SG1 · de Boozer Beater · últimos: 53.8 (37m), 22.4 (23m), 44.4 (36m), 42.3 (33m)
-    - pierde minutos: Norchad Omier PF/SF depth PF7 · LIBRE · últimos: 6.6 (12m)
 - Ajay Mitchell OKC (de Cooper Troopers): Out → Day-To-Day
     - pierde minutos: Alex Caruso PF/SF depth SF2 · LIBRE · últimos: 10.1 (13m), 8.9 (19m), 32.4 (29m), 16.2 (27m)
     - pierde minutos: Josh Dix PG/SG depth SF5 · LIBRE · últimos: 4.7 (21m), 9.3 (17m)
@@ -33,11 +35,6 @@ Cambios desde 2026-11-14T02:38:40Z (generado 2026-11-14T16:19:54Z)
     - pierde minutos: Darius Acuff Jr. PG/SG depth PG1 · de TIQUITI · últimos: 55.0 (39m), 46.8 (40m), 33.8 (35m)
     - pierde minutos: De'Andre Hunter PF/SF depth SF1 · de TIQUITI · últimos: 20.1 (31m), 23.8 (34m), 38.0 (42m)
     - pierde minutos: Zach LaVine SF/SG depth SG1 · de TIQUITI · últimos: 21.8 (25m), 42.6 (33m), 30.6 (36m)
-- Dailyn Swain CHI (LIBRE): Out → Day-To-Day
-    - pierde minutos: Matas Buzelis PF/SF depth PF1 · de LatinBet24 · últimos: 33.0 (31m), 16.6 (31m), 30.2 (29m)
-    - pierde minutos: Patrick Williams PF depth SF2 · LIBRE · últimos: 17.1 (25m), 25.4 (28m), 26.8 (24m)
-    - pierde minutos: Buddy Hield SG depth SG2 · LIBRE · últimos: 25.1 (25m)
-    - pierde minutos: Josh Giddey PG/SG depth PG1 · de Shalommeyer · últimos: 49.9 (34m), 15.9 (25m), 60.0 (39m)
 - Quinten Post MEM (LIBRE): Out → Day-To-Day
     - pierde minutos: Zach Edey C depth C1 · LIBRE · últimos: 19.3 (23m), 9.0 (20m)
     - pierde minutos: Isaiah Stewart C/PF depth C2 · LIBRE · últimos: 7.2 (18m), 25.0 (20m)
@@ -48,3 +45,8 @@ Cambios desde 2026-11-14T02:38:40Z (generado 2026-11-14T16:19:54Z)
     - pierde minutos: Davion Mitchell PG depth PG1 · de Levy heat 🔥 · últimos: 41.1 (40m), 42.0 (38m), 59.5 (39m)
     - pierde minutos: Bam Adebayo C/PF depth C1 · de Winning Time · últimos: 39.6 (34m), 36.6 (37m), 62.3 (38m)
     - pierde minutos: Andrew Wiggins PF/SF/SG depth SF2 · LIBRE · últimos: 14.1 (32m), 15.0 (19m), 18.6 (32m)
+- Dailyn Swain CHI (LIBRE): Out → sano
+    - pierde minutos: Matas Buzelis PF/SF depth PF1 · de LatinBet24 · últimos: 33.0 (31m), 16.6 (31m), 30.2 (29m)
+    - pierde minutos: Patrick Williams PF depth SF2 · LIBRE · últimos: 17.1 (25m), 25.4 (28m), 26.8 (24m)
+    - pierde minutos: Buddy Hield SG depth SG2 · LIBRE · últimos: 25.1 (25m)
+    - pierde minutos: Josh Giddey PG/SG depth PG1 · de Shalommeyer · últimos: 49.9 (34m), 15.9 (25m), 60.0 (39m)
