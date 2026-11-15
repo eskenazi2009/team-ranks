@@ -66,4 +66,5 @@
   pasar: unarchive_session, borrar y recrear las dos tareas con persistent_session_id de esa sesión. Hay crons
   de respaldo extra a las 10:00 y 19:00 UTC. La tarea programada de
   lesiones le notifica a las 5:42 PM de Panamá por push y correo
-  (trigger trig_01MFQi4UpVq8sQ4ANuJYMKbm).
+  (trigger trig_01MFQi4UpVq8sQ4ANuJYMKbm). Desde el 15-nov-2026 hay también un reporte matutino a las 8:12 AM
+  de Panamá, solo push (trigger trig_01AxhpoFkbEx6DdkUyvg1pQy), con lo nuevo desde la tarde anterior.
