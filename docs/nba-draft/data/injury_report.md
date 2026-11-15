@@ -1,5 +1,5 @@
 # Lesiones 2026-11-14 · Benchwarmers
-Cambios desde 2026-11-14T22:29:19Z (generado 2026-11-15T04:16:21Z)
+Cambios desde 2026-11-14T22:29:19Z (generado 2026-11-15T04:29:03Z)
 
 ## Nuevas o agravadas
 - **Donovan Mitchell** CLE PG/SG (de Boozer Beater): Day-To-Day → **Out** · Knee · regreso est. 2026-11-16 (2 días, se pierde 0 juegos, 0 de 0 esta semana). Bruise
@@ -56,7 +56,7 @@ Cambios desde 2026-11-14T22:29:19Z (generado 2026-11-15T04:16:21Z)
     - Andrew Wiggins PF/SF/SG depth SF2 · LIBRE · techo top5 48.4 · p90 43.3 · proy 22.6 · últimos: 14.1 (32m), 15.0 (19m), 18.6 (32m), 17.9 (23m)
     - Bobby Portis Jr. C/PF depth C2 · de Shalommeyer · techo top5 48.8 · p90 39.8 · proy 27.2 · últimos: 7.7 (20m), 10.7 (17m), 11.6 (15m), 19.8 (18m)
     - Davion Mitchell PG depth PG1 · de Levy heat 🔥 · techo top5 44.8 · p90 35.4 · proy 28.5 · últimos: 41.1 (40m), 42.0 (38m), 59.5 (39m), 40.3 (32m)
-- **Daniel Gafford** DAL C (LIBRE): sano → **Out** · Face. 
+- **Daniel Gafford** DAL C (LIBRE): sano → **Out** · Face · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Gafford (face) won't return to Saturday's game against the Cavaliers, Grant Afseth of DallasHoopsJournal.com reports.
     - Cooper Flagg PG/SF/SG depth SF1 · de Cooper Troopers · techo top5 69.2 · p90 58.9 · proy 43.8 · últimos: 53.0 (28m), 72.0 (39m), 27.9 (27m), 37.1 (38m)
     - Kyrie Irving PG/SG depth PG1 · de Magic Wonder Year · techo top5 61.1 · p90 56.4 · proy 40.4 · últimos: 31.6 (29m), 46.0 (38m), 22.6 (27m), 62.7 (37m)
     - Naji Marshall PF/SF/SG depth PF2 · LIBRE · techo top5 51.9 · p90 42.2 · proy 23.7 · últimos: 12.2 (15m), 16.0 (25m), 23.2 (23m), 22.1 (30m)
@@ -92,11 +92,11 @@ Cambios desde 2026-11-14T22:29:19Z (generado 2026-11-15T04:16:21Z)
     - Nickeil Alexander-Walker PG/SF/SG depth SG1 · de White · techo top5 60.7 · p90 48.9 · proy 33.1 · últimos: 26.1 (31m), 42.8 (34m), 33.7 (41m)
     - Onyeka Okongwu C/PF depth C1 · de Brunson Burner · techo top5 58.3 · p90 48.5 · proy 31.4 · últimos: 33.9 (30m), 34.3 (30m), 33.7 (35m)
     - Dyson Daniels SF/SG depth SF1 · de Winning Time · techo top5 54.1 · p90 47.3 · proy 31.1 · últimos: 43.5 (31m), 37.2 (31m), 26.8 (36m)
-- **GG Jackson** MEM PF/SF (LIBRE): sano → **Out** · Foot. 
+- **GG Jackson** MEM PF/SF (LIBRE): sano → **Out** · Foot · regreso est. 2026-11-16 (2 días, se pierde 0 juegos, 0 de 0 esta semana). According to Grizzlies head coach Tuomas Iisalo, Jackson suffered a "relatively serious" foot injury in Saturday's 129-110 win over Brooklyn, Michael Wallace of the Grizzlies' official site reports.
 - **Bennedict Mathurin** NOP SF/SG (LIBRE): sano → **Out** · Foot · regreso est. 2026-11-16 (2 días, se pierde 0 juegos, 0 de 0 esta semana). Plantar Fasciitis
-- **Jaylen Clark** MIN SF/SG (LIBRE): sano → **Out** · Hamstring. 
+- **Jaylen Clark** MIN SF/SG (LIBRE): sano → **Out** · Hamstring · regreso est. 2026-11-16 (2 días, se pierde 0 juegos, 0 de 0 esta semana). Not Specified
 - **Andrew Nembhard** IND PG/SG (de Shalommeyer): sano → **Day-To-Day** · Hip · regreso est. 2026-11-15 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Soreness
-- **Duncan Robinson** DET SF/SG (de TIQUITI): sano → **GTD** · Thigh. 
+- **Duncan Robinson** DET SF/SG (de TIQUITI): sano → **Day-To-Day** · Thigh · regreso est. 2026-11-14 (0 días, se pierde 0 juegos, 0 de 0 esta semana). Soreness
 
 ## Libres de la liga que ganan minutos hoy
 - **CJ McCollum** PG/SG · por la baja de Kingston Flemings · techo top5 55.9 · p90 44.8 · proy 29.0 · últimos: 24.3 (21m), 29.0 (24m), 37.5 (32m)
