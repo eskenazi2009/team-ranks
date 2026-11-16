@@ -1,5 +1,5 @@
 # Lesiones 2026-11-16 · Benchwarmers
-Cambios desde 2026-11-16T02:21:33Z (generado 2026-11-16T19:58:15Z)
+Cambios desde 2026-11-16T02:21:33Z (generado 2026-11-16T22:28:27Z)
 
 ## Nuevas o agravadas
 - **LeBron James** PHI PF/PG/SF (de Magic Wonder Year): sano → **Out** · Back · regreso est. 2026-11-18 (2 días, se pierde 1 juego, 1 de 3 esta semana). James (back) has been ruled out for Monday's game against the Nets.
@@ -12,16 +12,22 @@ Cambios desde 2026-11-16T02:21:33Z (generado 2026-11-16T19:58:15Z)
     - Zach Edey C depth C1 · LIBRE · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 19.3 (23m), 9.0 (20m)
     - Jerami Grant PF/SF depth SF2 · LIBRE · techo top5 49.0 · p90 42.5 · proy 21.0 · últimos: 30.6 (22m), 20.4 (20m), 26.7 (26m)
     - Cedric Coward SF/SG depth SG1 · de LatinBet24 · techo top5 49.0 · p90 40.8 · proy 33.9 · últimos: 23.2 (28m), 36.2 (27m), 33.4 (30m), 55.4 (33m)
-    - Cam Spencer PG/SF/SG depth SG2 · LIBRE · techo top5 46.1 · p90 36.9 · proy 23.2 · últimos: 17.4 (17m), 26.1 (20m), 24.9 (24m), 34.2 (34m)
+    - Cam Spencer PG/SF/SG depth SG2 · de Levy heat 🔥 · techo top5 46.1 · p90 36.9 · proy 23.2 · últimos: 17.4 (17m), 26.1 (20m), 24.9 (24m), 34.2 (34m)
     - Olivier-Maxence Prosper C/PF/SF depth C5 · LIBRE · techo top5 38.9 · p90 31.6 · proy 15.6 · últimos: 0.0 (1m), 7.2 (2m), 19.8 (20m)
+- **Neemias Queta** BOS C (LIBRE): sano → **Out** · Rest · regreso est. 2026-11-18 (2 días, se pierde 1 juego, 1 de 4 esta semana). Queta (rest) won't play in Monday's game against the Magic, Taylor Snow of the Celtics' official site reports.
+    - Jayson Tatum PF/SF depth SF1 · de Cooper Troopers · techo top5 60.2 · p90 59.7 · proy 49.0 · últimos: 38.2 (32m), 48.4 (38m), 51.2 (30m)
+    - Derrick White PG/SG depth PG1 · de TIQUITI · techo top5 58.2 · p90 51.9 · proy 30.6 · últimos: 10.7 (22m), 41.7 (38m), 31.8 (23m)
+    - Paul George PF/SF/SG depth PF1 · de White · techo top5 57.9 · p90 57.2 · proy 38.2 · últimos: 48.5 (30m), 27.4 (25m)
+    - Payton Pritchard PG/SG depth PG2 · de Brunson Burner · techo top5 53.2 · p90 47.8 · proy 25.7 · últimos: 38.7 (30m), 13.7 (31m), 24.2 (19m)
+    - Mitchell Robinson C depth C2 · LIBRE · techo top5 40.8 · p90 33.8 · proy 20.4 · últimos: 16.2 (17m), 3.4 (11m), 14.9 (15m)
 - **Steven Adams** HOU C (LIBRE): sano → **Out** · Calf · regreso est. 2026-11-18 (2 días, se pierde 1 juego, 1 de 3 esta semana). Adams (calf) is out for Monday's game against the Heat.
 - **Amen Thompson** HOU PG/SF/SG (de Levy heat 🔥): sano → **Day-To-Day** · Knee · regreso est. 2026-11-16 (0 días, se pierde 0 juegos, 0 de 3 esta semana). Soreness
-- **Neemias Queta** BOS C (LIBRE): sano → **Day-To-Day** · Rest · regreso est. 2026-11-16 (0 días, se pierde 0 juegos, 0 de 4 esta semana). Queta (rest) is questionable for Monday's game against the Magic.
+- **Ryan Dunn** PHX PF/SF (LIBRE): sano → **Day-To-Day** · Thumb · regreso est. 2026-11-16 (0 días, se pierde 0 juegos, 0 de 3 esta semana). Soreness
 
 ## Libres de la liga que ganan minutos hoy
 - **Jerami Grant** PF/SF · por la baja de Isaiah Stewart · techo top5 49.0 · p90 42.5 · proy 21.0 · últimos: 30.6 (22m), 20.4 (20m), 26.7 (26m)
-- **Cam Spencer** PG/SF/SG · por la baja de Isaiah Stewart · techo top5 46.1 · p90 36.9 · proy 23.2 · últimos: 17.4 (17m), 26.1 (20m), 24.9 (24m), 34.2 (34m)
 - **Zach Edey** C · por la baja de Isaiah Stewart · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 19.3 (23m), 9.0 (20m)
+- **Mitchell Robinson** C · por la baja de Neemias Queta · techo top5 40.8 · p90 33.8 · proy 20.4 · últimos: 16.2 (17m), 3.4 (11m), 14.9 (15m)
 - **Olivier-Maxence Prosper** C/PF/SF · por la baja de Isaiah Stewart · techo top5 38.9 · p90 31.6 · proy 15.6 · últimos: 0.0 (1m), 7.2 (2m), 19.8 (20m)
 - **Dean Wade** PF/SF · por la baja de LeBron James · techo top5 33.4 · p90 27.1 · proy 18.3 · últimos: 20.8 (23m), 17.0 (34m), 31.9 (35m)
 
@@ -86,7 +92,7 @@ Cambios desde 2026-11-16T02:21:33Z (generado 2026-11-16T19:58:15Z)
     - pierde minutos: Jalen Johnson PF/SF depth PF1 · de Boozer Beater · últimos: 29.4 (38m), 59.2 (40m), 32.7 (35m)
     - pierde minutos: CJ McCollum PG/SG depth PG2 · LIBRE · últimos: 29.0 (24m), 37.5 (32m), 36.8 (30m)
     - pierde minutos: Nickeil Alexander-Walker PG/SF/SG depth SG1 · de White · últimos: 42.8 (34m), 33.7 (41m), 36.0 (33m)
-- Tre Johnson WAS (LIBRE): Out → Day-To-Day
+- Tre Johnson WAS (LIBRE): Out → GTD
     - pierde minutos: Kyshawn George SF/SG depth SG1 · de Brunson Burner · últimos: 19.6 (35m), 39.3 (39m), 26.7 (26m), 28.4 (30m)
     - pierde minutos: AJ Dybantsa PF/SF depth SF1 · de Levy heat 🔥 · últimos: 32.1 (37m), 21.8 (34m), 21.6 (44m), 27.9 (30m)
     - pierde minutos: Anthony Davis C/PF depth PF1 · de LatinBet24 · últimos: 64.1 (34m), 43.6 (34m), 56.0 (44m), 35.1 (31m)
