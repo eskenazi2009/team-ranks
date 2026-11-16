@@ -1,4 +1,98 @@
 # Lesiones 2026-11-16 · Benchwarmers
-Cambios desde 2026-11-16T02:21:33Z (generado 2026-11-16T13:00:09Z)
+Cambios desde 2026-11-16T02:21:33Z (generado 2026-11-16T19:58:15Z)
 
-Sin cambios de lesión relevantes desde el último reporte.
+## Nuevas o agravadas
+- **LeBron James** PHI PF/PG/SF (de Magic Wonder Year): sano → **Out** · Back · regreso est. 2026-11-18 (2 días, se pierde 1 juego, 1 de 3 esta semana). James (back) has been ruled out for Monday's game against the Nets.
+    - Tyrese Maxey PG depth PG1 · de Shalommeyer · techo top5 71.2 · p90 63.4 · proy 44.5 · últimos: 32.2 (34m), 46.4 (35m), 46.8 (36m)
+    - Jaylen Brown PF/SF/SG depth SF1 · de Cooper Troopers · techo top5 66.3 · p90 59.5 · proy 40.1 · últimos: 25.0 (26m), 29.2 (36m), 36.4 (32m)
+    - Joel Embiid C depth C1 · de Magic Wonder Year · techo top5 64.0 · p90 61.7 · proy 41.4 · últimos: 23.7 (31m), 31.3 (28m)
+    - VJ Edgecombe PG/SG depth SG1 · de Boozer Beater · techo top5 56.3 · p90 45.3 · proy 30.6 · últimos: 23.3 (32m), 45.6 (36m), 25.8 (31m)
+    - Dean Wade PF/SF depth PF2 · LIBRE · techo top5 33.4 · p90 27.1 · proy 18.3 · últimos: 20.8 (23m), 17.0 (34m), 31.9 (35m)
+- **Isaiah Stewart** MEM C/PF (LIBRE): Day-To-Day → **Out** · Illness · regreso est. 2026-11-18 (2 días, se pierde 1 juego, 1 de 4 esta semana). Stewart is out for Monday's game against the Wizards due to an illness.
+    - Zach Edey C depth C1 · LIBRE · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 19.3 (23m), 9.0 (20m)
+    - Jerami Grant PF/SF depth SF2 · LIBRE · techo top5 49.0 · p90 42.5 · proy 21.0 · últimos: 30.6 (22m), 20.4 (20m), 26.7 (26m)
+    - Cedric Coward SF/SG depth SG1 · de LatinBet24 · techo top5 49.0 · p90 40.8 · proy 33.9 · últimos: 23.2 (28m), 36.2 (27m), 33.4 (30m), 55.4 (33m)
+    - Cam Spencer PG/SF/SG depth SG2 · LIBRE · techo top5 46.1 · p90 36.9 · proy 23.2 · últimos: 17.4 (17m), 26.1 (20m), 24.9 (24m), 34.2 (34m)
+    - Olivier-Maxence Prosper C/PF/SF depth C5 · LIBRE · techo top5 38.9 · p90 31.6 · proy 15.6 · últimos: 0.0 (1m), 7.2 (2m), 19.8 (20m)
+- **Steven Adams** HOU C (LIBRE): sano → **Out** · Calf · regreso est. 2026-11-18 (2 días, se pierde 1 juego, 1 de 3 esta semana). Adams (calf) is out for Monday's game against the Heat.
+- **Amen Thompson** HOU PG/SF/SG (de Levy heat 🔥): sano → **Day-To-Day** · Knee · regreso est. 2026-11-16 (0 días, se pierde 0 juegos, 0 de 3 esta semana). Soreness
+- **Neemias Queta** BOS C (LIBRE): sano → **Day-To-Day** · Rest · regreso est. 2026-11-16 (0 días, se pierde 0 juegos, 0 de 4 esta semana). Queta (rest) is questionable for Monday's game against the Magic.
+
+## Libres de la liga que ganan minutos hoy
+- **Jerami Grant** PF/SF · por la baja de Isaiah Stewart · techo top5 49.0 · p90 42.5 · proy 21.0 · últimos: 30.6 (22m), 20.4 (20m), 26.7 (26m)
+- **Cam Spencer** PG/SF/SG · por la baja de Isaiah Stewart · techo top5 46.1 · p90 36.9 · proy 23.2 · últimos: 17.4 (17m), 26.1 (20m), 24.9 (24m), 34.2 (34m)
+- **Zach Edey** C · por la baja de Isaiah Stewart · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 19.3 (23m), 9.0 (20m)
+- **Olivier-Maxence Prosper** C/PF/SF · por la baja de Isaiah Stewart · techo top5 38.9 · p90 31.6 · proy 15.6 · últimos: 0.0 (1m), 7.2 (2m), 19.8 (20m)
+- **Dean Wade** PF/SF · por la baja de LeBron James · techo top5 33.4 · p90 27.1 · proy 18.3 · últimos: 20.8 (23m), 17.0 (34m), 31.9 (35m)
+
+## Mejoran o regresan
+- Austin Reaves LAL (de LatinBet24): Out → Day-To-Day
+    - pierde minutos: Quentin Grimes SF/SG depth SG2 · LIBRE · últimos: 36.7 (37m)
+    - pierde minutos: Luka Dončić PG depth PG1 · de White · últimos: 69.6 (39m), 49.5 (32m), 65.1 (36m)
+    - pierde minutos: Sandro Mamukelashvili C/PF depth C2 · de Magic Wonder Year · últimos: 46.1 (32m), 34.6 (26m), 11.9 (21m)
+    - pierde minutos: Ziaire Williams SF/SG depth SF2 · LIBRE · últimos: 23.4 (28m), 22.7 (20m), 15.9 (19m)
+- Kyrie Irving DAL (de Magic Wonder Year): Out → Day-To-Day
+    - pierde minutos: Walter Clayton Jr. PG depth PG3 · LIBRE · últimos: 22.2 (25m), 7.2 (22m), 7.4 (13m), 26.3 (23m)
+    - pierde minutos: Marcus Sasser PG depth PG2 · LIBRE · últimos: 3.2 (9m), 10.2 (18m)
+    - pierde minutos: Naji Marshall PF/SF/SG depth PF2 · LIBRE · últimos: 16.0 (25m), 23.2 (23m), 22.1 (30m), 20.4 (23m)
+    - pierde minutos: Cooper Flagg PG/SF/SG depth SF1 · de Cooper Troopers · últimos: 72.0 (39m), 27.9 (27m), 37.1 (38m), 29.6 (27m)
+- Zach LaVine SAC (de TIQUITI): Out → Day-To-Day
+    - pierde minutos: De'Andre Hunter PF/SF depth SF1 · de TIQUITI · últimos: 23.8 (34m), 38.0 (42m)
+    - pierde minutos: Alex Karaban PF/SF depth PF6 · LIBRE · últimos: 9.5 (29m)
+    - pierde minutos: Darius Acuff Jr. PG/SG depth PG1 · de TIQUITI · últimos: 46.8 (40m), 33.8 (35m), 29.0 (33m)
+    - pierde minutos: Emanuel Sharp PG/SG depth SG2 · LIBRE · últimos: 5.4 (19m), 7.0 (7m), 15.0 (21m)
+- De'Aaron Fox SAS (de LatinBet24): Out → Day-To-Day
+    - pierde minutos: Julian Champagnie PF/SF/SG depth SG2 · LIBRE · últimos: 22.6 (27m), 24.0 (35m), 23.1 (23m), 10.5 (24m)
+    - pierde minutos: Keldon Johnson PF/SF depth SF2 · LIBRE · últimos: 14.5 (26m), 26.2 (28m), 30.8 (25m), 32.0 (29m)
+    - pierde minutos: Jordan McLaughlin PG depth PG3 · LIBRE · últimos: 12.8 (11m), 4.0 (2m), 18.2 (14m), 18.2 (19m)
+    - pierde minutos: Dylan Harper PG/SG depth SF1 · de Boozer Beater · últimos: 29.0 (26m), 54.2 (36m), 21.6 (25m), 48.8 (34m)
+- Ryan Rollins MIL (LIBRE): Out → Day-To-Day
+    - pierde minutos: Brayden Burries PG/SG depth PG1 · LIBRE · últimos: 12.1 (26m), 18.5 (23m), 13.3 (19m), 32.6 (29m)
+    - pierde minutos: Tyler Herro PG/SG depth SG1 · de Cooper Troopers · últimos: 40.9 (35m), 29.2 (34m), 12.5 (20m)
+    - pierde minutos: Nate Ament PF/SF depth PF2 · LIBRE · últimos: 19.9 (22m), 8.3 (22m), 20.1 (22m), 8.9 (17m)
+    - pierde minutos: Kel'el Ware C/PF depth C2 · LIBRE · últimos: 16.3 (17m), 22.5 (23m), 23.7 (17m), 30.2 (25m)
+- Santi Aldama DAL (LIBRE): Out → Day-To-Day
+    - pierde minutos: P.J. Washington C/PF/SF depth PF1 · de Levy heat 🔥 · últimos: 33.3 (35m), 12.6 (16m), 18.1 (26m), 19.0 (25m)
+    - pierde minutos: Naji Marshall PF/SF/SG depth PF2 · LIBRE · últimos: 16.0 (25m), 23.2 (23m), 22.1 (30m), 20.4 (23m)
+    - pierde minutos: Kyrie Irving PG/SG depth PG1 · de Magic Wonder Year · últimos: 46.0 (38m), 22.6 (27m), 62.7 (37m)
+    - pierde minutos: Cooper Flagg PG/SF/SG depth SF1 · de Cooper Troopers · últimos: 72.0 (39m), 27.9 (27m), 37.1 (38m), 29.6 (27m)
+- Precious Achiuwa SAC (de Shalommeyer): Out → Day-To-Day
+    - pierde minutos: Alex Karaban PF/SF depth PF6 · LIBRE · últimos: 9.5 (29m)
+    - pierde minutos: Keegan Murray PF/SF depth PF1 · LIBRE · últimos: 22.9 (24m), 36.4 (40m), 10.2 (21m)
+    - pierde minutos: De'Andre Hunter PF/SF depth SF1 · de TIQUITI · últimos: 23.8 (34m), 38.0 (42m)
+    - pierde minutos: Darius Acuff Jr. PG/SG depth PG1 · de TIQUITI · últimos: 46.8 (40m), 33.8 (35m), 29.0 (33m)
+- Max Christie DAL (LIBRE): Out → Day-To-Day
+    - pierde minutos: Caleb Martin PF/SF depth SG1 · LIBRE · últimos: 13.1 (19m), 20.9 (21m), 31.1 (33m), 32.5 (34m)
+    - pierde minutos: Kyrie Irving PG/SG depth PG1 · de Magic Wonder Year · últimos: 46.0 (38m), 22.6 (27m), 62.7 (37m)
+    - pierde minutos: Naji Marshall PF/SF/SG depth PF2 · LIBRE · últimos: 16.0 (25m), 23.2 (23m), 22.1 (30m), 20.4 (23m)
+    - pierde minutos: Cooper Flagg PG/SF/SG depth SF1 · de Cooper Troopers · últimos: 72.0 (39m), 27.9 (27m), 37.1 (38m), 29.6 (27m)
+- Jaxson Hayes UTA (LIBRE): Out → Day-To-Day
+    - pierde minutos: Mo Bamba C depth C2 · de Cooper Troopers · últimos: 20.4 (17m), 11.7 (18m), 24.3 (20m), 49.0 (36m)
+    - pierde minutos: Keyonte George PG/SG depth PG1 · de Cooper Troopers · últimos: 30.9 (33m), 45.3 (38m), 26.8 (34m)
+    - pierde minutos: Darryn Peterson PG/SG depth SG1 · de Winning Time · últimos: 36.8 (31m), 39.3 (33m), 47.4 (34m), 34.0 (34m)
+    - pierde minutos: Ace Bailey PF/SF depth PF1 · de Magic Wonder Year · últimos: 35.4 (35m), 42.4 (31m), 29.1 (35m), 21.6 (30m)
+- De'Andre Hunter SAC (de TIQUITI): Out → Day-To-Day
+    - pierde minutos: Leaky Black PF/SF depth SF2 · LIBRE · últimos: 8.6 (18m), 3.0 (12m), 37.8 (29m)
+    - pierde minutos: Alex Karaban PF/SF depth PF6 · LIBRE · últimos: 9.5 (29m)
+    - pierde minutos: Darius Acuff Jr. PG/SG depth PG1 · de TIQUITI · últimos: 46.8 (40m), 33.8 (35m), 29.0 (33m)
+    - pierde minutos: Zach LaVine SF/SG depth SG1 · de TIQUITI · últimos: 42.6 (33m), 30.6 (36m)
+- Kingston Flemings ATL (LIBRE): Out → Day-To-Day
+    - pierde minutos: CJ McCollum PG/SG depth PG2 · LIBRE · últimos: 29.0 (24m), 37.5 (32m), 36.8 (30m)
+    - pierde minutos: Jalen Johnson PF/SF depth PF1 · de Boozer Beater · últimos: 29.4 (38m), 59.2 (40m), 32.7 (35m)
+    - pierde minutos: Nickeil Alexander-Walker PG/SF/SG depth SG1 · de White · últimos: 42.8 (34m), 33.7 (41m), 36.0 (33m)
+    - pierde minutos: Onyeka Okongwu C/PF depth C1 · de Brunson Burner · últimos: 34.3 (30m), 33.7 (35m), 38.2 (36m)
+- Jock Landale ATL (LIBRE): Out → Day-To-Day
+    - pierde minutos: Onyeka Okongwu C/PF depth C1 · de Brunson Burner · últimos: 34.3 (30m), 33.7 (35m), 38.2 (36m)
+    - pierde minutos: Jalen Johnson PF/SF depth PF1 · de Boozer Beater · últimos: 29.4 (38m), 59.2 (40m), 32.7 (35m)
+    - pierde minutos: CJ McCollum PG/SG depth PG2 · LIBRE · últimos: 29.0 (24m), 37.5 (32m), 36.8 (30m)
+    - pierde minutos: Nickeil Alexander-Walker PG/SF/SG depth SG1 · de White · últimos: 42.8 (34m), 33.7 (41m), 36.0 (33m)
+- Tre Johnson WAS (LIBRE): Out → Day-To-Day
+    - pierde minutos: Kyshawn George SF/SG depth SG1 · de Brunson Burner · últimos: 19.6 (35m), 39.3 (39m), 26.7 (26m), 28.4 (30m)
+    - pierde minutos: AJ Dybantsa PF/SF depth SF1 · de Levy heat 🔥 · últimos: 32.1 (37m), 21.8 (34m), 21.6 (44m), 27.9 (30m)
+    - pierde minutos: Anthony Davis C/PF depth PF1 · de LatinBet24 · últimos: 64.1 (34m), 43.6 (34m), 56.0 (44m), 35.1 (31m)
+    - pierde minutos: Trae Young PG depth PG1 · de TIQUITI · últimos: 35.7 (38m), 29.6 (34m), 62.4 (45m), 14.2 (26m)
+- Fred VanVleet HOU (de Magic Wonder Year): Out → sano
+    - pierde minutos: Alperen Şengün C/PF depth C1 · de Winning Time · últimos: 50.2 (35m), 53.1 (37m), 70.9 (37m), 44.6 (28m)
+    - pierde minutos: Tari Eason SF/SG depth PF2 · de LatinBet24 · últimos: 29.0 (19m), 10.6 (22m), 33.2 (33m), 36.9 (30m)
+    - pierde minutos: Amen Thompson PG/SF/SG depth SG1 · de Levy heat 🔥 · últimos: 24.3 (35m), 37.4 (29m), 30.5 (41m), 48.9 (29m)
+    - pierde minutos: Kevin Durant PF/SF depth SF1 · de Boozer Beater · últimos: 48.4 (36m), 31.3 (34m), 34.6 (33m), 39.3 (30m)
