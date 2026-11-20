@@ -1,5 +1,5 @@
 # Lesiones 2026-11-20 · Benchwarmers
-Cambios desde 2026-11-19T22:28:14Z (generado 2026-11-20T18:14:04Z)
+Cambios desde 2026-11-19T22:28:14Z (generado 2026-11-20T21:00:26Z)
 
 ## Nuevas o agravadas
 - **Precious Achiuwa** SAC C/PF (LIBRE): sano → **Day-To-Day** · Lower Leg · regreso est. 2026-11-20 (0 días, se pierde 0 juegos, 0 de 2 esta semana). Bruise
