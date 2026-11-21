@@ -1,81 +1,17 @@
-# Lesiones 2026-11-20 · Benchwarmers
-Cambios desde 2026-11-20T21:00:26Z (generado 2026-11-21T03:24:40Z)
+# Lesiones 2026-11-21 · Benchwarmers
+Cambios desde 2026-11-21T03:24:40Z (generado 2026-11-21T12:58:33Z)
 
 ## Nuevas o agravadas
-- **Cameron Boozer** MEM C/PF (de Boozer Beater): sano → **Out** · Ankle · regreso est. 2026-11-23 (3 días, se pierde 1 juego, 1 de 1 esta semana). Boozer is out for Saturday's game against Minnesota due to a right ankle sprain.
-    - Jerami Grant PF/SF depth SF2 · LIBRE · techo top5 49.0 · p90 42.5 · proy 21.0 · últimos: 26.7 (26m), 24.2 (23m), 10.5 (20m), 3.0 (5m)
+- **Jerami Grant** MEM PF/SF (LIBRE): Day-To-Day → **Out** · Calf · regreso est. 2026-11-23 (2 días, se pierde 1 juego, 1 de 1 esta semana). Not Specified
     - Cedric Coward SF/SG depth SG1 · de LatinBet24 · techo top5 49.0 · p90 40.8 · proy 33.9 · últimos: 55.4 (33m), 40.6 (27m), 37.1 (33m), 37.8 (25m)
+    - Jaylen Wells SF/SG depth SF1 · LIBRE · techo top5 37.4 · p90 33.8 · proy 21.6 · últimos: 11.4 (25m), 20.3 (27m), 12.8 (26m), 33.4 (24m)
     - Cam Spencer PG/SF/SG depth SG2 · de Levy heat 🔥 · techo top5 46.1 · p90 36.9 · proy 23.2 · últimos: 34.2 (34m), 32.7 (32m), 42.7 (29m), 29.9 (27m)
     - Zach Edey C depth C1 · LIBRE · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 38.5 (21m), 17.9 (21m)
-    - Isaiah Stewart C/PF depth C2 · LIBRE · techo top5 43.1 · p90 30.1 · proy 25.5 · últimos: 25.0 (20m), 17.1 (15m), 14.3 (18m)
-- **Alex Caruso** OKC PF/SF (LIBRE): Day-To-Day → **Out** · Hip · regreso est. 2026-11-22 (2 días, se pierde 1 juego, 1 de 2 esta semana). Soreness
-    - Shai Gilgeous-Alexander PG depth PG1 · de Brunson Burner · techo top5 71.3 · p90 63.7 · proy 50.7 · últimos: 53.3 (39m), 46.4 (30m), 49.5 (36m), 57.1 (37m)
-    - Isaiah Hartenstein C depth C1 · de White · techo top5 50.9 · p90 41.4 · proy 29.3 · últimos: 51.2 (30m), 18.2 (18m), 37.4 (27m), 20.6 (28m)
-    - Ajay Mitchell PG/SG depth SF1 · de Cooper Troopers · techo top5 40.9 · p90 35.9 · proy 29.2 · últimos: 29.1 (27m), 31.2 (34m), 17.4 (30m)
-    - Nique Clifford SF/SG depth SF4 · LIBRE · techo top5 43.0 · p90 37.1 · proy 6.9 · últimos: 0.0 (12m), 14.6 (24m), 8.0 (13m), 13.5 (15m)
-    - Jaylin Williams C/PF depth C3 · LIBRE · techo top5 51.9 · p90 38.2 · proy 17.5 · últimos: sin juegos
-- **Precious Achiuwa** SAC C/PF (LIBRE): Day-To-Day → **Out** · Lower Leg · regreso est. 2026-11-21 (1 días, se pierde 1 juego, 1 de 2 esta semana). Bruise
-    - Keegan Murray PF/SF depth PF1 · de Magic Wonder Year · techo top5 44.9 · p90 43.1 · proy 28.7 · últimos: 36.4 (40m), 10.2 (21m), 25.9 (31m), 9.0 (7m)
-    - Domantas Sabonis C/PF depth C1 · de Shalommeyer · techo top5 50.4 · p90 53.2 · proy 45.7 · últimos: 44.9 (35m), 32.1 (29m), 34.6 (24m), 9.6 (6m)
-    - Zach LaVine SF/SG depth SG1 · de TIQUITI · techo top5 49.0 · p90 46.8 · proy 34.3 · últimos: 30.6 (36m), 30.0 (32m), 3.2 (6m)
-    - Malik Monk PG/SG depth PG2 · LIBRE · techo top5 46.4 · p90 34.2 · proy 21.2 · últimos: 17.3 (18m), 33.2 (29m), 13.2 (20m)
-    - De'Andre Hunter PF/SF depth SF1 · LIBRE · techo top5 38.4 · p90 36.8 · proy 20.9 · últimos: 38.0 (42m), 15.2 (35m), 1.2 (6m)
-- **Jalen Smith** CHI C/PF (de Brunson Burner): Day-To-Day → **Out** · Illness · regreso est. 2026-11-22 (2 días, se pierde 1 juego, 1 de 2 esta semana). Smith (illness) is out for Friday's game against the Wizards, Joel Lorenzi of The Athletic reports.
-    - Josh Giddey PG/SG depth PG1 · de Shalommeyer · techo top5 69.1 · p90 65.8 · proy 33.6 · últimos: 28.1 (26m), 17.8 (24m), 49.3 (28m), 17.7 (23m)
-    - Nic Claxton C/PF depth C2 · LIBRE · techo top5 52.8 · p90 43.1 · proy 30.2 · últimos: 13.2 (22m), 12.9 (17m), 22.3 (22m), 21.9 (29m)
-    - Matas Buzelis PF/SF depth PF1 · de LatinBet24 · techo top5 52.9 · p90 44.6 · proy 29.4 · últimos: 31.8 (30m), 31.6 (31m), 46.0 (30m), 16.5 (25m)
-    - Norman Powell SF/SG depth SG1 · de Cooper Troopers · techo top5 51.0 · p90 45.4 · proy 31.4 · últimos: 39.5 (30m), 36.4 (33m), 33.9 (26m), 24.6 (33m)
-    - Tre Jones PG/SF/SG depth PG2 · LIBRE · techo top5 46.7 · p90 41.9 · proy 24.9 · últimos: 24.0 (24m), 34.4 (23m), 19.4 (16m), 25.7 (25m)
-- **Kingston Flemings** ATL PG/SG (LIBRE): Day-To-Day → **Out** · Back · regreso est. 2026-11-22 (2 días, se pierde 0 juegos, 0 de 1 esta semana). Strain
-    - Jalen Johnson PF/SF depth PF1 · de Boozer Beater · techo top5 77.9 · p90 70.7 · proy 50.1 · últimos: 59.2 (40m), 32.7 (35m), 53.9 (34m), 51.2 (36m)
-    - Nickeil Alexander-Walker PG/SF/SG depth SG1 · de White · techo top5 60.7 · p90 48.9 · proy 33.1 · últimos: 33.7 (41m), 36.0 (33m), 38.3 (32m), 27.3 (32m)
-    - Onyeka Okongwu C/PF depth C1 · de Brunson Burner · techo top5 58.3 · p90 48.5 · proy 31.4 · últimos: 33.7 (35m), 38.2 (36m), 43.8 (36m), 27.9 (34m)
-    - Dyson Daniels SF/SG depth SF1 · de Winning Time · techo top5 54.1 · p90 47.3 · proy 31.1 · últimos: 26.8 (36m), 29.5 (27m), 33.0 (37m), 44.6 (35m)
-    - Aaron Wiggins PF/SF/SG depth SG2 · LIBRE · techo top5 42.3 · p90 35.7 · proy 20.8 · últimos: 18.3 (26m), 14.1 (24m), 24.1 (26m), 31.9 (34m)
-- **Nolan Traore** BKN PG (LIBRE): sano → **Out** · Hamstring · regreso est. 2026-11-20 (0 días, se pierde 0 juegos, 0 de 0 esta semana). Traore (hamstring) won't return to Friday's game against Orlando, Meghan Triplett of YES Network reports. He finished with four points (2-6 FG, 0-2 3Pt) and two assists over 18 minutes.
-    - Michael Porter Jr. PF/SF depth SF1 · de Brunson Burner · techo top5 62.0 · p90 56.3 · proy 38.6 · últimos: 40.2 (40m), 12.1 (27m), 32.3 (34m)
-    - Julius Randle C/PF depth PF1 · de White · techo top5 55.9 · p90 52.2 · proy 37.8 · últimos: 39.3 (31m), 48.7 (34m), 26.0 (27m), 50.8 (39m)
-    - Noah Clowney C/PF depth PF2 · LIBRE · techo top5 42.7 · p90 37.4 · proy 16.4 · últimos: 34.9 (35m), 20.1 (24m), 12.1 (19m), 9.4 (22m)
-    - Egor Dëmin PG/SG depth SG1 · LIBRE · techo top5 42.5 · p90 37.1 · proy 29.8 · últimos: 15.2 (27m), 17.6 (26m), 39.8 (31m), 10.6 (21m)
-    - Day'Ron Sharpe C depth C1 · de Boozer Beater · techo top5 42.3 · p90 36.2 · proy 26.7 · últimos: 38.7 (28m), 28.3 (25m), 13.5 (22m), 38.2 (26m)
-- **Dean Wade** PHI PF/SF (LIBRE): sano → **Out** · Hamstring · regreso est. 2026-11-23 (3 días, se pierde 1 juego, 1 de 1 esta semana). Soreness
-- **Ronald Holland II** DET PF/SF (LIBRE): Day-To-Day → **Out** · Knee · regreso est. 2026-11-22 (2 días, se pierde 0 juegos, 0 de 1 esta semana). Bruise
-- **Jordan Clarkson** NYK SF/SG (LIBRE): sano → **Out** · Foot · regreso est. 2026-11-22 (2 días, se pierde 1 juego, 1 de 2 esta semana). Plantar Fasciitis
-- **Jayson Tatum** BOS PF/SF (de Cooper Troopers): sano → **Day-To-Day** · Rest · regreso est. 2026-11-21 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Tatum (rest) is listed as questionable for Saturday's game against Sacramento.
-- **Derrick White** BOS PG/SG (de TIQUITI): sano → **Day-To-Day** · Shoulder · regreso est. 2026-11-21 (1 días, se pierde 0 juegos, 0 de 2 esta semana). White (shoulder) is questionable to play in Saturday's game against Sacramento.
-- **OG Anunoby** NYK PF/SF (de Winning Time): sano → **Day-To-Day** · Calf · regreso est. 2026-11-21 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Anunoby (calf) is questionable for Saturday's game against Portland.
-- **P.J. Washington** DAL C/PF/SF (de Levy heat 🔥): sano → **Day-To-Day** · Shoulder · regreso est. 2026-11-21 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Washington (shoulder) is listed as questionable for Saturday's game versus the Clippers.
-- **Walter Clayton Jr.** DAL PG (LIBRE): sano → **Day-To-Day** · Knee · regreso est. 2026-11-21 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Clayton (knee) is questionable for Saturday's game against the Clippers.
+    - Isaiah Stewart C/PF depth C2 · LIBRE · techo top5 43.1 · p90 30.1 · proy 25.5 · últimos: 17.1 (15m), 14.3 (18m)
+- **T.J. McConnell** IND PG (LIBRE): sano → **Out** · Hamstring · regreso est. 2026-11-22 (1 días, se pierde 0 juegos, 0 de 1 esta semana). Rick Carlisle revealed during his postgame interview that McConnell exited Friday's 128-119 loss with a left hamstring issue, Tony East of Forbes.com reports.
+- **Ryan Dunn** PHX PF/SF (LIBRE): sano → **Out** · Quadriceps · regreso est. 2026-11-23 (2 días, se pierde 0 juegos, 0 de 0 esta semana). Dunn won't return to Friday's game against the Jazz due to a right quad injury, Amanda Pflugrad of 3TV Phoenix reports.
 
 ## Libres de la liga que ganan minutos hoy
-- **Nic Claxton** C/PF · por la baja de Jalen Smith · techo top5 52.8 · p90 43.1 · proy 30.2 · últimos: 13.2 (22m), 12.9 (17m), 22.3 (22m), 21.9 (29m)
-- **Jaylin Williams** C/PF · por la baja de Alex Caruso · techo top5 51.9 · p90 38.2 · proy 17.5 · últimos: sin juegos
-- **Jerami Grant** PF/SF · por la baja de Cameron Boozer · techo top5 49.0 · p90 42.5 · proy 21.0 · últimos: 26.7 (26m), 24.2 (23m), 10.5 (20m), 3.0 (5m)
-- **Tre Jones** PG/SF/SG · por la baja de Jalen Smith · techo top5 46.7 · p90 41.9 · proy 24.9 · últimos: 24.0 (24m), 34.4 (23m), 19.4 (16m), 25.7 (25m)
-- **Malik Monk** PG/SG · por la baja de Precious Achiuwa · techo top5 46.4 · p90 34.2 · proy 21.2 · últimos: 17.3 (18m), 33.2 (29m), 13.2 (20m)
-- **Zach Edey** C · por la baja de Cameron Boozer · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 38.5 (21m), 17.9 (21m)
-- **Isaiah Stewart** C/PF · por la baja de Cameron Boozer · techo top5 43.1 · p90 30.1 · proy 25.5 · últimos: 25.0 (20m), 17.1 (15m), 14.3 (18m)
-- **Nique Clifford** SF/SG · por la baja de Alex Caruso · techo top5 43.0 · p90 37.1 · proy 6.9 · últimos: 0.0 (12m), 14.6 (24m), 8.0 (13m), 13.5 (15m)
-- **Noah Clowney** C/PF · por la baja de Nolan Traore · techo top5 42.7 · p90 37.4 · proy 16.4 · últimos: 34.9 (35m), 20.1 (24m), 12.1 (19m), 9.4 (22m)
-- **Egor Dëmin** PG/SG · por la baja de Nolan Traore · techo top5 42.5 · p90 37.1 · proy 29.8 · últimos: 15.2 (27m), 17.6 (26m), 39.8 (31m), 10.6 (21m)
-- **Aaron Wiggins** PF/SF/SG · por la baja de Kingston Flemings · techo top5 42.3 · p90 35.7 · proy 20.8 · últimos: 18.3 (26m), 14.1 (24m), 24.1 (26m), 31.9 (34m)
-- **De'Andre Hunter** PF/SF · por la baja de Precious Achiuwa · techo top5 38.4 · p90 36.8 · proy 20.9 · últimos: 38.0 (42m), 15.2 (35m), 1.2 (6m)
-
-## Mejoran o regresan
-- Cade Cunningham DET (de Shalommeyer): Day-To-Day → sano
-- Alperen Şengün HOU (de Winning Time): Day-To-Day → sano
-- Trey Murphy III NOP (de Brunson Burner): Out → sano
-    - pierde minutos: Saddiq Bey PF/SF depth SF2 · de Levy heat 🔥 · últimos: 33.2 (41m), 43.7 (33m), 30.6 (42m), 38.7 (37m)
-    - pierde minutos: Herbert Jones SF/SG depth PF3 · LIBRE · últimos: 13.9 (27m), 22.9 (24m), 18.7 (32m), 24.9 (33m)
-    - pierde minutos: Jaron Pierre Jr. PG/SG depth SF6 · LIBRE · últimos: 21.4 (23m), 15.6 (19m), 10.7 (17m), 6.4 (4m)
-    - pierde minutos: Jeremiah Fears PG/SG depth PG1 · de Boozer Beater · últimos: 31.3 (33m), 51.0 (29m), 30.0 (31m), 40.4 (38m)
-- Zach Edey MEM (LIBRE): Day-To-Day → sano
-- Andrew Nembhard IND (de Shalommeyer): Day-To-Day → sano
-- Myles Turner MIL (LIBRE): Day-To-Day → sano
-- Peyton Watson CLE (LIBRE): Day-To-Day → sano
-- Kyle Kuzma MIL (de TIQUITI): Day-To-Day → sano
-- De'Andre Hunter SAC (LIBRE): Day-To-Day → sano
-- Robert Williams III POR (LIBRE): Day-To-Day → sano
-- T.J. McConnell IND (LIBRE): Day-To-Day → sano
-- Steven Adams HOU (LIBRE): Day-To-Day → sano
-- Noa Essengue CHI (LIBRE): Day-To-Day → sano
+- **Zach Edey** C · por la baja de Jerami Grant · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 38.5 (21m), 17.9 (21m)
+- **Isaiah Stewart** C/PF · por la baja de Jerami Grant · techo top5 43.1 · p90 30.1 · proy 25.5 · últimos: 17.1 (15m), 14.3 (18m)
+- **Jaylen Wells** SF/SG · por la baja de Jerami Grant · techo top5 37.4 · p90 33.8 · proy 21.6 · últimos: 11.4 (25m), 20.3 (27m), 12.8 (26m), 33.4 (24m)
