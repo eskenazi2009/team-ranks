@@ -1,5 +1,5 @@
 # Lesiones 2026-11-21 · Benchwarmers
-Cambios desde 2026-11-21T03:24:40Z (generado 2026-11-21T20:00:50Z)
+Cambios desde 2026-11-21T03:24:40Z (generado 2026-11-21T20:41:44Z)
 
 ## Nuevas o agravadas
 - **Trey Murphy III** NOP SF/SG (de Brunson Burner): sano → **Out** · Knee · regreso est. 2026-11-23 (2 días, se pierde 1 juego, 1 de 1 esta semana). Murphy (knee) has been ruled out for Saturday's game against the Spurs.
@@ -66,7 +66,7 @@ Cambios desde 2026-11-21T03:24:40Z (generado 2026-11-21T20:00:50Z)
     - pierde minutos: Cedric Coward SF/SG depth SG1 · de LatinBet24 · últimos: 55.4 (33m), 40.6 (27m), 37.1 (33m), 37.8 (25m)
     - pierde minutos: Olivier-Maxence Prosper C/PF/SF depth C5 · LIBRE · últimos: 19.8 (20m), 14.5 (16m), 6.4 (16m), 24.5 (24m)
 - Dominick Barlow PHI (LIBRE): Out → sano
-    - pierde minutos: LeBron James PF/PG/SF depth PF1 · de Magic Wonder Year · últimos: 41.9 (33m), 34.6 (31m), 28.8 (27m)
-    - pierde minutos: Kentavious Caldwell-Pope PG/SG depth SG2 · LIBRE · últimos: 16.0 (22m), 8.9 (31m), 25.1 (32m), 18.2 (27m)
-    - pierde minutos: VJ Edgecombe PG/SG depth SG1 · de Boozer Beater · últimos: 25.8 (31m), 32.8 (33m), 46.6 (43m), 29.7 (30m)
-    - pierde minutos: Anfernee Simons PG/SG depth PG2 · LIBRE · últimos: 13.0 (15m), 15.2 (26m), 26.4 (38m), 23.5 (26m)
+    - pierde minutos: LeBron James PF/PG/SF depth PF1 · de Magic Wonder Year · últimos: 41.9 (33m), 34.6 (31m), 44.2 (35m)
+    - pierde minutos: Kentavious Caldwell-Pope PG/SG depth SG2 · LIBRE · últimos: 16.0 (22m), 8.9 (31m), 25.1 (32m), 18.2 (35m)
+    - pierde minutos: VJ Edgecombe PG/SG depth SG1 · de Boozer Beater · últimos: 25.8 (31m), 32.8 (33m), 46.6 (43m), 35.6 (38m)
+    - pierde minutos: Tyrese Maxey PG depth PG1 · de Shalommeyer · últimos: 46.8 (36m), 41.7 (35m), 28.8 (36m)
