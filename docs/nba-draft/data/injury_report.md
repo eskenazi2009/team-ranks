@@ -1,19 +1,13 @@
 # Lesiones 2026-11-22 · Benchwarmers
-Cambios desde 2026-11-21T22:29:14Z (generado 2026-11-22T12:58:51Z)
+Cambios desde 2026-11-21T22:29:14Z (generado 2026-11-22T15:37:04Z)
 
 ## Nuevas o agravadas
-- **Zion Williamson** NOP PF/SF (de Shalommeyer): sano → **Out** · Thigh · regreso est. 2026-11-23 (1 días, se pierde 0 juegos, 0 de 0 esta semana). Bruise
-    - Derik Queen C/PF depth PF2 · de Brunson Burner · techo top5 59.1 · p90 42.7 · proy 32.6 · últimos: 37.0 (21m), 17.0 (19m), 24.9 (18m), 34.0 (35m)
-    - Jeremiah Fears PG/SG depth PG1 · de Boozer Beater · techo top5 54.3 · p90 39.8 · proy 28.0 · últimos: 51.0 (29m), 30.0 (31m), 35.7 (38m), 42.0 (34m)
-    - Saddiq Bey PF/SF depth SF2 · de Levy heat 🔥 · techo top5 53.3 · p90 47.3 · proy 28.8 · últimos: 43.7 (33m), 30.6 (42m), 38.7 (37m), 11.0 (32m)
-    - Herbert Jones SF/SG depth PF3 · LIBRE · techo top5 39.9 · p90 31.5 · proy 15.7 · últimos: 22.9 (24m), 18.7 (32m), 24.9 (33m), 13.8 (25m)
-    - Julian Reese C depth C7 · LIBRE · techo top5 43.8 · p90 47.0 · proy 8.4 · últimos: 1.2 (5m)
-- **P.J. Washington** DAL C/PF/SF (de Levy heat 🔥): Day-To-Day → **Out** · Illness · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Washington (illness/shoulder) is listed as out for Saturday's game against the Clippers.
-    - Cooper Flagg PG/SF/SG depth SF1 · de Cooper Troopers · techo top5 69.2 · p90 58.9 · proy 43.8 · últimos: 29.6 (27m), 58.5 (34m), 43.2 (36m)
-    - Naji Marshall PF/SF/SG depth PF2 · LIBRE · techo top5 51.9 · p90 42.2 · proy 23.7 · últimos: 20.4 (23m), 25.0 (27m), 11.1 (14m)
-    - Kyrie Irving PG/SG depth PG1 · de Magic Wonder Year · techo top5 61.1 · p90 56.4 · proy 40.4 · últimos: 35.7 (29m), 41.2 (35m)
-    - Santi Aldama PF/SF depth PF3 · LIBRE · techo top5 50.4 · p90 41.6 · proy 24.1 · últimos: 0.0 (6m), 1.2 (9m)
-    - Daniel Gafford C depth C1 · LIBRE · techo top5 41.8 · p90 37.0 · proy 22.1 · últimos: 14.8 (19m), 19.2 (24m), 33.5 (31m)
+- **Norman Powell** CHI SF/SG (de Cooper Troopers): sano → **Out** · Hamstring · regreso est. 2026-11-25 (3 días, se pierde 2 juegos, 1 de 1 esta semana). Strain
+    - Josh Giddey PG/SG depth PG1 · de Shalommeyer · techo top5 69.1 · p90 65.8 · proy 33.6 · últimos: 17.8 (24m), 49.3 (28m), 17.7 (23m)
+    - Matas Buzelis PF/SF depth PF1 · de LatinBet24 · techo top5 52.9 · p90 44.6 · proy 29.4 · últimos: 31.6 (31m), 46.0 (30m), 16.5 (25m)
+    - Nic Claxton C/PF depth C2 · LIBRE · techo top5 52.8 · p90 43.1 · proy 30.2 · últimos: 12.9 (17m), 22.3 (22m), 21.9 (29m)
+    - Buddy Hield SG depth SG2 · LIBRE · techo top5 37.7 · p90 31.1 · proy 9.9 · últimos: 15.8 (19m), 20.2 (19m), 21.8 (23m)
+    - Tre Jones PG/SF/SG depth PG2 · LIBRE · techo top5 46.7 · p90 41.9 · proy 24.9 · últimos: 34.4 (23m), 19.4 (16m), 25.7 (25m)
 - **Alex Caruso** OKC PF/SF (LIBRE): Day-To-Day → **Out** · Hip · regreso est. 2026-11-23 (1 días, se pierde 1 juego, 1 de 1 esta semana). Soreness
     - Shai Gilgeous-Alexander PG depth PG1 · de Brunson Burner · techo top5 71.3 · p90 63.7 · proy 50.7 · últimos: 46.4 (30m), 49.5 (36m), 58.6 (37m)
     - Isaiah Hartenstein C depth C1 · de White · techo top5 50.9 · p90 41.4 · proy 29.3 · últimos: 18.2 (18m), 37.4 (27m), 22.6 (28m)
@@ -23,23 +17,61 @@ Cambios desde 2026-11-21T22:29:14Z (generado 2026-11-22T12:58:51Z)
 - **Jaylin Williams** OKC C/PF (LIBRE): sano → **Out** · Back · regreso est. 2026-11-23 (1 días, se pierde 1 juego, 1 de 1 esta semana). Spasms
 - **Shai Gilgeous-Alexander** OKC PG (de Brunson Burner): sano → **Day-To-Day** · Back · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Bruise
 - **Cade Cunningham** DET PG (de Shalommeyer): sano → **Day-To-Day** · Knee · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Soreness
-- **Norman Powell** CHI SF/SG (de Cooper Troopers): sano → **Day-To-Day** · Hamstring · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Powell is questionable for Sunday's game against the Nuggets due to a right hamstring strain.
+- **Zion Williamson** NOP PF/SF (de Shalommeyer): sano → **Day-To-Day** · Thigh · regreso est. 2026-11-23 (1 días, se pierde 0 juegos, 0 de 0 esta semana). Bruise
 - **Patrick Williams** CHI PF (LIBRE): sano → **Day-To-Day** · Thumb · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Williams is probable for Sunday's game against the Nuggets due to a left thumb sprain.
 
 ## Libres de la liga que ganan minutos hoy
-- **Naji Marshall** PF/SF/SG · por la baja de P.J. Washington · techo top5 51.9 · p90 42.2 · proy 23.7 · últimos: 20.4 (23m), 25.0 (27m), 11.1 (14m)
-- **Santi Aldama** PF/SF · por la baja de P.J. Washington · techo top5 50.4 · p90 41.6 · proy 24.1 · últimos: 0.0 (6m), 1.2 (9m)
-- **Julian Reese** C · por la baja de Zion Williamson · techo top5 43.8 · p90 47.0 · proy 8.4 · últimos: 1.2 (5m)
+- **Nic Claxton** C/PF · por la baja de Norman Powell · techo top5 52.8 · p90 43.1 · proy 30.2 · últimos: 12.9 (17m), 22.3 (22m), 21.9 (29m)
+- **Tre Jones** PG/SF/SG · por la baja de Norman Powell · techo top5 46.7 · p90 41.9 · proy 24.9 · últimos: 34.4 (23m), 19.4 (16m), 25.7 (25m)
 - **Nique Clifford** SF/SG · por la baja de Alex Caruso · techo top5 43.0 · p90 37.1 · proy 6.9 · últimos: 14.6 (24m), 8.0 (13m), 13.5 (15m)
-- **Daniel Gafford** C · por la baja de P.J. Washington · techo top5 41.8 · p90 37.0 · proy 22.1 · últimos: 14.8 (19m), 19.2 (24m), 33.5 (31m)
-- **Herbert Jones** SF/SG · por la baja de Zion Williamson · techo top5 39.9 · p90 31.5 · proy 15.7 · últimos: 22.9 (24m), 18.7 (32m), 24.9 (33m), 13.8 (25m)
+- **Buddy Hield** SG · por la baja de Norman Powell · techo top5 37.7 · p90 31.1 · proy 9.9 · últimos: 15.8 (19m), 20.2 (19m), 21.8 (23m)
 
 ## Mejoran o regresan
+- Jayson Tatum BOS (de Cooper Troopers): Out → Day-To-Day
+    - pierde minutos: Payton Pritchard PG/SG depth PG2 · de Brunson Burner · últimos: 24.2 (19m), 37.3 (32m), 19.2 (30m), 28.2 (34m)
+    - pierde minutos: Paul George PF/SF/SG depth PF1 · de White · últimos: 27.4 (25m), 42.1 (36m), 24.3 (23m), 45.1 (37m)
+    - pierde minutos: Derrick White PG/SG depth PG1 · de TIQUITI · últimos: 31.8 (23m), 16.6 (32m), 29.6 (35m)
+    - pierde minutos: Sam Hauser PF/SF depth PF2 · de Boozer Beater · últimos: 15.2 (11m), 20.2 (25m), 21.4 (17m), 28.2 (31m)
+- Cameron Boozer MEM (de Boozer Beater): Out → Day-To-Day
+    - pierde minutos: Taylor Hendricks C/PF depth PF2 · LIBRE · últimos: 10.6 (19m), 33.2 (21m), 20.7 (20m), 15.4 (27m)
+    - pierde minutos: Cam Spencer PG/SF/SG depth SG2 · de Levy heat 🔥 · últimos: 32.7 (32m), 42.7 (29m), 29.9 (27m), 26.5 (30m)
+    - pierde minutos: Javon Small PG/SG depth PG4 · LIBRE · últimos: 36.0 (29m), 15.3 (21m), 30.9 (25m)
+    - pierde minutos: Cedric Coward SF/SG depth SG1 · de LatinBet24 · últimos: 40.6 (27m), 37.1 (33m), 37.8 (25m), 40.4 (30m)
+- Jaylen Brown PHI (de Cooper Troopers): Out → Day-To-Day
+    - pierde minutos: Dean Wade PF/SF depth PF2 · LIBRE · últimos: 31.9 (35m), 29.7 (32m)
+    - pierde minutos: Jabari Walker C/PF depth SF3 · LIBRE · últimos: 23.9 (25m), 22.5 (16m), 15.0 (13m), 23.4 (20m)
+    - pierde minutos: Kentavious Caldwell-Pope PG/SG depth SG2 · LIBRE · últimos: 16.0 (22m), 8.9 (31m), 25.1 (32m), 18.2 (35m)
+    - pierde minutos: VJ Edgecombe PG/SG depth SG1 · de Boozer Beater · últimos: 25.8 (31m), 32.8 (33m), 46.6 (43m), 35.6 (38m)
+- Trey Murphy III NOP (de Brunson Burner): Out → Day-To-Day
+    - pierde minutos: Saddiq Bey PF/SF depth SF2 · de Levy heat 🔥 · últimos: 43.7 (33m), 30.6 (42m), 38.7 (37m), 11.0 (32m)
+    - pierde minutos: Herbert Jones SF/SG depth PF3 · LIBRE · últimos: 22.9 (24m), 18.7 (32m), 24.9 (33m), 13.8 (25m)
+    - pierde minutos: Jaron Pierre Jr. PG/SG depth SF6 · LIBRE · últimos: 15.6 (19m), 10.7 (17m), 6.4 (4m), 13.0 (25m)
+    - pierde minutos: Jordan Poole PG/SG depth PG3 · LIBRE · últimos: 22.9 (31m), 36.7 (30m), 8.5 (13m), 32.6 (31m)
+- Derrick White BOS (de TIQUITI): Out → Day-To-Day
+    - pierde minutos: Payton Pritchard PG/SG depth PG2 · de Brunson Burner · últimos: 24.2 (19m), 37.3 (32m), 19.2 (30m), 28.2 (34m)
+    - pierde minutos: Mike Conley PG depth PG3 · LIBRE · últimos: 35.8 (18m)
+    - pierde minutos: Jayson Tatum PF/SF depth SF1 · de Cooper Troopers · últimos: 51.2 (30m), 50.4 (36m), 37.1 (37m)
+    - pierde minutos: Paul George PF/SF/SG depth PF1 · de White · últimos: 27.4 (25m), 42.1 (36m), 24.3 (23m), 45.1 (37m)
 - OG Anunoby NYK (de Winning Time): Out → Day-To-Day
     - pierde minutos: Landry Shamet SF/SG depth PF2 · LIBRE · últimos: 31.4 (30m), 16.7 (24m), 16.2 (30m), 31.7 (36m)
     - pierde minutos: Karl-Anthony Towns C/PF depth C1 · de Winning Time · últimos: 55.9 (43m), 50.2 (36m), 48.4 (33m)
     - pierde minutos: Jalen Brunson PG depth PG1 · de Brunson Burner · últimos: 45.7 (41m), 48.5 (34m), 40.9 (35m), 48.9 (36m)
     - pierde minutos: Mikal Bridges PF/SF/SG depth SF1 · LIBRE · últimos: 21.9 (32m), 24.5 (30m), 23.1 (31m), 19.9 (28m)
+- Jerami Grant MEM (LIBRE): Out → Day-To-Day
+    - pierde minutos: Jaylen Wells SF/SG depth SF1 · de TIQUITI · últimos: 20.3 (27m), 12.8 (26m), 33.4 (24m), 11.2 (25m)
+    - pierde minutos: Cam Spencer PG/SF/SG depth SG2 · de Levy heat 🔥 · últimos: 32.7 (32m), 42.7 (29m), 29.9 (27m), 26.5 (30m)
+    - pierde minutos: Javon Small PG/SG depth PG4 · LIBRE · últimos: 36.0 (29m), 15.3 (21m), 30.9 (25m)
+    - pierde minutos: Taylor Hendricks C/PF depth PF2 · LIBRE · últimos: 10.6 (19m), 33.2 (21m), 20.7 (20m), 15.4 (27m)
+- Mitchell Robinson BOS (LIBRE): Out → Day-To-Day
+    - pierde minutos: Neemias Queta C depth C1 · LIBRE · últimos: 21.2 (15m), 37.5 (27m), 27.9 (30m)
+    - pierde minutos: Payton Pritchard PG/SG depth PG2 · de Brunson Burner · últimos: 24.2 (19m), 37.3 (32m), 19.2 (30m), 28.2 (34m)
+    - pierde minutos: Jayson Tatum PF/SF depth SF1 · de Cooper Troopers · últimos: 51.2 (30m), 50.4 (36m), 37.1 (37m)
+    - pierde minutos: Luka Garza C depth C3 · LIBRE · últimos: 15.1 (14m), 14.0 (18m), 2.7 (5m), 10.5 (17m)
+- Dean Wade PHI (LIBRE): Out → Day-To-Day
+    - pierde minutos: LeBron James PF/PG/SF depth PF1 · de Magic Wonder Year · últimos: 41.9 (33m), 34.6 (31m), 44.2 (35m)
+    - pierde minutos: Kentavious Caldwell-Pope PG/SG depth SG2 · LIBRE · últimos: 16.0 (22m), 8.9 (31m), 25.1 (32m), 18.2 (35m)
+    - pierde minutos: VJ Edgecombe PG/SG depth SG1 · de Boozer Beater · últimos: 25.8 (31m), 32.8 (33m), 46.6 (43m), 35.6 (38m)
+    - pierde minutos: Tyrese Maxey PG depth PG1 · de Shalommeyer · últimos: 46.8 (36m), 41.7 (35m), 28.8 (36m)
 - Jordan Clarkson NYK (LIBRE): Out → Day-To-Day
     - pierde minutos: Mikal Bridges PF/SF/SG depth SF1 · LIBRE · últimos: 21.9 (32m), 24.5 (30m), 23.1 (31m), 19.9 (28m)
     - pierde minutos: OG Anunoby PF/SF depth PF1 · de Winning Time · últimos: 38.3 (44m), 26.8 (36m), 32.4 (36m)
