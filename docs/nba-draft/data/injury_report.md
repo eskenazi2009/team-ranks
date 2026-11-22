@@ -1,5 +1,5 @@
 # Lesiones 2026-11-22 · Benchwarmers
-Cambios desde 2026-11-21T22:29:14Z (generado 2026-11-22T17:34:14Z)
+Cambios desde 2026-11-21T22:29:14Z (generado 2026-11-22T20:16:47Z)
 
 ## Nuevas o agravadas
 - **Norman Powell** CHI SF/SG (de Cooper Troopers): sano → **Out** · Hamstring · regreso est. 2026-11-28 (6 días, se pierde 3 juegos, 1 de 1 esta semana). Strain
@@ -16,11 +16,12 @@ Cambios desde 2026-11-21T22:29:14Z (generado 2026-11-22T17:34:14Z)
     - Jared McCain PG/SG depth SG1 · de Boozer Beater · techo top5 34.6 · p90 29.8 · proy 25.3 · últimos: 18.7 (30m), 28.1 (33m), 26.6 (30m)
 - **Jaylin Williams** OKC C/PF (LIBRE): sano → **Out** · Back · regreso est. 2026-11-23 (1 días, se pierde 1 juego, 1 de 1 esta semana). Spasms
 - **Shai Gilgeous-Alexander** OKC PG (de Brunson Burner): sano → **Day-To-Day** · Back · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Bruise
-- **Cade Cunningham** DET PG (de Shalommeyer): sano → **Day-To-Day** · Knee · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Soreness
+- **Cade Cunningham** DET PG (de Shalommeyer): sano → **GTD** · Knee. 
 - **Zion Williamson** NOP PF/SF (de Shalommeyer): sano → **Day-To-Day** · Thigh · regreso est. 2026-11-23 (1 días, se pierde 0 juegos, 0 de 0 esta semana). Bruise
 - **Nic Claxton** CHI C/PF (LIBRE): sano → **Day-To-Day** · Illness · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Claxton (illness) is questionable to play in Sunday's game against the Nuggets.
+- **Bub Carrington** WAS PG/SG (LIBRE): sano → **Day-To-Day** · Illness · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Carrington (illness) has been downgraded to questionable for Sunday's game against the Magic.
 - **Patrick Williams** CHI PF (LIBRE): sano → **Day-To-Day** · Thumb · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Williams is probable for Sunday's game against the Nuggets due to a left thumb sprain.
-- **Deandre Ayton** WAS C (LIBRE): sano → **Day-To-Day** · Illness · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Ayton had two points (1-1 FG), four rebounds and one block in nine minutes during Thursday's 144-140 double-overtime loss to the Pistons.
+- **Deandre Ayton** WAS C (LIBRE): sano → **Day-To-Day** · Illness · regreso est. 2026-11-22 (0 días, se pierde 0 juegos, 0 de 1 esta semana). Ayton (illness) is questionable to play in Sunday's game against Orlando.
 
 ## Libres de la liga que ganan minutos hoy
 - **Nic Claxton** C/PF · por la baja de Norman Powell · techo top5 52.8 · p90 43.1 · proy 30.2 · últimos: 12.9 (17m), 22.3 (22m), 21.9 (29m)
@@ -53,13 +54,8 @@ Cambios desde 2026-11-21T22:29:14Z (generado 2026-11-22T17:34:14Z)
     - pierde minutos: Mike Conley PG depth PG3 · LIBRE · últimos: 35.8 (18m)
     - pierde minutos: Jayson Tatum PF/SF depth SF1 · de Cooper Troopers · últimos: 51.2 (30m), 50.4 (36m), 37.1 (37m)
     - pierde minutos: Paul George PF/SF/SG depth PF1 · de White · últimos: 27.4 (25m), 42.1 (36m), 24.3 (23m), 45.1 (37m)
-- OG Anunoby NYK (de Winning Time): Out → Day-To-Day
-    - pierde minutos: Landry Shamet SF/SG depth PF2 · LIBRE · últimos: 31.4 (30m), 16.7 (24m), 16.2 (30m), 31.7 (36m)
-    - pierde minutos: Karl-Anthony Towns C/PF depth C1 · de Winning Time · últimos: 55.9 (43m), 50.2 (36m), 48.4 (33m)
-    - pierde minutos: Jalen Brunson PG depth PG1 · de Brunson Burner · últimos: 45.7 (41m), 48.5 (34m), 40.9 (35m), 48.9 (36m)
-    - pierde minutos: Mikal Bridges PF/SF/SG depth SF1 · LIBRE · últimos: 21.9 (32m), 24.5 (30m), 23.1 (31m), 19.9 (28m)
 - Jerami Grant MEM (LIBRE): Out → Day-To-Day
-    - pierde minutos: Jaylen Wells SF/SG depth SF1 · de TIQUITI · últimos: 20.3 (27m), 12.8 (26m), 33.4 (24m), 11.2 (25m)
+    - pierde minutos: Jaylen Wells SF/SG depth SF1 · LIBRE · últimos: 20.3 (27m), 12.8 (26m), 33.4 (24m), 11.2 (25m)
     - pierde minutos: Cam Spencer PG/SF/SG depth SG2 · de Levy heat 🔥 · últimos: 32.7 (32m), 42.7 (29m), 29.9 (27m), 26.5 (30m)
     - pierde minutos: Javon Small PG/SG depth PG4 · LIBRE · últimos: 36.0 (29m), 15.3 (21m), 30.9 (25m)
     - pierde minutos: Taylor Hendricks C/PF depth PF2 · LIBRE · últimos: 10.6 (19m), 33.2 (21m), 20.7 (20m), 15.4 (27m)
@@ -73,12 +69,16 @@ Cambios desde 2026-11-21T22:29:14Z (generado 2026-11-22T17:34:14Z)
     - pierde minutos: Kentavious Caldwell-Pope PG/SG depth SG2 · LIBRE · últimos: 16.0 (22m), 8.9 (31m), 25.1 (32m), 18.2 (35m)
     - pierde minutos: VJ Edgecombe PG/SG depth SG1 · de Boozer Beater · últimos: 25.8 (31m), 32.8 (33m), 46.6 (43m), 35.6 (38m)
     - pierde minutos: Tyrese Maxey PG depth PG1 · de Shalommeyer · últimos: 46.8 (36m), 41.7 (35m), 28.8 (36m)
-- Jordan Clarkson NYK (LIBRE): Out → Day-To-Day
-    - pierde minutos: Mikal Bridges PF/SF/SG depth SF1 · LIBRE · últimos: 21.9 (32m), 24.5 (30m), 23.1 (31m), 19.9 (28m)
-    - pierde minutos: OG Anunoby PF/SF depth PF1 · de Winning Time · últimos: 38.3 (44m), 26.8 (36m), 32.4 (36m)
-    - pierde minutos: Landry Shamet SF/SG depth PF2 · LIBRE · últimos: 31.4 (30m), 16.7 (24m), 16.2 (30m), 31.7 (36m)
-    - pierde minutos: Karl-Anthony Towns C/PF depth C1 · de Winning Time · últimos: 55.9 (43m), 50.2 (36m), 48.4 (33m)
 - Deni Avdija POR (de Levy heat 🔥): GTD → sano
 - Draymond Green GSW (LIBRE): Day-To-Day → sano
 - Precious Achiuwa SAC (LIBRE): Day-To-Day → sano
-- Walter Clayton Jr. DAL (LIBRE): Day-To-Day → sano
+- Kingston Flemings ATL (LIBRE): Out → sano
+    - pierde minutos: Aaron Wiggins PF/SF/SG depth SG2 · de Boozer Beater · últimos: 14.1 (24m), 24.1 (26m), 31.9 (34m)
+    - pierde minutos: Onyeka Okongwu C/PF depth C1 · de Brunson Burner · últimos: 38.2 (36m), 43.8 (36m), 27.9 (34m)
+    - pierde minutos: Jalen Johnson PF/SF depth PF1 · de Boozer Beater · últimos: 32.7 (35m), 53.9 (34m), 51.2 (36m)
+    - pierde minutos: Dyson Daniels PG/SF/SG depth SF1 · de Winning Time · últimos: 29.5 (27m), 33.0 (37m), 44.6 (35m)
+- Ronald Holland II DET (LIBRE): Out → sano
+    - pierde minutos: Ausar Thompson SF/SG depth PF1 · de Magic Wonder Year · últimos: 52.8 (29m), 24.4 (34m), 27.7 (33m)
+    - pierde minutos: Javonte Green PF/SF/SG depth PF2 · LIBRE · últimos: 13.2 (23m), 35.4 (35m), 16.2 (23m)
+    - pierde minutos: Kevin Huerter SF/SG depth SG2 · de TIQUITI · últimos: 14.9 (36m), 25.7 (36m), 32.1 (36m)
+    - pierde minutos: Daniss Jenkins PG/SG depth SG1 · LIBRE · últimos: 42.5 (38m), 34.3 (36m), 25.3 (39m)
