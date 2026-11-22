@@ -1,5 +1,5 @@
 # Lesiones 2026-11-22 · Benchwarmers
-Cambios desde 2026-11-22T20:16:47Z (generado 2026-11-22T22:29:17Z)
+Cambios desde 2026-11-22T20:16:47Z (generado 2026-11-22T22:50:26Z)
 
 ## Nuevas o agravadas
 - **Giannis Antetokounmpo** MIA C/PF (de Magic Wonder Year): Day-To-Day → **Out** · Groin · regreso est. 2026-11-25 (3 días, se pierde 1 juego, 1 de 1 esta semana). Antetokounmpo (groin) won't play in Sunday's game against Oklahoma City, Clemente Almanza of USA Today reports.
@@ -32,6 +32,12 @@ Cambios desde 2026-11-22T20:16:47Z (generado 2026-11-22T22:29:17Z)
     - Jalen Smith C/PF depth C1 · de Brunson Burner · techo top5 41.3 · p90 35.5 · proy 21.9 · últimos: 46.7 (28m), 27.7 (21m)
     - Tre Jones PG/SF/SG depth PG2 · de Cooper Troopers · techo top5 46.7 · p90 41.9 · proy 24.9 · últimos: 34.4 (23m), 19.4 (16m), 25.7 (25m)
     - Buddy Hield SG depth SG2 · LIBRE · techo top5 37.7 · p90 31.1 · proy 9.9 · últimos: 15.8 (19m), 20.2 (19m), 21.8 (23m)
+- **P.J. Washington** DAL C/PF/SF (de Levy heat 🔥): Day-To-Day → **Out** · Illness · regreso est. 2026-11-24 (2 días, se pierde 1 juego, 1 de 1 esta semana). Washington (illness) is doubtful to play Sunday's game against the Jazz.
+    - Cooper Flagg PG/SF/SG depth SF1 · de Cooper Troopers · techo top5 69.2 · p90 58.9 · proy 43.8 · últimos: 29.6 (27m), 58.5 (34m), 43.2 (36m)
+    - Naji Marshall PF/SF/SG depth PF2 · LIBRE · techo top5 51.9 · p90 42.2 · proy 23.7 · últimos: 20.4 (23m), 25.0 (27m), 11.1 (14m)
+    - Kyrie Irving PG/SG depth PG1 · de Magic Wonder Year · techo top5 61.1 · p90 56.4 · proy 40.4 · últimos: 35.7 (29m), 41.2 (35m)
+    - Santi Aldama PF/SF depth PF3 · LIBRE · techo top5 50.4 · p90 41.6 · proy 24.1 · últimos: 0.0 (6m), 1.2 (9m)
+    - Daniel Gafford C depth C1 · LIBRE · techo top5 41.8 · p90 37.0 · proy 22.1 · últimos: 14.8 (19m), 19.2 (24m), 33.5 (31m)
 - **Grayson Allen** CHA SF/SG (de TIQUITI): Day-To-Day → **Out** · Concussion · regreso est. 2026-11-25 (3 días, se pierde 1 juego, 0 de 0 esta semana). Allen (concussion) has been ruled out for Monday's game against the Grizzlies.
     - Brandon Miller PF/SF/SG depth SG1 · de Brunson Burner · techo top5 53.7 · p90 50.8 · proy 39.0 · últimos: 15.4 (24m), 38.4 (32m), 37.1 (33m)
     - Naz Reid C/PF depth PF1 · de Cooper Troopers · techo top5 48.6 · p90 44.3 · proy 31.7 · últimos: 29.3 (27m), 56.2 (42m), 29.5 (39m)
@@ -50,6 +56,12 @@ Cambios desde 2026-11-22T20:16:47Z (generado 2026-11-22T22:29:17Z)
     - Noah Clowney C/PF depth PF2 · LIBRE · techo top5 42.7 · p90 37.4 · proy 16.4 · últimos: 20.1 (24m), 12.1 (19m), 9.4 (22m)
     - Egor Dëmin PG/SG depth SG1 · LIBRE · techo top5 42.5 · p90 37.1 · proy 29.8 · últimos: 17.6 (26m), 39.8 (31m), 10.6 (21m)
     - Day'Ron Sharpe C depth C1 · de Boozer Beater · techo top5 42.3 · p90 36.2 · proy 26.7 · últimos: 28.3 (25m), 13.5 (22m), 38.2 (26m)
+- **Aday Mara** OKC C/PF (de Cooper Troopers): sano → **Out** · Lower Leg. 
+    - Isaiah Hartenstein C depth C1 · de White · techo top5 50.9 · p90 41.4 · proy 29.3 · últimos: 18.2 (18m), 37.4 (27m), 22.6 (28m)
+    - Ajay Mitchell PG/SF/SG depth SF1 · de Cooper Troopers · techo top5 40.9 · p90 35.9 · proy 29.2 · últimos: 29.1 (27m), 31.2 (34m), 17.4 (31m)
+    - Nique Clifford SF/SG depth SF4 · LIBRE · techo top5 43.0 · p90 37.1 · proy 6.9 · últimos: 14.6 (24m), 8.0 (13m), 13.5 (15m)
+    - Jared McCain PG/SG depth SG1 · de Boozer Beater · techo top5 34.6 · p90 29.8 · proy 25.3 · últimos: 18.7 (30m), 28.1 (33m), 26.6 (30m)
+    - Kenrich Williams C/PF depth PF2 · LIBRE · techo top5 None · p90 None · proy 12.6 · últimos: 20.2 (19m), 23.5 (23m), 23.4 (28m)
 - **Grant Williams** CHA PF (LIBRE): Day-To-Day → **Out** · Hamstring · regreso est. 2026-11-25 (3 días, se pierde 1 juego, 0 de 0 esta semana). Williams (hamstring) won't play Monday's game against the Grizzlies.
     - Brandon Miller PF/SF/SG depth SG1 · de Brunson Burner · techo top5 53.7 · p90 50.8 · proy 39.0 · últimos: 15.4 (24m), 38.4 (32m), 37.1 (33m)
     - Naz Reid C/PF depth PF1 · de Cooper Troopers · techo top5 48.6 · p90 44.3 · proy 31.7 · últimos: 29.3 (27m), 56.2 (42m), 29.5 (39m)
@@ -59,6 +71,8 @@ Cambios desde 2026-11-22T20:16:47Z (generado 2026-11-22T22:29:17Z)
 - **Brandon Miller** CHA PF/SF/SG (de Brunson Burner): sano → **Day-To-Day** · Knee · regreso est. 2026-11-23 (1 días, se pierde 0 juegos, 0 de 0 esta semana). Bruise
 
 ## Libres de la liga que ganan minutos hoy
+- **Naji Marshall** PF/SF/SG · por la baja de P.J. Washington · techo top5 51.9 · p90 42.2 · proy 23.7 · últimos: 20.4 (23m), 25.0 (27m), 11.1 (14m)
+- **Santi Aldama** PF/SF · por la baja de P.J. Washington · techo top5 50.4 · p90 41.6 · proy 24.1 · últimos: 0.0 (6m), 1.2 (9m)
 - **Neemias Queta** C · por la baja de Paul George · techo top5 49.1 · p90 40.1 · proy 22.4 · últimos: 21.2 (15m), 37.5 (27m), 27.9 (30m)
 - **Jerami Grant** PF/SF · por la baja de Cameron Boozer · techo top5 49.0 · p90 42.5 · proy 21.0 · últimos: 24.2 (23m), 10.5 (20m), 3.0 (5m)
 - **Bobby Portis Jr.** C/PF · por la baja de Giannis Antetokounmpo · techo top5 48.8 · p90 39.8 · proy 27.2 · últimos: 28.2 (23m), 11.6 (17m)
@@ -70,9 +84,11 @@ Cambios desde 2026-11-22T20:16:47Z (generado 2026-11-22T22:29:17Z)
 - **Nikola Jović** C/PF/SF · por la baja de Giannis Antetokounmpo · techo top5 42.8 · p90 39.2 · proy 12.2 · últimos: 12.2 (14m)
 - **Noah Clowney** C/PF · por la baja de Nolan Traore · techo top5 42.7 · p90 37.4 · proy 16.4 · últimos: 20.1 (24m), 12.1 (19m), 9.4 (22m)
 - **Egor Dëmin** PG/SG · por la baja de Nolan Traore · techo top5 42.5 · p90 37.1 · proy 29.8 · últimos: 17.6 (26m), 39.8 (31m), 10.6 (21m)
+- **Daniel Gafford** C · por la baja de P.J. Washington · techo top5 41.8 · p90 37.0 · proy 22.1 · últimos: 14.8 (19m), 19.2 (24m), 33.5 (31m)
 - **Sam Hauser** PF/SF · por la baja de Paul George · techo top5 41.0 · p90 33.1 · proy 19.7 · últimos: 15.2 (11m), 20.2 (25m), 21.4 (17m), 28.2 (31m)
 - **Buddy Hield** SG · por la baja de Nic Claxton · techo top5 37.7 · p90 31.1 · proy 9.9 · últimos: 15.8 (19m), 20.2 (19m), 21.8 (23m)
 - **Taylor Hendricks** C/PF · por la baja de Cameron Boozer · techo top5 37.2 · p90 33.5 · proy 19.1 · últimos: 10.6 (19m), 33.2 (21m), 20.7 (20m), 15.4 (27m)
+- **Kenrich Williams** C/PF · por la baja de Aday Mara · techo top5 None · p90 None · proy 12.6 · últimos: 20.2 (19m), 23.5 (23m), 23.4 (28m)
 
 ## Mejoran o regresan
 - Cade Cunningham DET (de Shalommeyer): GTD → sano
