@@ -1,5 +1,5 @@
 # Lesiones 2026-11-23 · Benchwarmers
-Cambios desde 2026-11-23T03:00:57Z (generado 2026-11-23T21:53:00Z)
+Cambios desde 2026-11-23T03:00:57Z (generado 2026-11-23T22:28:47Z)
 
 ## Nuevas o agravadas
 - **Aaron Nesmith** IND SF/SG (LIBRE): sano → **Out** · Foot · regreso est. 2026-11-27 (4 días, se pierde 1 juego, 1 de 3 esta semana). Nesmith is out for Monday's game against the Thunder due to right foot soreness.
@@ -15,6 +15,7 @@ Cambios desde 2026-11-23T03:00:57Z (generado 2026-11-23T21:53:00Z)
     - Zach Edey C depth C1 · LIBRE · techo top5 45.0 · p90 45.0 · proy 28.8 · últimos: 38.5 (21m), 17.9 (21m), 13.4 (23m)
     - Ty Jerome PG/SG depth PG1 · de Magic Wonder Year · techo top5 43.5 · p90 44.7 · proy 37.9 · últimos: 33.8 (27m)
 - **Victor Wembanyama** SAS C (de LatinBet24): sano → **Day-To-Day** · Back · regreso est. 2026-11-23 (0 días, se pierde 0 juegos, 0 de 4 esta semana). Wembanyama (back) is questionable for Monday's game against the Kings, Jared Weiss of The Athletic reports.
+- **Cade Cunningham** DET PG (de Shalommeyer): sano → **Day-To-Day** · Knee · regreso est. 2026-11-24 (1 días, se pierde 0 juegos, 0 de 3 esta semana). Cunningham (knee) is probable for Tuesday's game against the Orlando.
 - **Joel Embiid** PHI C (de Magic Wonder Year): sano → **Day-To-Day** · Illness · regreso est. 2026-11-23 (0 días, se pierde 0 juegos, 0 de 4 esta semana). Embiid (knee) has been downgraded to questionable for Monday's game against Portland.
 - **Pascal Siakam** IND C/PF (de Shalommeyer): sano → **Day-To-Day** · Hip · regreso est. 2026-11-23 (0 días, se pierde 0 juegos, 0 de 3 esta semana). Not Specified
 - **Jalen Smith** CHI C/PF (de Brunson Burner): sano → **Day-To-Day** · Illness · regreso est. 2026-11-23 (0 días, se pierde 0 juegos, 0 de 3 esta semana). Smith (illness) is probable for Monday's game against Cleveland.
@@ -55,6 +56,7 @@ Cambios desde 2026-11-23T03:00:57Z (generado 2026-11-23T21:53:00Z)
     - pierde minutos: Josh Dix PG/SG depth SF5 · LIBRE · últimos: 28.0 (32m)
     - pierde minutos: Kenrich Williams C/PF depth PF2 · LIBRE · últimos: 23.5 (23m), 23.4 (28m), 20.8 (26m)
     - pierde minutos: Jared McCain PG/SG depth SG1 · de Boozer Beater · últimos: 28.1 (33m), 26.6 (30m), 27.9 (29m)
+- Brandon Miller CHA (de Brunson Burner): Day-To-Day → sano
 - Paul George BOS (de White): Out → sano
     - pierde minutos: Sam Hauser PF/SF depth PF2 · LIBRE · últimos: 20.2 (25m), 21.4 (17m), 28.2 (31m), 8.2 (22m)
     - pierde minutos: Payton Pritchard PG/SG depth PG2 · de Brunson Burner · últimos: 37.3 (32m), 19.2 (30m), 28.2 (34m), 18.2 (28m)
