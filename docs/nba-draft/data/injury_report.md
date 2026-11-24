@@ -1,26 +1,8 @@
 # Lesiones 2026-11-24 · Benchwarmers
-Cambios desde 2026-11-23T22:28:47Z (generado 2026-11-24T05:40:16Z)
+Cambios desde 2026-11-23T22:28:47Z (generado 2026-11-24T06:18:26Z)
 
 ## Nuevas o agravadas
-- **Victor Wembanyama** SAS C (de LatinBet24): Day-To-Day → **Out** · Back · regreso est. 2026-11-25 (1 días, se pierde 0 juegos, 0 de 3 esta semana). Wembanyama (back) won't play Monday against the Kings, Jeff McDonald of the San Antonio Express-News reports.
-    - Stephon Castle PG/SF/SG depth SG1 · de Winning Time · techo top5 64.4 · p90 50.2 · proy 37.6 · últimos: 21.9 (31m), 50.2 (33m), 34.6 (29m), 58.1 (37m)
-    - Julian Champagnie PF/SF/SG depth SG2 · LIBRE · techo top5 50.2 · p90 38.1 · proy 21.6 · últimos: 27.2 (30m), 29.3 (29m), 22.1 (25m), 40.9 (30m)
-    - Luke Kornet C depth C2 · LIBRE · techo top5 37.7 · p90 29.3 · proy 17.7 · últimos: 8.7 (14m), 8.5 (15m), 3.6 (10m), 37.7 (29m)
-    - Devin Vassell PF/SF/SG depth PF1 · LIBRE · techo top5 44.1 · p90 37.9 · proy 26.6 · últimos: 28.0 (36m), 33.8 (32m), 21.6 (26m), 32.2 (34m)
-    - Keldon Johnson PF/SF depth SF2 · LIBRE · techo top5 40.9 · p90 34.7 · proy 23.8 · últimos: 5.9 (15m), 24.5 (27m), 22.8 (23m), 24.3 (26m)
-- **De'Aaron Fox** SAS PG (de LatinBet24): Day-To-Day → **Out** · Lower Leg · regreso est. 2026-11-25 (1 días, se pierde 0 juegos, 0 de 3 esta semana). Bruise
-    - Stephon Castle PG/SF/SG depth SG1 · de Winning Time · techo top5 64.4 · p90 50.2 · proy 37.6 · últimos: 21.9 (31m), 50.2 (33m), 34.6 (29m), 58.1 (37m)
-    - Julian Champagnie PF/SF/SG depth SG2 · LIBRE · techo top5 50.2 · p90 38.1 · proy 21.6 · últimos: 27.2 (30m), 29.3 (29m), 22.1 (25m), 40.9 (30m)
-    - Devin Vassell PF/SF/SG depth PF1 · LIBRE · techo top5 44.1 · p90 37.9 · proy 26.6 · últimos: 28.0 (36m), 33.8 (32m), 21.6 (26m), 32.2 (34m)
-    - Keldon Johnson PF/SF depth SF2 · LIBRE · techo top5 40.9 · p90 34.7 · proy 23.8 · últimos: 5.9 (15m), 24.5 (27m), 22.8 (23m), 24.3 (26m)
-    - Luke Kornet C depth C2 · LIBRE · techo top5 37.7 · p90 29.3 · proy 17.7 · últimos: 8.7 (14m), 8.5 (15m), 3.6 (10m), 37.7 (29m)
 - **Ryan Kalkbrenner** CHA C (LIBRE): sano → **Day-To-Day** · Hip · regreso est. 2026-11-25 (1 días, se pierde 0 juegos, 0 de 2 esta semana). Soreness
-
-## Libres de la liga que ganan minutos hoy
-- **Julian Champagnie** PF/SF/SG · por la baja de Victor Wembanyama · techo top5 50.2 · p90 38.1 · proy 21.6 · últimos: 27.2 (30m), 29.3 (29m), 22.1 (25m), 40.9 (30m)
-- **Devin Vassell** PF/SF/SG · por la baja de Victor Wembanyama · techo top5 44.1 · p90 37.9 · proy 26.6 · últimos: 28.0 (36m), 33.8 (32m), 21.6 (26m), 32.2 (34m)
-- **Keldon Johnson** PF/SF · por la baja de Victor Wembanyama · techo top5 40.9 · p90 34.7 · proy 23.8 · últimos: 5.9 (15m), 24.5 (27m), 22.8 (23m), 24.3 (26m)
-- **Luke Kornet** C · por la baja de Victor Wembanyama · techo top5 37.7 · p90 29.3 · proy 17.7 · últimos: 8.7 (14m), 8.5 (15m), 3.6 (10m), 37.7 (29m)
 
 ## Mejoran o regresan
 - Aaron Nesmith IND (LIBRE): Out → Day-To-Day
@@ -28,6 +10,11 @@ Cambios desde 2026-11-23T22:28:47Z (generado 2026-11-24T05:40:16Z)
     - pierde minutos: Pascal Siakam C/PF depth PF1 · de Shalommeyer · últimos: 42.3 (33m), 32.4 (30m), 38.7 (33m), 38.1 (35m)
     - pierde minutos: Andrew Nembhard PG/SG depth PG1 · de Shalommeyer · últimos: 30.6 (26m), 26.4 (32m), 31.4 (38m)
     - pierde minutos: Jarace Walker PF/SF depth SF2 · LIBRE · últimos: 7.1 (17m), 13.7 (11m), 0.0 (1m), 20.1 (14m)
+- Jaxson Hayes UTA (LIBRE): Out → Day-To-Day
+    - pierde minutos: Mo Bamba C depth C2 · de Cooper Troopers · últimos: 30.2 (23m), 6.4 (20m), 16.5 (23m), 21.4 (29m)
+    - pierde minutos: Svi Mykhailiuk SF/SG depth SG2 · de Boozer Beater · últimos: 30.1 (34m), 22.4 (28m), 56.5 (32m), 8.6 (25m)
+    - pierde minutos: Tony Bradley C depth C4 · LIBRE · últimos: 10.9 (17m), 7.0 (13m)
+    - pierde minutos: Keyonte George PG/SG depth PG1 · de Cooper Troopers · últimos: 51.2 (39m), 23.4 (36m), 32.5 (26m), 24.8 (33m)
 - T.J. McConnell IND (LIBRE): Out → Day-To-Day
     - pierde minutos: Andrew Nembhard PG/SG depth PG1 · de Shalommeyer · últimos: 30.6 (26m), 26.4 (32m), 31.4 (38m)
     - pierde minutos: Braden Smith PG/SG depth PG4 · LIBRE · últimos: 24.5 (18m), 18.1 (11m), 13.2 (18m), 20.4 (24m)
