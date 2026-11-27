@@ -1,5 +1,5 @@
 # Lesiones 2026-11-26 · Benchwarmers
-Cambios desde 2026-11-26T19:24:09Z (generado 2026-11-27T02:06:20Z)
+Cambios desde 2026-11-26T19:24:09Z (generado 2026-11-27T04:28:25Z)
 
 ## Nuevas o agravadas
 - **Cade Cunningham** DET PG (de Shalommeyer): Day-To-Day → **Out** · Knee · regreso est. 2026-11-29 (3 días, se pierde 1 juego, 1 de 2 esta semana). Cunningham (knee) is out for Friday's game against the Bucks.
